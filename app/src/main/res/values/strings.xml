@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Real Estate Manager</string>
+
+    <!-- Defence string -->
+    <string name="defence_value">Le premier bien immobilier enregistré vaut\u0020</string>
+
 </resources>

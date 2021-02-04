@@ -1,8 +1,12 @@
 package com.openclassrooms.realestatemanager;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+
+// -------------------------------
+// MainActivity (FOR DEFENCE ONLY)
+// -------------------------------
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,7 +18,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
+        BUG#1: Wrong ID reference
+        SOLUTION: Replace with the correct TextView ID reference
+            From
         this.textViewMain = findViewById(R.id.activity_second_activity_text_view_main);
+            To
+        */
+        this.textViewMain = findViewById(R.id.activity_main_activity_text_view_main);
+
         this.textViewQuantity = findViewById(R.id.activity_main_activity_text_view_quantity);
 
         this.configureTextViewMain();
@@ -23,12 +35,20 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureTextViewMain(){
         this.textViewMain.setTextSize(15);
-        this.textViewMain.setText("Le premier bien immobilier enregistré vaut ");
+        this.textViewMain.setText(R.string.defence_value);
     }
 
     private void configureTextViewQuantity(){
         int quantity = Utils.convertDollarToEuro(100);
         this.textViewQuantity.setTextSize(20);
+
+        /*
+        BUG#2: setText() method requires a String object. Previously, was trying to setText with an int value
+        SOLUTION: transform the int value into a String object with valueOf() method from JAVA's String class
+            From
         this.textViewQuantity.setText(quantity);
+            To
+        */
+        this.textViewQuantity.setText(String.valueOf(quantity));
     }
 }

@@ -1,7 +1,11 @@
 package com.openclassrooms.realestatemanager;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+
+// --------------------------------
+// SecondActivity (FOR DEFENCE ONLY)
+// --------------------------------
 
 public class SecondActivity extends AppCompatActivity {
 

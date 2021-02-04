@@ -7,9 +7,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by Philippe on 21/02/2018.
- */
+// -----
+// Utils
+// -----
 
 public class Utils {
 
