@@ -7,6 +7,10 @@ import android.widget.TextView;
 
 import com.oxymium.realestatemanager.R;
 
+// --------------------------
+// MainActivity (DEFENCE ONLY)
+// --------------------------
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView textViewMain;
@@ -17,7 +21,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
+        ISSUE#1: Wrong ID reference
+        SOLUTION: Replace with the correct TextView ID reference
+            From
         this.textViewMain = findViewById(R.id.activity_second_activity_text_view_main);
+            To
+        */
+        this.textViewMain = findViewById(R.id.activity_main_activity_text_view_main);
+
         this.textViewQuantity = findViewById(R.id.activity_main_activity_text_view_quantity);
 
         this.configureTextViewMain();
@@ -26,13 +38,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureTextViewMain(){
         this.textViewMain.setTextSize(15);
-        this.textViewMain.setText("Le premier bien immobilier enregistrÃ© vaut ");
+        // Modified to String resource reference for convenience
+        this.textViewMain.setText(R.string.defence_string);
     }
 
     private void configureTextViewQuantity(){
         int quantity = Utils.convertDollarToEuro(100);
         this.textViewQuantity.setTextSize(20);
+
+        /*
+        ISSUE#2: setText() method requires a String object. Previously, was trying to setText with an int value
+        SOLUTION: transform the int value into a String object with valueOf() method from JAVA's String class
+            From
         this.textViewQuantity.setText(quantity);
+            To
+        */
+        this.textViewQuantity.setText(String.valueOf(quantity));
     }
 
 }

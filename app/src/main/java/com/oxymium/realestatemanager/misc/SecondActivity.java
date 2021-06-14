@@ -6,6 +6,10 @@ import android.os.Bundle;
 
 import com.oxymium.realestatemanager.R;
 
+// ----------------------------
+// SecondActivity (DEFENCE ONLY)
+// ----------------------------
+
 public class SecondActivity extends AppCompatActivity {
 
     @Override
