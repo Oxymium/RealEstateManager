@@ -1,6 +1,15 @@
 <resources>
     <!-- GENERAL -->
-    <string name="app_name">RealEstateManager</string>
+    <string name="app_name">Real Estate Manager</string>
 
     <!-- DEFENCE -->
-    <string name="defence_string">The first registered estate is worth\u0020</string></resources>
+    <string name="defence_string">The first registered estate is worth\u0020</string>
+
+    <!-- BOTTOM NAV. TITLES -->
+    <string name="bottom_nav_category_1">Search</string>
+    <string name="bottom_nav_category_2">Create</string>
+    <string name="bottom_nav_category_3">Estates</string>
+    <string name="bottom_nav_category_4">Tools</string>
+    <string name="bottom_nav_category_5">Map</string>
+
+</resources>
