@@ -7,8 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.oxymium.realestatemanager.databinding.FragmentEstatesBinding
-
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentCreateBinding
 

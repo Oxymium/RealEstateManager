@@ -21,7 +21,11 @@
         android:id="@+id/estatesFragment"
         android:name="com.oxymium.realestatemanager.features.estates.EstatesFragment"
         android:label="EstatesFragment"
-        tools:layout="@layout/fragment_estates" />
+        tools:layout="@layout/fragment_estates" >
+        <action
+            android:id="@+id/action_estatesFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/toolsFragment"
         android:name="com.oxymium.realestatemanager.features.tools.ToolsFragment"
@@ -32,5 +36,10 @@
         android:name="com.oxymium.realestatemanager.features.map.MapFragment"
         android:label="MapFragment"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.oxymium.realestatemanager.features.estates.DetailsFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_details"/>
 
 </navigation>

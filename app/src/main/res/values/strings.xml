@@ -12,4 +12,17 @@
     <string name="bottom_nav_category_4">Tools</string>
     <string name="bottom_nav_category_5">Map</string>
 
+    <!-- ESTATES FRAG. -->
+    <string name="quick_search_hint">Quick Search</string>
+    <string name="fragment_estates_text_emptyRecyclerView">Start by touching the CREATE icon.</string>
+
+    <!-- ESTATE ITEM -->
+    <string name="item_estate_description_picture">Estate picture</string>
+    <string name="item_estate_hint_energy">Energy</string>
+    <string name="item_estate_hint_location">Location</string>
+    <string name="item_estate_hint_price">Price</string>
+    <string name="item_estate_hint_surface">Surface</string>
+    <string name="item_estate_hint_rooms">Rooms</string>
+    <string name="item_estate_hint_type">Type</string>
+
 </resources>

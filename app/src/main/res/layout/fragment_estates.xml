@@ -1,13 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/independence"
+        android:background="@drawable/dot_grid_repeating"
         tools:context=".EstatesFragment">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/fragment_estates_quickSearch_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:startIconDrawable="@drawable/baseline_search_white_24"
+            app:startIconTint="@color/white"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            app:hintTextColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fragment_estates_recyclerView"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/quick_search_hint"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:inputType="text|textNoSuggestions"
+                android:background="@drawable/quick_search_shape"
+                android:layout_marginStart="@dimen/quick_search_padding"
+                android:layout_marginEnd="@dimen/quick_search_padding"
+                android:layout_marginTop="@dimen/quick_search_padding"
+                android:layout_marginBottom="@dimen/quick_search_padding"
+                android:textCursorDrawable="@null"
+                android:maxLines="1"
+                android:maxLength="25" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_estates_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            tools:listitem="@layout/item_estate"
+            tools:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_estates_quickSearch_input"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/fragment_estates_emptyWarning_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_estates_text_emptyRecyclerView"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
