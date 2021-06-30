@@ -39,6 +39,7 @@ class EstateViewHolder(val binding: ItemEstateBinding):
             return EstateViewHolder(binding)
 
         }
+
     }
 
 }

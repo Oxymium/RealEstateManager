@@ -12,7 +12,6 @@ import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentDetailsBinding
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
 import com.oxymium.realestatemanager.viewmodel.EstateViewModelFactory
-import com.oxymium.realestatemanager.viewmodel.Injection
 
 // ---------------
 // DetailsFragment
@@ -34,12 +33,6 @@ class DetailsFragment: Fragment() {
         super.onCreate(savedInstanceState)
 
         Log.d(fragmentTAG, "onCreate: ")
-
-        // EstateViewModel init with Factory
-        estateViewModel = activity?.run {
-            estateViewModelFactory = Injection.provideEstateViewModelFactory(context)
-            ViewModelProvider(this@DetailsFragment.requireActivity())[EstateViewModel::class.java]
-        } ?: throw Exception("Invalid Activity")
 
     }
 

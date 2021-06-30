@@ -8,11 +8,11 @@ import androidx.room.PrimaryKey
 // Estate (Model class)
 // -------------------
 
-@Entity(tableName = "estates")
+@Entity(tableName = "estate")
 data class Estate(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    var id:Long,
+    val id:Long = 0,
     @ColumnInfo(name = "type")
     var type:String,
     @ColumnInfo(name = "price")
@@ -26,4 +26,6 @@ data class Estate(
     @ColumnInfo(name = "location")
     var location: String
     )
+
+
 

@@ -3,15 +3,17 @@ package com.oxymium.realestatemanager.presenter
 import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.oxymium.realestatemanager.R
+import com.oxymium.realestatemanager.database.EstatesApplication
+import com.oxymium.realestatemanager.model.Estate
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
 import com.oxymium.realestatemanager.viewmodel.EstateViewModelFactory
-import com.oxymium.realestatemanager.viewmodel.Injection
+import com.oxymium.realestatemanager.viewmodel.ToolsViewModel
 
 // -----------------------------------
 // NavHostActivity (Launcher Activity)
@@ -24,9 +26,12 @@ class NavHostActivity : AppCompatActivity() {
     private val navController get() = Navigation.findNavController(this, R.id.navHostFragment)
     private lateinit var bottomNavigationView: BottomNavigationView
 
-    // EstateViewModel
-    private lateinit var estateViewModelFactory: EstateViewModelFactory
-    private lateinit var estateViewModel: EstateViewModel
+    // ViewModel injection
+    private val estateViewModel: EstateViewModel by viewModels {
+        EstateViewModelFactory((application as EstatesApplication).repository)
+    }
+
+    private val toolsViewModel: ToolsViewModel by viewModels ()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,19 +42,12 @@ class NavHostActivity : AppCompatActivity() {
 
         initNavigationUI()
 
-        initEstateViewModel()
         observeSelectedEstate()
+        observeToolsSelectedCategory()
 
         hideSupportActionBar()
         disableWindowAutoResizingWhenKeyboardCalled()
 
-    }
-
-    private fun initEstateViewModel(){
-        estateViewModel = run {
-            estateViewModelFactory = Injection.provideEstateViewModelFactory(this@NavHostActivity)
-            ViewModelProvider(this, estateViewModelFactory)[EstateViewModel::class.java]
-        }
     }
 
     // Navigate from EstatesFragment -> DetailsFragment onClick
@@ -57,6 +55,16 @@ class NavHostActivity : AppCompatActivity() {
         estateViewModel.selectedEstate.observe(this, { estate ->
             if (estate != null) {
                 navController.navigate(R.id.action_estatesFragment_to_detailsFragment)
+            }
+        })
+    }
+
+    private fun observeToolsSelectedCategory(){
+        toolsViewModel.categoryClicked.observe(this, { categoryValue ->
+            when (categoryValue) {
+                1 -> navController.navigate(R.id.action_toolsFragment_to_currencyFragment)
+                2 -> navController.navigate(R.id.action_toolsFragment_to_loanFragment)
+                3 -> navController.navigate(R.id.action_toolsFragment_to_devFragment)
             }
         })
     }

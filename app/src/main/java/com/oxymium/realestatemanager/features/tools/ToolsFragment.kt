@@ -5,12 +5,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.oxymium.realestatemanager.databinding.FragmentEstatesBinding
 
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentToolsBinding
+import com.oxymium.realestatemanager.viewmodel.ToolsViewModel
 
 // -------------
 // ToolsFragment
@@ -23,6 +26,9 @@ class ToolsFragment: Fragment() {
     // DataBinding
     private lateinit var fragmentToolsBinding: FragmentToolsBinding
     private val binding get() = fragmentToolsBinding
+
+    // ViewModel
+    private val toolsViewModel: ToolsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +44,7 @@ class ToolsFragment: Fragment() {
     ): View? {
 
         fragmentToolsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_tools, container, false)
+        binding.toolsViewModel = toolsViewModel
 
         return binding.root
     }

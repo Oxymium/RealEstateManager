@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="createViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.CreateViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/create_padding_extra"
+        android:paddingEnd="@dimen/create_padding_extra"
+        android:paddingTop="@dimen/create_padding_extra"
+        android:paddingBottom="@dimen/create_padding_extra"
+        android:background="@color/independence"
+        tools:context=".CreateFragment">
+
+        <Space
+            android:id="@+id/layout_create_date_top_space"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layout_create_date"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_create_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circular_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_create_date_top_space">
+
+            <TextView
+                android:id="@+id/testTV1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/create_padding"
+                android:paddingBottom="@dimen/create_padding"
+                android:onClick="@{() -> createViewModel.onClickEstateType()}"
+                android:text="@{createViewModel.estateType}"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/testTV2"/>
+
+            <TextView
+                android:id="@+id/testTV2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/create_padding"
+                android:paddingBottom="@dimen/create_padding"
+                android:onClick="@{() -> createViewModel.onClickEnergyScore()}"
+                android:text="@{createViewModel.energyScore}"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/testTV1"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/layout_create_type_title"
+            android:textColor="@color/white"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/layout_create_date"
+            app:layout_constraintBottom_toBottomOf="@id/layout_create_date_top_space"
+            app:layout_constraintHorizontal_bias="0.95" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/layout_create_type_picture"
+            android:src="@drawable/ic_home_city_white_24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/layout_create_date"
+            app:layout_constraintBottom_toBottomOf="@id/layout_create_date_top_space"
+            app:layout_constraintHorizontal_bias="0.05" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -25,4 +25,70 @@
     <string name="item_estate_hint_rooms">Rooms</string>
     <string name="item_estate_hint_type">Type</string>
 
+    <!-- CREATE FRAG. -->
+    <string name="layout_create_date_picture">Date icon</string>
+    <string name="layout_create_date_title">Current date</string>
+    <string name="layout_create_date_hint">dd/mm/yyyy</string>
+    <string name="layout_create_numerics_title">Numerics</string>
+    <string name="layout_create_numerics_picture">Date icon</string>
+    <string name="layout_create_price_input_hint">Price in dollars</string>
+    <string name="layout_create_surface_input_hint">Surface m²</string>
+
+    <string name="layout_create_type_title">Type</string>
+    <string name="layout_create_type_picture">Type icon</string>
+
+    <string name="layout_create_address_title">Address</string>
+    <string name="layout_create_address_picture">Address icon</string>
+    <string name="layout_create_street_input_hint">Street</string>
+    <string name="layout_create_zipCode_input_hint">Zip Code (ex. XXXXX)</string>
+    <string name="layout_create_location_input_hint">Location (ex. Paris)</string>
+
+    <string-array name="array_estate_type">
+        <item>Bungalow</item>
+        <item>Condominium</item>
+        <item>Cottage</item>
+        <item>Duplex</item>
+        <item>Farmhouse</item>
+        <item>Flat</item>
+        <item>Lodge</item>
+        <item>Manor</item>
+        <item>Penthouse</item>
+        <item>Townhouse</item>
+        <item>Villa</item>
+    </string-array>
+
+    <string-array name="array_energy_score">
+        <item>A+</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+    </string-array>
+
+    <!-- TOOLS FRAG. -->
+    <string name="fragment_tools_description_picture_currency">Currency icon</string>
+    <string name="fragment_tools_description_picture_loan">Loan icon</string>
+    <string name="fragment_tools_description_picture_dev">Developer icon</string>
+    <string name="fragment_tools_category_currency_title">Currency converter</string>
+    <string name="fragment_tools_category_currency_subtitle">Convert at any given rate</string>
+    <string name="fragment_tools_category_loan_title">Loan Simulator</string>
+    <string name="fragment_tools_category_loan_subtitle">Plan ahead</string>
+    <string name="fragment_tools_category_dev_title">Developer mode</string>
+    <string name="fragment_tools_category_dev_subtitle">Debug</string>
+
+    <!-- DEV FRAG. -->
+    <string name="fragment_dev_button_deleteAll_text">Delete all</string>
+    <string name="fragment_dev_button_addOneRandom_text">Generate +1 random Estate</string>
+
+    <!-- CURRENCY FRAG. -->
+    <string name="fragment_currency_hint_exchangeRate">Exchange rate</string>
+    <string name="fragment_currency_hint_firstCurrency">Currency 1</string>
+    <string name="fragment_currency_hint_secondCurrency">Currency 2</string>
+
+    <!-- LOAN FRAG. -->
+    <string name="fragment_loan_hint_borrowedAmount">Borrowed amount</string>
+    <string name="fragment_loan_hint_deposit">Deposit</string>
+    <string name="fragment_loan_hint_duration">Duration</string>
+    <string name="fragment_loan_hint_interestRate">Interest rate</string>
+
 </resources>

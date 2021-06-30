@@ -9,4 +9,24 @@
     <dimen name="item_estate_font_medium">15sp</dimen>
     <dimen name="item_estate_font_big">16sp</dimen>
 
+    <!-- Tools Categories -->
+    <dimen name="tools_category_font_title">18sp</dimen>
+    <dimen name="tools_category_font_subtitle">14sp</dimen>
+    <dimen name="tools_category_text_padding">7sp</dimen>
+
+    <!-- Loan Frag. -->
+    <dimen name="loan_padding">5dp</dimen>
+    <dimen name="loan_textInput_padding">7dp</dimen>
+
+    <!-- Currency Frag. -->
+    <dimen name="currency_padding">5dp</dimen>
+    <dimen name="currency_textInput_padding">7dp</dimen>
+
+    <!-- Create Frag. -->
+    <dimen name="create_padding">5dp</dimen>
+    <dimen name="create_padding_extra">7dp</dimen>
+
+
+
+
 </resources>

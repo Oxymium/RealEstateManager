@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="currencyViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.CurrencyViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/currency_padding"
+        android:paddingEnd="@dimen/currency_padding"
+        android:paddingTop="@dimen/currency_padding"
+        android:background="@color/independence"
+        tools:context=".CurrencyFragment">
+
+        <androidx.cardview.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/fragment_currency_rate_cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/space_cadet"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardPreventCornerOverlap="false"
+            card_view:cardElevation="3dp"
+            card_view:cardMaxElevation="3dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintBottom_toTopOf="@id/fragment_currency_firstCurrency_cardView"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/fragment_currency_top_rate"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="#80FFFFFF"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintHeight_percent="0.1"
+                    card_view:layout_constraintVertical_bias="0"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_currency_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/ic_percent_white_24dp"
+                    app:startIconTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    android:paddingStart="@dimen/currency_textInput_padding"
+                    android:paddingEnd="@dimen/currency_textInput_padding"
+                    android:paddingTop="@dimen/currency_textInput_padding"
+                    android:paddingBottom="@dimen/currency_textInput_padding"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_currency_rate_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/fragment_currency_hint_exchangeRate"
+                        android:text="@{currencyViewModel.exchangeRate}"
+                        android:background="@color/space_cadet"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:inputType="text|textNoSuggestions"
+                        android:textCursorDrawable="@null"
+                        android:maxLines="1"
+                        android:maxLength="25" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/fragment_currency_firstCurrency_cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/space_cadet"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardPreventCornerOverlap="false"
+            card_view:cardElevation="3dp"
+            card_view:cardMaxElevation="3dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/fragment_currency_rate_cardView"
+            card_view:layout_constraintBottom_toTopOf="@id/fragment_currency_secondCurrency_cardView"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/fragment_currency_firstCurrency_top"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="#80FFFFFF"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintHeight_percent="0.1"
+                    card_view:layout_constraintVertical_bias="0"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_currency_firstCurrency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/ic_numeric_1_circle_white_24dp"
+                    app:startIconTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    android:paddingStart="@dimen/currency_textInput_padding"
+                    android:paddingEnd="@dimen/currency_textInput_padding"
+                    android:paddingTop="@dimen/currency_textInput_padding"
+                    android:paddingBottom="@dimen/currency_textInput_padding"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_currency_firstCurrency_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/fragment_currency_hint_firstCurrency"
+                        android:text="@{currencyViewModel.firstCurrency}"
+                        android:background="@color/space_cadet"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:inputType="text|textNoSuggestions"
+                        android:textCursorDrawable="@null"
+                        android:maxLines="1"
+                        android:maxLength="25" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/fragment_currency_secondCurrency_cardView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/space_cadet"
+            card_view:cardUseCompatPadding="true"
+            card_view:cardPreventCornerOverlap="false"
+            card_view:cardElevation="3dp"
+            card_view:cardMaxElevation="3dp"
+            card_view:cardCornerRadius="5dp"
+            card_view:layout_constraintStart_toStartOf="parent"
+            card_view:layout_constraintEnd_toEndOf="parent"
+            card_view:layout_constraintTop_toBottomOf="@id/fragment_currency_firstCurrency_cardView"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/fragment_currency_top_secondCurrency"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="#80FFFFFF"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintHeight_percent="0.1"
+                    card_view:layout_constraintVertical_bias="0"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fragment_currency_secondCurrency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/ic_numeric_2_circle_white_24dp"
+                    app:startIconTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    android:paddingStart="@dimen/currency_textInput_padding"
+                    android:paddingEnd="@dimen/currency_textInput_padding"
+                    android:paddingTop="@dimen/currency_textInput_padding"
+                    android:paddingBottom="@dimen/currency_textInput_padding"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fragment_currency_secondCurrency_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/fragment_currency_hint_secondCurrency"
+                        android:text="@{currencyViewModel.secondCurrency}"
+                        android:background="@color/space_cadet"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        android:inputType="text|textNoSuggestions"
+                        android:textCursorDrawable="@null"
+                        android:maxLines="1"
+                        android:maxLength="25" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

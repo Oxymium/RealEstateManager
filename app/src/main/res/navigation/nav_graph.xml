@@ -30,7 +30,17 @@
         android:id="@+id/toolsFragment"
         android:name="com.oxymium.realestatemanager.features.tools.ToolsFragment"
         android:label="ToolsFragment"
-        tools:layout="@layout/fragment_tools" />
+        tools:layout="@layout/fragment_tools" >
+        <action
+            android:id="@+id/action_toolsFragment_to_currencyFragment"
+            app:destination="@id/currencyFragment" />
+        <action
+            android:id="@+id/action_toolsFragment_to_loanFragment"
+            app:destination="@id/loanFragment" />
+        <action
+            android:id="@+id/action_toolsFragment_to_devFragment"
+            app:destination="@id/devFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mapFragment"
         android:name="com.oxymium.realestatemanager.features.map.MapFragment"
@@ -41,5 +51,20 @@
         android:name="com.oxymium.realestatemanager.features.estates.DetailsFragment"
         android:label="DetailsFragment"
         tools:layout="@layout/fragment_details"/>
+    <fragment
+        android:id="@+id/currencyFragment"
+        android:name="com.oxymium.realestatemanager.features.tools.CurrencyFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_currency"/>
+    <fragment
+        android:id="@+id/loanFragment"
+        android:name="com.oxymium.realestatemanager.features.tools.LoanFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_loan"/>
+    <fragment
+        android:id="@+id/devFragment"
+        android:name="com.oxymium.realestatemanager.features.tools.DevFragment"
+        android:label="DevFragment"
+        tools:layout="@layout/fragment_dev"/>
 
 </navigation>
