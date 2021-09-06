@@ -41,7 +41,8 @@
                     android:layout_height="0dp"
                     android:scaleType="centerCrop"
                     android:contentDescription="@string/item_estate_description_picture"
-                    android:src="@color/space_cadet"
+                    android:background="@color/space_cadet"
+                    android:src="@{estate.mainPicturePath}"
                     card_view:layout_constraintDimensionRatio="H,1:1"
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +135,7 @@
                     android:id="@+id/item_estate_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text='@{String.format("%,d", estate.price).replace(",", ".")}'
+                    android:text='@{"$" + String.format("%,d", estate.price).replace(",", ".")}'
                     android:textSize="@dimen/item_estate_font_medium"
                     android:textColor="@color/yellow_500"
                     android:textStyle="bold"
@@ -153,7 +154,7 @@
                     android:id="@+id/item_estate_part_bottom"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:background="#99000000"
+                    android:background="@color/independence"
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
                     card_view:layout_constraintTop_toBottomOf="@id/item_estate_picture"

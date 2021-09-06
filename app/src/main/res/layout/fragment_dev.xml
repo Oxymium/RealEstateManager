@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="estateViewModel"
-            type="com.oxymium.realestatemanager.viewmodel.EstateViewModel"/>
+            name="createViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.CreateViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,11 +20,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fragment_dev_button_addOneRandom_text"
-            android:onClick="@{() -> estateViewModel.onClickAddOneButton()}"
+            android:onClick="@{() -> createViewModel.onClickAddOneButton()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintBottom_toTopOf="@id/fragment_dev_addThousand_button"
+            />
+
+        <Button
+            android:id="@+id/fragment_dev_addThousand_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_dev_button_addThousandRandom_text"
+            android:onClick="@{() -> createViewModel.onClickAddThousandButton()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_dev_addOne_button"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_dev_addTenThousand_button"
+            />
+
+        <Button
+            android:id="@+id/fragment_dev_addTenThousand_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_dev_button_addTenThousandRandom_text"
+            android:onClick="@{() -> createViewModel.onClickAddTenThousandButton()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_dev_addThousand_button"
+            app:layout_constraintBottom_toTopOf="@id/fragment_dev_deleteAll_button"
             />
 
         <Button
@@ -32,11 +56,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/fragment_dev_button_deleteAll_text"
-            android:onClick="@{() -> estateViewModel.onClickDeleteAllButton()}"
+            android:onClick="@{() -> createViewModel.onClickDeleteAllButton()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fragment_dev_addOne_button"
-            app:layout_constraintHorizontal_bias="0.05"
+            app:layout_constraintTop_toBottomOf="@id/fragment_dev_addTenThousand_button"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

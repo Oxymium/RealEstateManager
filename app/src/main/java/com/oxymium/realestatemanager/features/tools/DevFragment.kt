@@ -8,13 +8,12 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.createViewModelLazy
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentDevBinding
 import com.oxymium.realestatemanager.databinding.FragmentToolsBinding
-import com.oxymium.realestatemanager.viewmodel.EstateViewModel
-import com.oxymium.realestatemanager.viewmodel.EstateViewModelFactory
-import com.oxymium.realestatemanager.viewmodel.ToolsViewModel
+import com.oxymium.realestatemanager.viewmodel.*
 
 // -----------
 // DevFragment
@@ -29,8 +28,8 @@ class DevFragment: Fragment() {
     private val binding get() = fragmentDevBinding
 
     // ViewModel
-    private val estateViewModel: EstateViewModel by activityViewModels() {
-        EstateViewModelFactory((activity?.application as EstatesApplication).repository)
+    private val createViewModel: CreateViewModel by activityViewModels() {
+        CreateViewModelFactory((activity?.application as EstatesApplication).repository, (activity?.application as EstatesApplication).repository2)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +46,7 @@ class DevFragment: Fragment() {
     ): View? {
 
         fragmentDevBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_dev, container, false)
-        fragmentDevBinding.estateViewModel = estateViewModel
-
+        fragmentDevBinding.createViewModel = createViewModel
 
         return binding.root
     }

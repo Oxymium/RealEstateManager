@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="estateViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.EstateViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/space_cadet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/layout_details_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="2dp"
+            android:text="@{String.valueOf(estateViewModel.selectedEstate.type)}"
+            android:textSize="@dimen/details_font_medium"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textStyle="italic|bold"
+            android:hint="@string/fragment_details_hint_type"
+            android:textColorHint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layout_details_price"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
+
+        <TextView
+            android:id="@+id/layout_details_energy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{estateViewModel.selectedEstate.energy}"
+            android:textSize="@dimen/details_font_medium"
+            app:energyTextColor="@{estateViewModel.selectedEstate.energy}"
+            android:textAlignment="textStart"
+            android:textStyle="italic"
+            android:hint="@string/fragment_details_hint_energy"
+            android:textColorHint="@color/white"
+            app:drawableStartCompat="@drawable/ic_bee_flower_white_24dp"
+            android:drawablePadding="3dp"
+            app:energyIconTint="@{estateViewModel.selectedEstate.energy}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/layout_details_type"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layout_details_left_line"
+            app:layout_constraintHorizontal_bias="0.04" />
+
+        <TextView
+            android:id="@+id/layout_details_highSpeedInternet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{estateViewModel.selectedEstate.highSpeedInternet ? `Yes` : `No`}"
+            android:textSize="@dimen/details_font_medium"
+            app:internetTextColor="@{estateViewModel.selectedEstate.highSpeedInternet}"
+            android:textAlignment="viewStart"
+            android:textStyle="italic"
+            android:hint="@string/fragment_details_hint_highSpeedInternet"
+            android:textColorHint="@color/white"
+            app:drawableStartCompat="@drawable/ic_speedometer_white_24dp"
+            android:drawablePadding="3dp"
+            app:internetIconTint="@{estateViewModel.selectedEstate.highSpeedInternet}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/layout_details_location"
+            app:layout_constraintTop_toBottomOf="@id/layout_details_left_line"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.04"
+            />
+
+        <TextView
+            android:id="@+id/layout_details_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{"$" + String.format("%,d", estateViewModel.selectedEstate.price).replace(",", ".")}'
+            android:textSize="@dimen/details_font_very_big"
+            android:textColor="@color/yellow_500"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:hint="@string/fragment_details_hint_price"
+            android:textColorHint="@color/yellow_500"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_details_type"
+            app:layout_constraintBottom_toTopOf="@id/layout_details_location"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
+
+        <TextView
+            android:id="@+id/layout_details_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="2dp"
+            android:text="@{String.valueOf(estateViewModel.selectedEstate.location)}"
+            android:textSize="@dimen/item_estate_font_big"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:hint="Location"
+            android:textColorHint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_details_price"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
+
+        <View
+            android:id="@+id/layout_details_left_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/independence"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/layout_details_price"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+        <View
+            android:id="@+id/layout_details_right_line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/independence"
+            app:layout_constraintStart_toEndOf="@id/layout_details_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

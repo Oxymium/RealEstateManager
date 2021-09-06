@@ -9,6 +9,12 @@
     <dimen name="item_estate_font_medium">15sp</dimen>
     <dimen name="item_estate_font_big">16sp</dimen>
 
+    <!-- Estate Details -->
+    <dimen name="details_font_small">12sp</dimen>
+    <dimen name="details_font_medium">16sp</dimen>
+    <dimen name="details_font_big">20sp</dimen>
+    <dimen name="details_font_very_big">24sp</dimen>
+
     <!-- Tools Categories -->
     <dimen name="tools_category_font_title">18sp</dimen>
     <dimen name="tools_category_font_subtitle">14sp</dimen>

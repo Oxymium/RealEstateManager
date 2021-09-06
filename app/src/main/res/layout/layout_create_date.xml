@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/create_padding"
                 android:paddingBottom="@dimen/create_padding"
-                android:text="@{createViewModel.test1}"
+                android:text="@{createViewModel.addedDate}"
                 android:textColor="@color/white"
                 android:hint="@string/layout_create_date_hint"
                 android:textColorHint="@color/white"

@@ -18,6 +18,7 @@ class EstateAdapter(private val estateListener: EstateListener): ListAdapter<Est
 
     override fun onBindViewHolder(holder: EstateViewHolder, position: Int) {
         holder.bind(getItem(position), estateListener)
+
     }
 
     // For smoother/faster lists comparison, also RecyclerView animation

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/detailsFragment"
+    >
+
+    <fragment
+        android:id="@+id/createFragment"
+        android:name="com.oxymium.realestatemanager.features.create.CreateFragment"
+        android:label="CreateFragment"
+        tools:layout="@layout/fragment_create" />
+
+    <fragment
+        android:id="@+id/toolsFragment"
+        android:name="com.oxymium.realestatemanager.features.tools.ToolsFragment"
+        android:label="ToolsFragment"
+        tools:layout="@layout/fragment_tools" >
+        <action
+            android:id="@+id/action_toolsFragment_to_currencyFragment"
+            app:destination="@id/currencyFragment" />
+        <action
+            android:id="@+id/action_toolsFragment_to_loanFragment"
+            app:destination="@id/loanFragment" />
+        <action
+            android:id="@+id/action_toolsFragment_to_devFragment"
+            app:destination="@id/devFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.oxymium.realestatemanager.features.map.MapFragment"
+        android:label="MapFragment"
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.oxymium.realestatemanager.features.estates.DetailsFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_details"/>
+
+    <fragment
+        android:id="@+id/currencyFragment"
+        android:name="com.oxymium.realestatemanager.features.tools.CurrencyFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_currency"/>
+
+    <fragment
+        android:id="@+id/loanFragment"
+        android:name="com.oxymium.realestatemanager.features.tools.LoanFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_loan"/>
+
+    <fragment
+        android:id="@+id/devFragment"
+        android:name="com.oxymium.realestatemanager.features.tools.DevFragment"
+        android:label="DevFragment"
+        tools:layout="@layout/fragment_dev"/>
+
+</navigation>

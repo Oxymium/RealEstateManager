@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -9,7 +10,6 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingStart="@dimen/create_padding_extra"
@@ -38,19 +38,19 @@
             app:layout_constraintTop_toBottomOf="@id/layout_create_date_top_space">
 
             <CheckBox
-                android:id="@+id/checkboxTest"
+                android:id="@+id/layout_create_miscellaneous_high_speed_internet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/white"
-                android:text="High speed internet"
+                android:text="@string/layout_create_description_high_speed_internet"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/layout_create_TEST"
+                app:layout_constraintBottom_toTopOf="@id/layout_create_miscellaneous_description"
                 />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layout_create_TEST"
+                android:id="@+id/layout_create_miscellaneous_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:startIconDrawable="@drawable/ic_comment_edit_white_24dp"
@@ -60,14 +60,15 @@
                 app:hintTextColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/checkboxTest"
+                app:layout_constraintTop_toBottomOf="@id/layout_create_miscellaneous_high_speed_internet"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/layout_create_zipCode_input"
+                    android:id="@+id/layout_create_miscellaneous_description_input"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Description (max 400c)"
+                    android:text="@{createViewModel.description}"
+                    android:hint="@string/layout_create_description_input_hint"
                     android:background="@color/space_cadet"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
@@ -78,6 +79,38 @@
                     android:maxLength="400" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_create_miscellaneous_nearby"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:startIconDrawable="@drawable/ic_google_nearby_white_24dp"
+                app:startIconTint="@color/white"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_create_miscellaneous_description"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/layout_create_miscellaneous_nearby_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{createViewModel.nearbyPlaces}"
+                    android:hint="@string/layout_create_description_nearby_hint"
+                    android:background="@color/space_cadet"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:inputType="textMultiLine"
+                    android:textCursorDrawable="@null"
+                    android:minLines="5"
+                    android:maxLines="5"
+                    android:maxLength="400" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

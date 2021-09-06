@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.oxymium.realestatemanager.model.Estate
+import com.oxymium.realestatemanager.model.Picture
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,10 +14,11 @@ import kotlinx.coroutines.launch
 // EstateRoomDatabase (ROOM)
 // -------------------------
 
-@Database(entities = [Estate::class], version = 1)
+@Database(entities = [Estate::class, Picture::class], version = 6)
 abstract class EstateRoomDatabase : RoomDatabase() {
 
     abstract fun estateDao(): EstateDao
+    abstract fun pictureDao(): PictureDao
 
     companion object {
         @Volatile
@@ -68,7 +70,8 @@ abstract class EstateRoomDatabase : RoomDatabase() {
          * If you want to start with more words, just add them.
          */
         suspend fun populateDatabase(estateDao: EstateDao) {
-
         }
-    }
+
+        suspend fun populateDatabase(pictureDao: PictureDao){}
+        }
 }

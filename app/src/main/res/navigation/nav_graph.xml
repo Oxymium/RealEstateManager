@@ -8,15 +8,15 @@
     >
 
     <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.oxymium.realestatemanager.features.search.SearchFragment"
-        android:label="SearchFragment"
-        tools:layout="@layout/fragment_search" />
-    <fragment
         android:id="@+id/createFragment"
         android:name="com.oxymium.realestatemanager.features.create.CreateFragment"
         android:label="CreateFragment"
-        tools:layout="@layout/fragment_create" />
+        tools:layout="@layout/fragment_create" >
+        <action
+            android:id="@+id/action_createFragment_to_estatesFragment"
+            app:destination="@id/estatesFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/estatesFragment"
         android:name="com.oxymium.realestatemanager.features.estates.EstatesFragment"
@@ -45,12 +45,20 @@
         android:id="@+id/mapFragment"
         android:name="com.oxymium.realestatemanager.features.map.MapFragment"
         android:label="MapFragment"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.oxymium.realestatemanager.features.estates.DetailsFragment"
         android:label="DetailsFragment"
-        tools:layout="@layout/fragment_details"/>
+        tools:layout="@layout/fragment_details">
+        <action
+            android:id="@+id/action_detailsFragment_to_createFragment"
+            app:destination="@id/createFragment" />
+    </fragment>
     <fragment
         android:id="@+id/currencyFragment"
         android:name="com.oxymium.realestatemanager.features.tools.CurrencyFragment"

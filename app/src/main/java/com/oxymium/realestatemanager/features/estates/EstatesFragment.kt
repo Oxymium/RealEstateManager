@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
@@ -41,15 +42,11 @@ class EstatesFragment: Fragment() {
 
     // EstateViewModel
     private val estateViewModel: EstateViewModel by activityViewModels() {
-        EstateViewModelFactory((activity?.application as EstatesApplication).repository)
+        EstateViewModelFactory((activity?.application as EstatesApplication).repository, (activity?.application as EstatesApplication).repository2)
     }
 
     // RecyclerView Adapter
     private lateinit var estateAdapter: EstateAdapter
-
-    // RX
-    private val disposable = CompositeDisposable()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,21 +64,56 @@ class EstatesFragment: Fragment() {
 
         fragmentEstatesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_estates, container, false)
 
+        fragmentEstatesBinding.estateViewModel = estateViewModel
         fragmentEstatesBinding.lifecycleOwner = activity
-        val gridLayoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
-        fragmentEstatesBinding.fragmentEstatesRecyclerView.layoutManager = gridLayoutManager
 
-        // Observe list
+        // RecyclerView setup
+        var gridLayoutManager: GridLayoutManager
+        estateViewModel.isTablet.observe(viewLifecycleOwner, {
+            when (it) {
+                true -> {
+                    gridLayoutManager =
+                        GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
+                    fragmentEstatesBinding.fragmentEstatesRecyclerView.layoutManager =
+                        gridLayoutManager
+                }
+                false -> {
+                    gridLayoutManager =
+                        GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
+                    fragmentEstatesBinding.fragmentEstatesRecyclerView.layoutManager =
+                        gridLayoutManager
+                }
+            }
+        })
+
+        // Observe estate list
         estateViewModel.estateListLiveData.observe(viewLifecycleOwner,
-            { estateAdapter.submitList(it)
+            {
+                estateAdapter.submitList(it)
+                // Update listSize value to display number of Estate in the list
+                estateViewModel.estatesListSize.postValue(it.size)
             })
 
-        estateViewModel.setQuickSearchQuery("")
+        // Initialize query
+        estateViewModel.queryValue.observe(viewLifecycleOwner, {
+            estateViewModel.setQuickSearchQuery(it)
+        })
+
+        // Reset query value when user swipe screen
+        fragmentEstatesBinding.fragmentEstateSwipeRefreshLayout.setOnRefreshListener{
+            estateViewModel.setQuickSearchQuery("")
+            // Query field "cleaned"
+            fragmentEstatesBinding.fragmentEstatesQuickSearchInputEdit.text = null
+            // Stop refresh animation
+            fragmentEstatesBinding.fragmentEstateSwipeRefreshLayout.isRefreshing = false
+        }
 
         // Setup adapter
         estateAdapter = EstateAdapter(EstateListener { estate ->
             // Send selected Estate to ViewModel
             estateViewModel.selectedEstate.postValue(estate)
+            estateViewModel.getEstateFromId(estate)
+            estateViewModel.startDetailsFragmentFrom.postValue(1)
             Log.d("estate Clicked:", estate.id.toString())
         })
 
@@ -92,8 +124,24 @@ class EstatesFragment: Fragment() {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 // OnChange -> update Query
-                s?.let { estateViewModel.setQuickSearchQuery(it.toString())}
+                s?.let {
+                    //estateViewModel.setQuickSearchQuery(it.toString())
+                    estateViewModel.setQuickSearchQuery(it.toString())
+
+                }
             }
+        })
+
+        // (Quick Search) Text listener
+        fragmentEstatesBinding.include1.layoutSearchPriceMinInput.addTextChangedListener(object :
+            TextWatcher {
+            override fun afterTextChanged(s: Editable) {
+                s.let {
+                    estateViewModel.setSearchQuery(it.toString())
+                }
+            }
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
         // Adapter init

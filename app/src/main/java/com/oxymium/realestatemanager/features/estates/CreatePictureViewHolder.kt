@@ -5,34 +5,37 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.oxymium.realestatemanager.databinding.ItemPictureBinding
 import com.oxymium.realestatemanager.model.Picture
-import com.oxymium.realestatemanager.utils.PictureListener
+import com.oxymium.realestatemanager.utils.PictureCommentListener
+import com.oxymium.realestatemanager.utils.PictureDeleteListener
 
 // -------------------------------
 // PictureViewHolder (RecyclerView)
 // -------------------------------
 
-class PictureViewHolder(val binding: ItemPictureBinding):
+class CreatePictureViewHolder(val binding: ItemPictureBinding):
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(picture: Picture, pictureListener: PictureListener) {
+    fun bind(picture: Picture, pictureDeleteListener: PictureDeleteListener, pictureCommentListener: PictureCommentListener) {
 
         // REQUIRED WITH DATA BINDING
         binding.executePendingBindings()
 
         // BIND DATA
         binding.picture = picture
+        binding.pictureClickDeleteListener = pictureDeleteListener
+        binding.pictureClickCommentListener = pictureCommentListener
 
         // BIND picture description
-        binding.itemEstateDescription.text = picture.description
+        binding.itemEstateDescription.text = picture.comment
 
     }
 
     companion object {
 
-        fun from(parent: ViewGroup): PictureViewHolder {
+        fun from(parent: ViewGroup): CreatePictureViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = ItemPictureBinding.inflate(layoutInflater, parent, false)
-            return PictureViewHolder(binding)
+            return CreatePictureViewHolder(binding)
 
         }
 

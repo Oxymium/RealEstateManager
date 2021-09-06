@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="createViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.CreateViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/create_padding_extra"
+        android:paddingEnd="@dimen/create_padding_extra"
+        android:paddingTop="@dimen/create_padding_extra"
+        android:paddingBottom="@dimen/create_padding_extra"
+        android:background="@color/independence"
+        tools:context=".CreateFragment">
+
+        <Space
+            android:id="@+id/layout_create_main_picture_top_space"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layout_create_main_picture"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_create_main_picture"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/circular_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_create_main_picture_top_space">
+
+            <ImageView
+                android:id="@+id/layout_create_main_picture_mainPicture_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:adjustViewBounds="true"
+                android:background="@color/heliotrope_gray"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/layout_create_main_picture_title"
+            android:textColor="@color/white"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/layout_create_main_picture"
+            app:layout_constraintBottom_toBottomOf="@id/layout_create_main_picture_top_space"
+            app:layout_constraintHorizontal_bias="0.95" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/layout_create_main_picture_picture"
+            android:src="@drawable/ic_image_outline_white_24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/layout_create_main_picture"
+            app:layout_constraintBottom_toBottomOf="@id/layout_create_main_picture_top_space"
+            app:layout_constraintHorizontal_bias="0.05" />
+
+        <ImageButton
+            android:id="@+id/layout_create_main_picture_add_mainPicture_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_plus_box_white_24dp"
+            android:backgroundTint="@color/independence"
+            android:onClick="@{() -> createViewModel.onClickAddMainPictureButton()}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/layout_create_main_picture_delete_mainPicture_button"
+            app:layout_constraintTop_toTopOf="@id/layout_create_main_picture"
+            app:layout_constraintBottom_toBottomOf="@id/layout_create_main_picture_top_space"
+            />
+
+        <ImageButton
+            android:id="@+id/layout_create_main_picture_delete_mainPicture_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_delete_white_24dp"
+            android:backgroundTint="@color/independence"
+            android:onClick="@{() -> createViewModel.onClickDeleteMainPictureButton()}"
+            app:layout_constraintStart_toEndOf="@+id/layout_create_main_picture_add_mainPicture_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/layout_create_main_picture"
+            app:layout_constraintBottom_toBottomOf="@id/layout_create_main_picture_top_space"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

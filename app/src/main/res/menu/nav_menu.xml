@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/searchFragment"
-        android:title="@string/bottom_nav_category_1"
-        android:icon="@drawable/baseline_search_white_24"/>
-    <item
         android:id="@+id/createFragment"
         android:title="@string/bottom_nav_category_2"
         android:icon="@drawable/baseline_add_white_24"/>

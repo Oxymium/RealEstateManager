@@ -8,31 +8,42 @@
             name="picture"
             type="com.oxymium.realestatemanager.model.Picture"/>
         <variable
+            name="pictureClickDeleteListener"
+            type="com.oxymium.realestatemanager.utils.PictureDeleteListener"/>
+        <variable
+            name="pictureClickCommentListener"
+            type="com.oxymium.realestatemanager.utils.PictureCommentListener"/>
+        <variable
             name="pictureClickListener"
             type="com.oxymium.realestatemanager.utils.PictureListener"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="100dp"
+        android:layout_height="100dp">
 
         <androidx.cardview.widget.CardView
             xmlns:card_view="http://schemas.android.com/apk/res-auto"
             android:id="@+id/item_picture_cardView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:onClick="@{() -> pictureClickListener.onClickPicture(picture)}"
             card_view:cardUseCompatPadding="true"
             card_view:cardPreventCornerOverlap="false"
+            card_view:cardBackgroundColor="@color/space_cadet"
             card_view:cardElevation="3dp"
             card_view:cardMaxElevation="3dp"
             card_view:cardCornerRadius="5dp"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent">
+            card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintBottom_toBottomOf="parent"
+            >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                >
 
                 <ImageView
                     android:id="@+id/item_picture_picture"
@@ -40,11 +51,14 @@
                     android:layout_height="0dp"
                     android:scaleType="centerCrop"
                     android:contentDescription="@string/item_estate_description_picture"
-                    android:src="@color/space_cadet"
-                    card_view:layout_constraintDimensionRatio="H,1:1"
+                    android:background="@color/space_cadet"
+                    android:adjustViewBounds="true"
+                    android:src="@{picture.path}"
                     card_view:layout_constraintStart_toStartOf="parent"
                     card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent" />
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    />
 
                 <!-- Top part -->
 
@@ -58,14 +72,14 @@
                     card_view:layout_constraintTop_toTopOf="parent"
                     card_view:layout_constraintBottom_toBottomOf="parent"
                     card_view:layout_constraintHeight_percent="0.1"
-                    card_view:layout_constraintVertical_bias="0"
+                    card_view:layout_constraintVertical_bias="1"
                     />
 
                 <TextView
                     android:id="@+id/item_estate_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bathroom"
+                    android:text="@{picture.comment}"
                     android:textSize="@dimen/item_estate_font_small"
                     android:textColor="@color/isabelline"
                     android:textStyle="bold"
@@ -78,6 +92,40 @@
                     card_view:layout_constraintBottom_toBottomOf="@id/item_picture_part_top"
                     card_view:layout_constraintHorizontal_bias="0.5"
                     />
+
+                <!-- Right part -->
+
+                <ImageButton
+                    android:id="@+id/item_picture_button_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_delete_white_24dp"
+                    android:backgroundTint="@color/transparent"
+                    android:onClick="@{() -> pictureClickDeleteListener.onClickPictureDeleteButton(picture)}"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintVertical_bias="0.7"
+                    card_view:layout_constraintHorizontal_bias="1"
+                    />
+
+                <ImageButton
+                    android:id="@+id/item_picture_button_edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_comment_edit_white_24dp"
+                    android:backgroundTint="@color/transparent"
+                    android:onClick="@{() -> pictureClickCommentListener.onClickPictureCommentButton(picture)}"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toBottomOf="@id/item_picture_button_delete"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    card_view:layout_constraintVertical_bias="0"
+                    card_view:layout_constraintHorizontal_bias="1"
+
+                    />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

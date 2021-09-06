@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+        <variable
+            name="estateViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.EstateViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:paddingStart="@dimen/create_padding"
+        android:paddingEnd="@dimen/create_padding"
+        android:paddingTop="@dimen/create_padding"
+        android:paddingBottom="@dimen/create_padding"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/fragment_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/independence"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_search_price_min"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:startIconDrawable="@drawable/ic_currency_usd_white_24dp"
+                app:startIconTint="@color/white"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/layout_search_price_max"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/layout_search_price_min_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="min. Price"
+                    android:background="@color/independence"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:inputType="number"
+                    android:textCursorDrawable="@null"
+                    android:maxLines="1"
+                    android:maxLength="8" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_search_price_max"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:startIconTint="@color/white"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/layout_search_price_min"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/layout_search_price_max_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="max. Price"
+                    android:background="@color/independence"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:inputType="number"
+                    android:textCursorDrawable="@null"
+                    android:maxLines="1"
+                    android:maxLength="8" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_search_surface_min"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:startIconDrawable="@drawable/ic_texture_box_white_24dp"
+                app:startIconTint="@color/white"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/layout_search_surface_max"
+                app:layout_constraintTop_toBottomOf="@id/layout_search_price_min"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/layout_search_surface_min_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="min. Surface"
+                    android:background="@color/independence"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:inputType="number"
+                    android:textCursorDrawable="@null"
+                    android:maxLines="1"
+                    android:maxLength="8" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_search_surface_max"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                app:layout_constraintStart_toEndOf="@id/layout_search_surface_min"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_search_price_min"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/layout_search_surface_max_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="max. Surface"
+                    android:background="@color/independence"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:inputType="number"
+                    android:textCursorDrawable="@null"
+                    android:maxLines="1"
+                    android:maxLength="8" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_search_mini_rooms_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_search_surface_min"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/layout_search_mini_rooms_amount_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="min. Rooms"
+                    android:background="@color/independence"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:inputType="number"
+                    android:textCursorDrawable="@null"
+                    android:maxLines="1"
+                    android:maxLength="8" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_search_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_search_mini_rooms_amount"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/layout_search_location_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Location"
+                    android:background="@color/independence"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:inputType="number"
+                    android:textCursorDrawable="@null"
+                    android:maxLines="1"
+                    android:maxLength="8" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layout_search_mini_pictures_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                app:hintTextColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_search_location"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/layout_search_mini_pictures_amount_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="min. Pictures"
+                    android:background="@color/independence"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:inputType="number"
+                    android:textCursorDrawable="@null"
+                    android:maxLines="1"
+                    android:maxLength="8" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/layout_search_hasHighSpeedInternet_checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="High-speed internet"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_search_mini_pictures_amount"
+                />
+
+            <CheckBox
+                android:id="@+id/layout_search_isAvailable_checkbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Not available"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_search_hasHighSpeedInternet_checkbox"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

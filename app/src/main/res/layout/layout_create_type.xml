@@ -44,7 +44,7 @@
                 android:paddingTop="@dimen/create_padding"
                 android:paddingBottom="@dimen/create_padding"
                 android:onClick="@{() -> createViewModel.onClickEstateType()}"
-                android:text="@{createViewModel.estateType}"
+                android:text="@{createViewModel.type}"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

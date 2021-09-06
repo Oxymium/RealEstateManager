@@ -8,7 +8,8 @@
             type="com.oxymium.realestatemanager.viewmodel.LoanViewModel"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:orientation="vertical"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,6 +33,7 @@
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
+            card_view:layout_constraintBottom_toTopOf="@+id/fragment_loan_pieChart"
             >
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -75,11 +77,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:hint="@string/fragment_loan_hint_borrowedAmount"
-                        android:text="@{loanViewModel.borrowedAmount}"
                         android:background="@color/space_cadet"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
-                        android:inputType="text|textNoSuggestions"
+                        android:inputType="numberDecimal"
                         android:textCursorDrawable="@null"
                         android:maxLines="1"
                         android:maxLength="25" />
@@ -108,12 +109,11 @@
                         android:id="@+id/fragment_loan_deposit_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@{loanViewModel.deposit}"
                         android:hint="@string/fragment_loan_hint_deposit"
                         android:background="@color/space_cadet"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
-                        android:inputType="text|textNoSuggestions"
+                        android:inputType="numberDecimal"
                         android:textCursorDrawable="@null"
                         android:maxLines="1"
                         android:maxLength="25" />
@@ -142,7 +142,6 @@
                         android:id="@+id/fragment_loan_duration_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@{loanViewModel.duration}"
                         android:hint="@string/fragment_loan_hint_duration"
                         android:background="@color/space_cadet"
                         android:textColor="@color/white"
@@ -176,12 +175,11 @@
                         android:id="@+id/fragment_loan_interestRate_input"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="@{loanViewModel.interestRate}"
                         android:hint="@string/fragment_loan_hint_interestRate"
                         android:background="@color/space_cadet"
                         android:textColor="@color/white"
                         android:textColorHint="@color/white"
-                        android:inputType="text|textNoSuggestions"
+                        android:inputType="numberDecimal"
                         android:textCursorDrawable="@null"
                         android:maxLines="1"
                         android:maxLength="25" />
@@ -195,13 +193,13 @@
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/fragment_loan_pieChart"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fragment_loan_cardView"
-
+            app:layout_constraintBottom_toBottomOf="parent"
             />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>
