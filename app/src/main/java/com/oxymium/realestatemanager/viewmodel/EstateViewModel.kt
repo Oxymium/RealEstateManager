@@ -1,41 +1,20 @@
 package com.oxymium.realestatemanager.viewmodel
 
-import android.util.Log
+import android.content.Context
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.*
-import androidx.room.RawQuery
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.oxymium.realestatemanager.database.EstateRepository
 import com.oxymium.realestatemanager.database.PictureRepository
 import com.oxymium.realestatemanager.model.Estate
 import com.oxymium.realestatemanager.model.Picture
-import io.reactivex.Completable
+import com.oxymium.realestatemanager.model.Search
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
-import com.bumptech.glide.Glide
-
-import android.R
-import android.graphics.PorterDuffColorFilter
-import android.widget.TextView
-import androidx.core.app.NotificationCompat.getColor
-
-import androidx.databinding.BindingAdapter
-import android.graphics.PorterDuff
-
-import android.R.color
-import android.graphics.Color
-
-import androidx.core.content.ContextCompat
-
-import android.graphics.drawable.Drawable
-
-
-
-
-
 
 
 // ---------------
@@ -61,33 +40,40 @@ class EstateViewModel(private val estateRepository: EstateRepository, private va
     // Observed to pass selected Estate to Details Fragment onClick
     var selectedEstate: MutableLiveData<Estate> = MutableLiveData(null)
 
+    val searchQuery: MutableLiveData<Search> = MutableLiveData(Search())
+
     // Query channels
     @ExperimentalCoroutinesApi
     private val searchChannel = ConflatedBroadcastChannel<SimpleSQLiteQuery>()
 
     @ExperimentalCoroutinesApi
-    //val estateListLiveData = quickSearchChannel.asFlow()
     val estateListLiveData = searchChannel.asFlow()
-    .flatMapLatest { search ->
+        .flatMapLatest { search ->
             // We use flatMapLatest as we don't want flows of flows and we only want to query the latest searched string in case user types
             // in a new query before the earlier one is finished processing.
-        //estateRepository.getSearchedEstate(search)
-        estateRepository.getSearchedEstates(search) }
-        .catch { throwable ->
+            estateRepository.getSearchedEstates(search) }
+        .catch { throwable -> println("Something went wrong")
 
         }.asLiveData()
 
-    @ExperimentalCoroutinesApi
-    fun setQuickSearchQuery(quickSearch: String) {
-        val quickSearchValue = "SELECT * FROM estate WHERE location LIKE '%$quickSearch%' OR type LIKE '%$quickSearch%' OR price LIKE '%$quickSearch%' OR surface LIKE '%$quickSearch%' OR energyScore like '%$quickSearch%'"
-        val simpleSQLiteQuery = SimpleSQLiteQuery(quickSearchValue)
-        searchChannel.offer(simpleSQLiteQuery)
-    }
 
     @ExperimentalCoroutinesApi
-    fun setSearchQuery(search: String) {
-        val quickSearchValue = "SELECT * FROM estate WHERE price >= $search "
-        val simpleSQLiteQuery = SimpleSQLiteQuery(quickSearchValue)
+    fun setSearchQuery(search: String, from: Int) {
+        var searchValue: String? = null
+        // Quick search
+        if (from == 1){
+            searchValue = "SELECT * FROM estate WHERE location LIKE '%$search%' OR type LIKE '%$search%' OR price LIKE '%$search%' OR surface LIKE '%$search%' OR energyScore like '%$search%'"
+        }
+        // Pre-formatted search
+        if (from == 2){
+            searchValue = search
+        }
+        // TODO add all fields
+        //val quickSearchValueTEST = "SELECT *, COUNT(picture.id) AS nbPics FROM estate LEFT JOIN picture ON estate.id = picture.estate_id GROUP BY estate.id HAVING nbPics > 0 AND price > 1000000"
+        //val quickSearchValue = "SELECT *, COUNT(picture.id) AS nbPics FROM estate LEFT JOIN picture ON estate.id = picture.estate_id GROUP BY estate.id HAVING nbPics = 3"
+
+        val simpleSQLiteQuery = SimpleSQLiteQuery(searchValue)
+        println("SEARCH $search")
         searchChannel.offer(simpleSQLiteQuery)
     }
 
@@ -110,8 +96,6 @@ class EstateViewModel(private val estateRepository: EstateRepository, private va
         startDetailsFragmentFrom.postValue(2)
     }
 
-    // SELECT * FROM estate WHERE location LIKE '%' || :search || '%' OR type LIKE '%' || :search || '%'
-
     // -----------------
     // onClick Edit/Sell
     // -----------------
@@ -126,12 +110,41 @@ class EstateViewModel(private val estateRepository: EstateRepository, private va
         wasSellButtonClicked.postValue(1)
     }
 
-    fun updateEstateIntoDatabase(soldDate: String) = viewModelScope.launch {
+    fun updateEstateIntoDatabase(soldDateInMillis: Long) = viewModelScope.launch {
         val oldEstate: Estate? = selectedEstate.value
         oldEstate?.wasSold = true
-        oldEstate?.soldDate = soldDate
+        oldEstate?.soldDate = soldDateInMillis
         selectedEstate.postValue(oldEstate)
         estateRepository.updateEstate(oldEstate!!)
-        }
+    }
+
+    // --------------------
+    // onClick Search dates
+    // --------------------
+
+    var startingAddedDate: MutableLiveData<Long> = MutableLiveData()
+    var endingAddedDate: MutableLiveData<Long> = MutableLiveData()
+    // 0 = default, 1 = StartingDate, 2 = EndingDate, 3 = StartingDateSold, 4 = EndingDateSold
+    var wasDateClicked: MutableLiveData<Int> = MutableLiveData(0)
+
+    fun onClickStartingDateButton(){
+        wasDateClicked.postValue(1)
+    }
+
+    fun onClickEndingDateButton(){
+        wasDateClicked.postValue(2)
+    }
+
+    var startingSoldDate: MutableLiveData<Long> = MutableLiveData()
+    var endingSoldDate: MutableLiveData<Long> = MutableLiveData()
+
+    fun onClickStartingDateSoldButton(){
+        wasDateClicked.postValue(3)
+    }
+
+    fun onClickEndingDateSoldButton(){
+        wasDateClicked.postValue(4)
+    }
+
 
 }

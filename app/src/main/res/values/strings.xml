@@ -104,6 +104,43 @@
         <item>Agent Z</item>
     </string-array>
 
+    <string-array name="array_search_estate_type">
+        <item><font fgcolor='#000000'>Any</font></item>
+        <item><font fgcolor='#000000'>Bungalow</font></item>
+        <item><font fgcolor='#000000'>Condominium</font></item>
+        <item><font fgcolor='#000000'>Cottage</font></item>
+        <item><font fgcolor='#000000'>Duplex</font></item>
+        <item><font fgcolor='#000000'>Farmhouse</font></item>
+        <item><font fgcolor='#000000'>Flat</font></item>
+        <item><font fgcolor='#000000'>Lodge</font></item>
+        <item><font fgcolor='#000000'>Manor</font></item>
+        <item><font fgcolor='#000000'>Penthouse</font></item>
+        <item><font fgcolor='#000000'>Townhouse</font></item>
+        <item><font fgcolor='#000000'>Villa</font></item>
+    </string-array>
+
+    <string-array name="array_search_energy_score">
+        <item>Any</item>
+        <item>A+</item>
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+    </string-array>
+
+    <string-array name="array_search_highSpeedInternet">
+        <item>Both</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="array_search_available">
+        <item>Both</item>
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+
+
     <!-- TOOLS FRAG. -->
     <string name="fragment_tools_description_picture_currency">Currency icon</string>
     <string name="fragment_tools_description_picture_loan">Loan icon</string>

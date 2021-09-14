@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#7F000000"
-            android:text="@{`Sold: ` + estateViewModel.selectedEstate.soldDate}"
+            app:convertTimeInMillisToDate="@{estateViewModel.selectedEstate.soldDate}"
             android:textAlignment="center"
             app:soldVisibility="@{estateViewModel.selectedEstate.wasSold}"
             android:textSize="@dimen/details_font_medium"

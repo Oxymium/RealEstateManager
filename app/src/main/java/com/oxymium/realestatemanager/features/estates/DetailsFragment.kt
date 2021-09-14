@@ -5,11 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import android.view.View.*
 import android.view.ViewGroup
 import android.widget.DatePicker
-import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -18,6 +17,8 @@ import com.bumptech.glide.Glide
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentDetailsBinding
+import com.oxymium.realestatemanager.features.map.GeoCoderUtils
+import com.oxymium.realestatemanager.utils.DateUtils
 import com.oxymium.realestatemanager.utils.PictureListener
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
 import com.oxymium.realestatemanager.viewmodel.EstateViewModelFactory
@@ -80,13 +81,13 @@ class DetailsFragment: Fragment() {
         // Setup adapter
         detailsPictureAdapter = DetailsPictureAdapter(
             PictureListener {
-                    picture -> Glide.with(this@DetailsFragment).load(picture.path).into(fragmentDetailsBinding.include1.layoutDetailsMainPicture)
+                    picture -> Glide.with(this@DetailsFragment).load(picture.path.toUri()).into(fragmentDetailsBinding.include1.layoutDetailsMainPicture)
 
-        }
+            }
         )
         // Load Main Picture in Details
         estateViewModel.selectedEstate.observe(viewLifecycleOwner, {
-            selectedEstate ->
+                selectedEstate ->
             // Check for null selected estate (when app starts on tablet, user won't have selected anything yet)
             if (selectedEstate != null) {
                 // Disable sold button if Estate already sold
@@ -99,22 +100,24 @@ class DetailsFragment: Fragment() {
                     .load(selectedEstate.mainPicturePath)
                     .placeholder(R.drawable.estate_placeholder4)
                     .into(fragmentDetailsBinding.include1.layoutDetailsMainPicture)
-                // Static map API call "https://maps.googleapis.com/maps/api/staticmap?center=Annecy+Le+Vieux,Bois+Fleuris,France&zoom=14&size=400x400&key=AIzaSyBfhFAJtJzQmOIRhGuPjuyyThh5CzK_6p8"
-                Glide.with(this@DetailsFragment)
-                    .load("")
-                    .placeholder(R.drawable.estate_placeholder4)
-                    .into(fragmentDetailsBinding.include5.fragmentDetailsEstateStaticMap)
-            }else{
 
+                // Static map API call "https://maps.googleapis.com/maps/api/staticmap?center=Annecy+Le+Vieux,Bois+Fleuris,France&zoom=14&size=400x400&key=AIzaSyBfhFAJtJzQmOIRhGuPjuyyThh5CzK_6p8"
+                var latLng = GeoCoderUtils().getLatLngFromCompleteAddress(requireActivity(), GeoCoderUtils().fuseAllElementsFromAddress(selectedEstate.address, selectedEstate.zipCode.toString(), selectedEstate.location))
+
+                /* Glide.with(this@DetailsFragment)
+                    .load("https://maps.googleapis.com/maps/api/staticmap?center=${latLng.latitude},${latLng.longitude}&zoom=14&size=400x400&key=AIzaSyBfhFAJtJzQmOIRhGuPjuyyThh5CzK_6p8")
+                    .placeholder(R.drawable.estate_placeholder4)
+                    .into(fragmentDetailsBinding.include5.fragmentDetailsEstateStaticMap) */
             }
 
         })
 
         // Observe sale date trigger
         estateViewModel.wasSellButtonClicked.observe(viewLifecycleOwner, {
-            sellButtonWasClicked ->
+                sellButtonWasClicked ->
             if (sellButtonWasClicked == 1){
-                alertDialogDate()
+                estateViewModel.wasSellButtonClicked.value = 0
+                alertDialogSellingDate()
             }
         })
 
@@ -125,15 +128,15 @@ class DetailsFragment: Fragment() {
 
     }
 
-    fun alertDialogDate() {
-
-        var yearSold: Int? = null
-        var monthSold: Int? = null
-        var daySold: Int? = null
+    private fun alertDialogSellingDate() {
 
         // Get current date
         val calendar: Calendar = Calendar.getInstance()
-        calendar.timeInMillis = System.currentTimeMillis()
+        calendar.timeInMillis = DateUtils().getTodayInMillis()
+
+        val newCalendar = Calendar.getInstance()
+        newCalendar.timeInMillis = DateUtils().getTodayInMillis()
+        var soldDateInMillis: Long? = null
 
         // Alert Dialog
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
@@ -149,30 +152,24 @@ class DetailsFragment: Fragment() {
         )
         { view, year, month, day ->
             Log.d(fragmentTAG, "selected date: $day/$month/$year")
-            yearSold = year
-            // Month starts at index 0
-            monthSold = month + 1
-            daySold = day
+            newCalendar.set(Calendar.YEAR, year)
+            newCalendar.set(Calendar.MONTH, month)
+            newCalendar.set(Calendar.DAY_OF_MONTH, day)
+            soldDateInMillis = newCalendar.timeInMillis
         }
 
         builder.setTitle("Selling date")
         builder.setView(picker)
         builder.setPositiveButton("Save")
         { dialog, which ->
-
-            // Adds extra 0 if month is < 10 (to display proper date format like February = 02, not 2)
-            var monthConverted: String? = null
-            if(monthSold!! < 10){
-                monthConverted = "0$monthSold"
-            }
-            // Update sold date
-            estateViewModel.updateEstateIntoDatabase("$daySold/$monthConverted/$yearSold")
+            // Update with selected Date as sold
+            soldDateInMillis?.let { estateViewModel.updateEstateIntoDatabase(it) }
         }
 
-            builder.setNegativeButton(
-                "Cancel"
-            ) { dialog, which -> dialog.cancel() }
+        builder.setNegativeButton(
+            "Cancel"
+        ) { dialog, which -> dialog.cancel() }
 
-            builder.show()
-        }
+        builder.show()
     }
+}

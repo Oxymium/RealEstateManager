@@ -1,11 +1,21 @@
 package com.oxymium.realestatemanager.database
 
+import android.content.Context
+import android.location.Address
+import android.location.Geocoder
 import androidx.annotation.WorkerThread
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ReportFragment
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.google.android.gms.maps.model.LatLng
 import com.oxymium.realestatemanager.misc.Utils
 import com.oxymium.realestatemanager.model.Estate
+import com.oxymium.realestatemanager.utils.DateUtils
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
+import java.io.IOException
 import java.lang.Math.random
 
 // ----------------
@@ -19,6 +29,31 @@ class EstateRepository(private val estateDao: EstateDao) {
 
     fun getSearchedEstates(search: SimpleSQLiteQuery): Flow<List<Estate>> {
         return estateDao.getSearchedEstates(search)
+    }
+
+    suspend fun generateAddress(fragmentActivity: FragmentActivity, address: String, zipCode: String, location: String): LatLng?{
+
+        var latLngResult: LatLng? = null
+
+        return withContext(Dispatchers.IO) {
+            val result: Address
+            try {
+                val availableAddresses =
+                    Geocoder(fragmentActivity).getFromLocationName(
+                        "$address, $zipCode, $location",
+                        0
+                    )
+                if (!availableAddresses.isNullOrEmpty()) {
+                    result = availableAddresses[0]
+                    latLngResult = LatLng(result.latitude, result.longitude)
+                } else {
+                    latLngResult = LatLng(0.0, 0.0)
+                }
+            } catch (e: IOException) {
+            }
+
+            return@withContext latLngResult
+        }
     }
 
     // Insert Estate into DB
@@ -106,7 +141,7 @@ class EstateRepository(private val estateDao: EstateDao) {
         val agent = arrayOf("Agent X", "Agent Y", "Agent Z")
         val randAgent = agent.random()
 
-        return Estate(Utils.getTodayDate().toString(), randSoldStatus, Utils.getTodayDate().toString(),
+        return Estate(1631085363547, randSoldStatus, DateUtils().getTodayInMillis(),
             randType, randPrice, randEnergy, randSurface, randRooms, randBedrooms, randBathrooms, randAddress,
             randZipCode, randLocation, randHighSpeedInternet, randNearbyPlaces, description, randMainPicture, randAgent)
     }

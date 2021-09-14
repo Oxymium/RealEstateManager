@@ -10,6 +10,7 @@ import com.oxymium.realestatemanager.model.Estate
 import com.oxymium.realestatemanager.model.Picture
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.*
 
 // ---------------
 // CreateViewModel
@@ -17,11 +18,14 @@ import kotlinx.coroutines.launch
 
 class CreateViewModel(private val estateRepository: EstateRepository, private val pictureRepository: PictureRepository): ViewModel() {
 
+    // Define edit or create route 1 = CREATE / 2 = EDIT
+    var createOrEditMode: MutableLiveData<Int> = MutableLiveData(1)
     val editedEstate: MutableLiveData<Estate> = MutableLiveData()
     // Estate values
-    var addedDate: MutableLiveData<String> = MutableLiveData(Utils.getTodayDate())
+    var editedId: MutableLiveData<Long> = MutableLiveData(0L)
+    var addedDate: MutableLiveData<Long> = MutableLiveData(0L)
     var wasSold: MutableLiveData<Boolean> = MutableLiveData(false)
-    var soldDate: MutableLiveData<String> = MutableLiveData("")
+    var soldDate: MutableLiveData<Long> = MutableLiveData(0L)
     var type: MutableLiveData<String> = MutableLiveData("Select type")
     var price: MutableLiveData<Int> = MutableLiveData(0)
     var energyScore: MutableLiveData<String> = MutableLiveData("Select energy score")
@@ -121,9 +125,9 @@ class CreateViewModel(private val estateRepository: EstateRepository, private va
 
         val insertedId: Long = estateRepository.insert(
             Estate(
-                addedDate.value.toString(),
+                addedDate.value ?: 0L,
                 wasSold.value ?: false,
-                soldDate.value.toString(),
+                soldDate.value ?: 0L,
                 type.value.toString(),
                 price.value ?: 0,
                 energyScore.value.toString(),
@@ -142,6 +146,7 @@ class CreateViewModel(private val estateRepository: EstateRepository, private va
             ))
         Log.i("INSERT_ID", "Estate Inserted ID is: $insertedId")
 
+        triggerNotification.postValue(true)
         returnedEstateIdValue.postValue(insertedId)
 
         // Attach returned Estate ID to all Pictures
@@ -160,7 +165,38 @@ class CreateViewModel(private val estateRepository: EstateRepository, private va
 
     }
 
-    //                 mainPicturePath.value.toString()
+    // Update Estate into DB
+    fun updateEstateIntoDatabase() = viewModelScope.launch {
+
+        estateRepository.updateEstate(Estate(
+            addedDate.value ?: 0L,
+            wasSold.value ?: false,
+            soldDate.value ?: 0L,
+            type.value.toString(),
+            price.value ?: 0,
+            energyScore.value.toString(),
+            surface.value ?: 0,
+            rooms.value ?: 0,
+            bedrooms.value ?: 0,
+            bathrooms.value ?: 0,
+            address.value.toString(),
+            zipCode.value ?: 0,
+            location.value.toString(),
+            highSpeedInternet.value ?: false,
+            nearbyPlaces.value.toString(),
+            description.value.toString(),
+            mainPicturePath.value.toString(),
+            agent.value.toString(),
+            editedId.value
+        ))
+
+        createOrEditMode.value = 1
+
+        navigateToEstatesFragment.postValue(true)
+
+    }
+
+
 
     // -------
     // Testing

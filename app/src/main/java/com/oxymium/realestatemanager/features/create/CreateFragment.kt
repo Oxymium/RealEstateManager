@@ -25,6 +25,7 @@ import android.text.TextWatcher
 
 import android.widget.EditText
 import com.oxymium.realestatemanager.model.Picture
+import com.oxymium.realestatemanager.utils.DateUtils
 
 
 // --------------
@@ -62,6 +63,7 @@ class CreateFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
         fragmentCreateBinding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_create, container, false)
         fragmentCreateBinding.lifecycleOwner = activity
@@ -77,23 +79,20 @@ class CreateFragment: Fragment() {
         fragmentCreateBinding.include8.createViewModel = createViewModel
         fragmentCreateBinding.include9.createViewModel = createViewModel
 
-        // EDIT MODE
-        createViewModel.editedEstate.observe(viewLifecycleOwner, { editedEstate ->
-            createViewModel.type.value = editedEstate.type
-            createViewModel.energyScore.value = editedEstate.energy
-            createViewModel.price.value = editedEstate.price
-            createViewModel.surface.value = editedEstate.surface
-            createViewModel.rooms.value = editedEstate.rooms
-            createViewModel.bedrooms.value = editedEstate.bedrooms
-            createViewModel.bathrooms.value = editedEstate.bathrooms
-            createViewModel.address.value = editedEstate.address
-            createViewModel.zipCode.value = editedEstate.zipCode
-            createViewModel.location.value = editedEstate.location
-            createViewModel.description.value = editedEstate.description
-            createViewModel.nearbyPlaces.value = editedEstate.nearbyPlaces
-            createViewModel.agent.value = editedEstate.agent
+
+        // Check Create or Edit Mode
+        createViewModel.createOrEditMode.observe(viewLifecycleOwner, {
+            mode ->
+            when (mode){
+                1 -> Log.d(fragmentTAG, "onCreateView: createMode")
+                2 -> { Log.d(fragmentTAG, "onCreateView: editMode")
+                    provideEditedEstateValues()
+                }
+            }
         })
 
+        // Added Date
+        createViewModel.addedDate.value = DateUtils().getTodayInMillis()
 
         // Type
         createViewModel.wasEstateTypeClicked.observe(viewLifecycleOwner, { wasClicked ->
@@ -158,7 +157,7 @@ class CreateFragment: Fragment() {
             })
 
         // Bedrooms
-        fragmentCreateBinding.include3.layoutCreateSurfaceInput.addTextChangedListener(
+        fragmentCreateBinding.include3.layoutCreateBedroomsInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
                     if (s.isNotEmpty()) createViewModel.bedrooms.postValue(s.toString().toInt())
@@ -169,7 +168,7 @@ class CreateFragment: Fragment() {
             })
 
         // Bathrooms
-        fragmentCreateBinding.include3.layoutCreateSurfaceInput.addTextChangedListener(
+        fragmentCreateBinding.include3.layoutCreateBathroomsInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
                     if (s.isNotEmpty()) createViewModel.bathrooms.postValue(s.toString().toInt())
@@ -288,7 +287,8 @@ class CreateFragment: Fragment() {
         createViewModel.triggerSaveAlertDialog.observe(viewLifecycleOwner,
             { trigger ->
                 if (trigger) {
-                    alertDialogTesst()
+                    createViewModel.triggerSaveAlertDialog.value = false
+                    alertDialogSaveEstate()
                 }
             })
 
@@ -301,7 +301,7 @@ class CreateFragment: Fragment() {
         builder.setTitle(title)
 
         // Add a radio button list
-        val checkedItem = 0
+        val checkedItem = -1
         builder.setSingleChoiceItems(arrayList, checkedItem) { dialog, which ->
             if (valueToUpdate == 1) {
                 createViewModel.type.postValue(resources.getStringArray(arrayList)[which].toString())
@@ -323,7 +323,7 @@ class CreateFragment: Fragment() {
         dialog.show()
     }
 
-    private fun alertDialogTesst() {
+    private fun alertDialogSaveEstate() {
         val builder: AlertDialog.Builder? = activity?.let {
             AlertDialog.Builder(it)
         }
@@ -331,7 +331,10 @@ class CreateFragment: Fragment() {
             .setTitle("Save")
         builder.apply {
             setPositiveButton("Yes") { dialog, id ->
-                createViewModel.insertEstateIntoDatabase()
+                if (createViewModel.createOrEditMode.value == 1){
+                    createViewModel.insertEstateIntoDatabase() }
+                if (createViewModel.createOrEditMode.value == 2){
+                    createViewModel.updateEstateIntoDatabase() }
             }
             setNegativeButton("No") { dialog, id ->
                 val selectedId = id
@@ -352,7 +355,6 @@ class CreateFragment: Fragment() {
         // Set up the input
         val input = EditText(requireActivity())
         // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
         input.inputType = InputType.TYPE_CLASS_TEXT
         builder.setView(input)
         // Set up the buttons
@@ -370,6 +372,28 @@ class CreateFragment: Fragment() {
 
         builder.show()
 
+    }
+
+    // Fetch values from Edited Estate
+    private fun provideEditedEstateValues(){
+
+        createViewModel.editedEstate.observe(viewLifecycleOwner, { editedEstate ->
+                createViewModel.type.value = editedEstate.type
+                createViewModel.energyScore.value = editedEstate.energy
+                createViewModel.price.value = editedEstate.price
+                createViewModel.surface.value = editedEstate.surface
+                createViewModel.rooms.value = editedEstate.rooms
+                createViewModel.bedrooms.value = editedEstate.bedrooms
+                createViewModel.bathrooms.value = editedEstate.bathrooms
+                createViewModel.address.value = editedEstate.address
+                createViewModel.zipCode.value = editedEstate.zipCode
+                createViewModel.location.value = editedEstate.location
+                createViewModel.description.value = editedEstate.description
+                createViewModel.nearbyPlaces.value = editedEstate.nearbyPlaces
+                createViewModel.agent.value = editedEstate.agent
+                createViewModel.mainPicturePath.value = editedEstate.mainPicturePath
+                createViewModel.editedId.value = editedEstate.id
+        })
     }
 
 }

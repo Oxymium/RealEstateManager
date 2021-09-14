@@ -70,6 +70,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/layout_create_secondary_pictures_picture"
             android:src="@drawable/ic_image_multiple_outline_white_24dp"
+            app:tint="@color/yellow_500"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/layout_create_secondary_pictures"

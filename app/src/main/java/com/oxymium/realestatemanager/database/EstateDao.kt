@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.oxymium.realestatemanager.model.Estate
+import com.oxymium.realestatemanager.model.Picture
 import kotlinx.coroutines.flow.Flow
 
 // ---------
@@ -17,7 +18,7 @@ interface EstateDao {
     @Query("SELECT * FROM estate ORDER BY location ASC")
     fun getLocalisedEstate(): Flow<List<Estate>>
 
-    @RawQuery(observedEntities = [Estate::class])
+    @RawQuery(observedEntities = [Estate::class, Picture::class])
     fun getSearchedEstates(search: SimpleSQLiteQuery?): Flow<List<Estate>>
 
     @Query("SELECT * FROM estate WHERE price >= :minPrice AND price <= :maxPrice")

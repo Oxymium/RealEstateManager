@@ -71,6 +71,11 @@
 
         </provider>
 
+        <provider
+            android:name=".database.EstateContentProvider"
+            android:authorities="com.oxymium.realestatemanager"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

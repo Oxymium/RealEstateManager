@@ -16,11 +16,11 @@ import android.content.ContentValues
 @Entity(tableName = "estate")
 data class Estate(
     @ColumnInfo(name = "addedDate")
-    var addedDate:String,
+    var addedDate:Long,
     @ColumnInfo(name = "wasSold")
     var wasSold: Boolean,
     @ColumnInfo(name = "soldDate")
-    var soldDate: String,
+    var soldDate: Long,
     @ColumnInfo(name = "type")
     var type:String,
     @ColumnInfo(name = "price")
@@ -60,9 +60,9 @@ data class Estate(
     fun fromContentValues(values: ContentValues): Estate? {
         // TODO ContentProvider tweaks
         val estate: Estate? = null
-        if (values.containsKey("addedDate")) estate?.addedDate = values.getAsString("addedDate")
+        if (values.containsKey("addedDate")) estate?.addedDate = values.getAsLong("addedDate")
         if (values.containsKey("wasSold")) estate?.wasSold = values.getAsBoolean("wasSold")
-        if (values.containsKey("soldDate")) estate?.soldDate = values.getAsString("soldDate")
+        if (values.containsKey("soldDate")) estate?.soldDate = values.getAsLong("soldDate")
         if (values.containsKey("type")) estate?.type = values.getAsString("type")
         if (values.containsKey("price")) estate?.price = values.getAsInteger("price")
         if (values.containsKey("energyScore")) estate?.energy = values.getAsString("energyScore")

@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 // EstateRoomDatabase (ROOM)
 // -------------------------
 
-@Database(entities = [Estate::class, Picture::class], version = 6)
+@Database(entities = [Estate::class, Picture::class], version = 2)
 abstract class EstateRoomDatabase : RoomDatabase() {
 
     abstract fun estateDao(): EstateDao

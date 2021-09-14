@@ -85,6 +85,7 @@
             android:layout_height="wrap_content"
             android:contentDescription="@string/layout_create_type_picture"
             android:src="@drawable/ic_home_city_white_24dp"
+            app:tint="@color/yellow_500"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/layout_create_date"

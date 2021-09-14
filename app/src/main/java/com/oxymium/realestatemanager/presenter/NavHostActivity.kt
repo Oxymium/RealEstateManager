@@ -38,6 +38,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.R.attr.data
 import androidx.navigation.NavController
+import com.oxymium.realestatemanager.database.EstateContentProvider
 import com.oxymium.realestatemanager.utils.Notifications
 
 
@@ -235,13 +236,19 @@ class NavHostActivity : AppCompatActivity() {
         if(requestCode == OPEN_IMAGE_REQUEST && resultCode == Activity.RESULT_OK){
             val selectedImageUri: Uri? = data!!.data
             val imagePath = selectedImageUri!!.path
+            val contentResolver = applicationContext.contentResolver
+            val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            contentResolver.takePersistableUriPermission(selectedImageUri, takeFlags)
+
+
             //val imageFile = File(imagePath!!)
             val from = createViewModel.triggerPictureActivityFrom.value
             if (from == 1){
                 createViewModel.mainPicturePath.postValue(selectedImageUri.toString())
             }else if(from == 2){
                 //Create new secondary picture
-                val newSecondaryPicture = Picture(imagePath!!, "")
+                val newSecondaryPicture = Picture(selectedImageUri.toString(), "")
                 createViewModel.addPictureToSecondaryList(newSecondaryPicture)
             }
 
@@ -252,7 +259,7 @@ class NavHostActivity : AppCompatActivity() {
 
     // GALLERY
     private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.type = "image/*"
         startActivityForResult(intent, OPEN_IMAGE_REQUEST)
     }
@@ -318,6 +325,7 @@ class NavHostActivity : AppCompatActivity() {
     private fun observeEditMode() {
         estateViewModel.estateToEdit.observe(this, {
                 estateToEdit ->
+            createViewModel.createOrEditMode.postValue(2)
             createViewModel.editedEstate.postValue(estateToEdit)
             navController.navigate(R.id.action_detailsFragment_to_createFragment)
         })
@@ -327,7 +335,7 @@ class NavHostActivity : AppCompatActivity() {
         // Alert Dialog
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle("Pictures from:")
-        val checkedItem = 0
+        val checkedItem = -1
         var clickChoice: Int = -1
         builder.setSingleChoiceItems(arrayList, checkedItem) { dialog, which ->
             clickChoice = which
