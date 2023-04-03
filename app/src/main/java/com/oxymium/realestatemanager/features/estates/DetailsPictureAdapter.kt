@@ -4,10 +4,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.oxymium.realestatemanager.model.Picture
-import com.oxymium.realestatemanager.utils.PictureDeleteListener
 import com.oxymium.realestatemanager.utils.PictureListener
 
-class DetailsPictureAdapter(private val pictureListener: PictureListener): ListAdapter<Picture, DetailsPictureViewHolder>(DetailsPictureAdapter.PictureDataAdapterListDiff()) {
+// ---------------------
+// DetailsPictureAdapter
+// ---------------------
+
+class DetailsPictureAdapter(private val pictureListener: PictureListener): ListAdapter<Picture, DetailsPictureViewHolder>(PictureDataAdapterListDiff()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailsPictureViewHolder {
         return DetailsPictureViewHolder.from(parent)

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="createViewModel"
+            type="com.oxymium.realestatemanager.features.create.CreateViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/create_padding_extra"
+        android:paddingEnd="@dimen/create_padding_extra"
+        android:paddingTop="@dimen/create_padding_extra"
+        android:paddingBottom="@dimen/create_padding_extra"
+        android:background="@color/space_cadet"
+        tools:context=".CreateFragment">
+
+        <Space
+            android:id="@+id/layout_create_numerics_top_space"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layout_create_numerics"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_create_numerics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="1dp"
+            android:paddingEnd="1dp"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:background="@drawable/circular_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_create_numerics_top_space">
+
+            <ImageButton
+                android:id="@+id/create_navigator_button_step_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> createViewModel.updateCurrentStep(1) }"
+                app:navigatorStepButtonColor="@{ createViewModel.selectedAgentId != null &amp;&amp; createViewModel.selectedType != null }"
+                android:src="@drawable/numeric_1_box_multiple"
+                app:tint="@color/isabelline"
+                android:backgroundTint="@color/space_cadet"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_step_2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:background="@color/yellow_500"
+                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 1 }"
+                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_1"
+                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_1"
+                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_1"
+                />
+
+            <ImageButton
+                android:id="@+id/create_navigator_button_step_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> createViewModel.updateCurrentStep(2) }"
+                app:navigatorStepButtonColor="@{createViewModel.price != null &amp;&amp; createViewModel.surface != null &amp;&amp; createViewModel.rooms != null &amp;&amp; createViewModel.bedrooms != null &amp;&amp; createViewModel.bathrooms != null &amp;&amp; createViewModel.energyScore != null }"
+                android:src="@drawable/numeric_2_box_multiple"
+                app:tint="@color/isabelline"
+                android:backgroundTint="@color/space_cadet"
+                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_1"
+                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_step_3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:background="@color/yellow_500"
+                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 2 }"
+                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_2"
+                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_2"
+                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_2"
+                />
+
+            <ImageButton
+                android:id="@+id/create_navigator_button_step_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> createViewModel.updateCurrentStep(3) }"
+                app:navigatorStepButtonColor="@{createViewModel.mainPicturePath != null }"
+                android:src="@drawable/numeric_3_box_multiple"
+                app:tint="@color/isabelline"
+                android:backgroundTint="@color/space_cadet"
+                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_2"
+                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_step_4"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:background="@color/yellow_500"
+                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 3 }"
+                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_3"
+                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_3"
+                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_3"
+                />
+
+            <ImageButton
+                android:id="@+id/create_navigator_button_step_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> createViewModel.updateCurrentStep(4) }"
+                app:navigatorStepButtonColor="@{createViewModel.secondaryPictures.size() != 0 }"
+                android:src="@drawable/numeric_4_box_multiple"
+                app:tint="@color/isabelline"
+                android:backgroundTint="@color/space_cadet"
+                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_3"
+                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_step_5"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:background="@color/yellow_500"
+                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 4 }"
+                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_4"
+                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_4"
+                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_4"
+                />
+
+
+            <ImageButton
+                android:id="@+id/create_navigator_button_step_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> createViewModel.updateCurrentStep(5) }"
+                app:navigatorStepButtonColor="@{createViewModel.description != null }"
+                android:src="@drawable/numeric_5_box_multiple"
+                app:tint="@color/isabelline"
+                android:backgroundTint="@color/space_cadet"
+                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_4"
+                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_step_6"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:background="@color/yellow_500"
+                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 5 }"
+                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_5"
+                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_5"
+                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_5"
+                />
+
+
+            <ImageButton
+                android:id="@+id/create_navigator_button_step_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> createViewModel.updateCurrentStep(6) }"
+                app:navigatorStepButtonColor="@{createViewModel.street != null &amp;&amp; createViewModel.zipCode != null &amp;&amp; createViewModel.location != null }"
+                android:src="@drawable/numeric_6_box_multiple"
+                app:tint="@color/isabelline"
+                android:backgroundTint="@color/space_cadet"
+                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_5"
+                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_save"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="3dp"
+                android:background="@color/yellow_500"
+                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 6 }"
+                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_6"
+                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_6"
+                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_6"
+                />
+
+
+            <ImageButton
+                android:id="@+id/create_navigator_button_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> createViewModel.onClickSaveEstateButton() }"
+                android:src="@drawable/content_save_all_outline"
+                app:tint="@color/isabelline"
+                android:backgroundTint="@color/space_cadet"
+                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="Steps"
+            android:textColor="@color/isabelline"
+            android:textStyle="italic|bold"
+            android:textAlignment="center"
+            android:background="@color/space_cadet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/layout_create_numerics"
+            app:layout_constraintBottom_toBottomOf="@id/layout_create_numerics_top_space"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

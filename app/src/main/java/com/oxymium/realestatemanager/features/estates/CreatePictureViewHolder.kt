@@ -7,6 +7,7 @@ import com.oxymium.realestatemanager.databinding.ItemPictureBinding
 import com.oxymium.realestatemanager.model.Picture
 import com.oxymium.realestatemanager.utils.PictureCommentListener
 import com.oxymium.realestatemanager.utils.PictureDeleteListener
+import com.oxymium.realestatemanager.utils.PictureListener
 
 // -------------------------------
 // PictureViewHolder (RecyclerView)
@@ -15,13 +16,15 @@ import com.oxymium.realestatemanager.utils.PictureDeleteListener
 class CreatePictureViewHolder(val binding: ItemPictureBinding):
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(picture: Picture, pictureDeleteListener: PictureDeleteListener, pictureCommentListener: PictureCommentListener) {
+    fun bind(picture: Picture, pictureListener: PictureListener, pictureDeleteListener: PictureDeleteListener, pictureCommentListener: PictureCommentListener) {
 
         // REQUIRED WITH DATA BINDING
         binding.executePendingBindings()
 
         // BIND DATA
         binding.picture = picture
+
+        binding.pictureClickListener = pictureListener
         binding.pictureClickDeleteListener = pictureDeleteListener
         binding.pictureClickCommentListener = pictureCommentListener
 

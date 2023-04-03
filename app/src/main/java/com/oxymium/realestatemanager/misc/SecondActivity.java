@@ -1,8 +1,8 @@
 package com.oxymium.realestatemanager.misc;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.oxymium.realestatemanager.R;
 

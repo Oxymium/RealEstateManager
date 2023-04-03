@@ -6,17 +6,12 @@ import android.graphics.Color
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.TextView
-import androidx.databinding.BindingAdapter
-
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Button
-import android.widget.ImageView
-import androidx.core.net.toUri
-import com.bumptech.glide.Glide
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import com.oxymium.realestatemanager.R
-import java.security.AccessController.getContext
 import java.util.*
 import java.util.Calendar.*
 
@@ -25,23 +20,15 @@ class Binders {
 
     companion object {
 
-        // Edit/Create button
-        @JvmStatic
-        @BindingAdapter("app:validateButtonText")
-        fun changeSaveButtonText(button: Button, state: Int?) {
-            when (state) {
-                1 -> {button.text = "Save new Estate" }
-                2 -> {button.text = "Save edited Estate"} }
-        }
 
-        // Image String path to Uri
+        // Toggle Sold Button visibility
         @JvmStatic
-        @BindingAdapter("app:loadSecondaryPictureUri")
-        fun loadSecondaryPictureUri(imageView: ImageView, path: String?){
-            if (!path.isNullOrEmpty()){
-            Glide.with(imageView.context).load(path.toUri()).placeholder(R.drawable.estate_placeholder4).into(imageView)}
-            else{
-
+        @BindingAdapter("app:toggleSellButtonVisibility")
+        fun toggleSellButtonVisibility(imageButton: ImageButton, sold: Boolean){
+            if (sold){
+                imageButton.visibility = GONE
+            }else{
+                imageButton.visibility = VISIBLE
             }
         }
 
@@ -50,7 +37,7 @@ class Binders {
         @BindingAdapter("app:convertTimeInMillisToDate")
         fun loadSecondaryPictureUri(textView: TextView, timeInMillis: Long) {
             if (timeInMillis != 0L) {
-                val calendar: Calendar = Calendar.getInstance()
+                val calendar: Calendar = getInstance()
                 calendar.timeInMillis = timeInMillis
                 val year = calendar.get(YEAR)
                 // Month starts at index 0 (January = 0)
@@ -75,29 +62,22 @@ class Binders {
             }
         }
 
+        // Search results text
+        @JvmStatic
+        @BindingAdapter("app:searchResultsText")
+        fun changeSearchResultsText(textView: TextView, resultNumber: Int) {
+            textView.text = " x $resultNumber"
+        }
+
         // Search results text color
         @JvmStatic
         @BindingAdapter("app:searchResultsTextColor")
-        fun changeSearchResultsTextColor(textView: TextView, resultNumber: Int?) {
-
-            when (resultNumber) {
-                0 -> textView.setTextColor(ColorStateList.valueOf(Color.parseColor("#E91E63")))
-                else -> textView.setTextColor(ColorStateList.valueOf(Color.parseColor("#4CAF50")))
-
-            }
-        }
-
-        // Search results custom text
-        @JvmStatic
-        @BindingAdapter("app:searchResultsText")
-        fun changeSearchResultsText(textView: TextView, resultNumber: Int?) {
-
-            when (resultNumber) {
-                0 -> textView.text = "0 estates found"
-                1 -> textView.text = "1 estate found"
-                else -> textView.text = "$resultNumber estates found"
-
-            }
+        fun changeSearchResultsTextColor(textView: TextView, resultNumber: Int) {
+            val context = textView.context
+            textView.setTextColor( when(resultNumber){
+                0 -> provideCompatColor(context, R.color.red_500)
+                else -> provideCompatColor(context, R.color.green_500)
+            })
         }
 
         // Search results custom text
@@ -121,36 +101,6 @@ class Binders {
             }
         }
 
-        // Energy icon tint
-        @SuppressLint("UseCompatTextViewDrawableApis")
-        @JvmStatic
-        @BindingAdapter("app:energyIconTint")
-        fun changeEnergyDrawableTint(textView: TextView, energy: String?) {
-
-            when (energy) {
-                "A+", "A" -> textView.compoundDrawableTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50"))
-                "B" -> textView.compoundDrawableTintList = ColorStateList.valueOf(Color.parseColor("#FFEB3B"))
-                "C" -> textView.compoundDrawableTintList = ColorStateList.valueOf(Color.parseColor("#FF9800"))
-                "D" -> textView.compoundDrawableTintList = ColorStateList.valueOf(Color.parseColor("#E91E63"))
-
-            }
-        }
-
-        // Energy text color
-        @JvmStatic
-        @BindingAdapter("app:energyTextColor")
-        fun changeEnergyTextColor(textView: TextView, energy: String?) {
-
-            when (energy) {
-                "A+", "A" -> textView.setTextColor(ColorStateList.valueOf(Color.parseColor("#4CAF50")))
-                "B" -> textView.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFEB3B")))
-                "C" -> textView.setTextColor(ColorStateList.valueOf(Color.parseColor("#FF9800")))
-                "D" -> textView.setTextColor(ColorStateList.valueOf(Color.parseColor("#E91E63")))
-
-            }
-
-        }
-
         // High speed internet icon tint
         @SuppressLint("UseCompatTextViewDrawableApis")
         @JvmStatic
@@ -160,6 +110,7 @@ class Binders {
             when (highSpeedInternet) {
                 true -> textView.compoundDrawableTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50"))
                 false -> textView.compoundDrawableTintList = ColorStateList.valueOf(Color.parseColor("#E91E63"))
+                else -> {}
 
             }
         }
@@ -172,6 +123,7 @@ class Binders {
             when (highSpeedInternet) {
                 true -> textView.setTextColor(ColorStateList.valueOf(Color.parseColor("#4CAF50")))
                 false -> textView.setTextColor(ColorStateList.valueOf(Color.parseColor("#E91E63")))
+                else -> {}
             }
         }
 

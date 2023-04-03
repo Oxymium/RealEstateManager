@@ -3,14 +3,14 @@ package com.oxymium.realestatemanager.features.estates
 import android.view.LayoutInflater
 import android.view.View.GONE
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.oxymium.realestatemanager.databinding.ItemPictureBinding
 import com.oxymium.realestatemanager.model.Picture
-import com.oxymium.realestatemanager.utils.PictureCommentListener
-import com.oxymium.realestatemanager.utils.PictureDeleteListener
 import com.oxymium.realestatemanager.utils.PictureListener
+
+// ------------------------
+// DetailsPictureViewHolder
+// ------------------------
 
 class DetailsPictureViewHolder(val binding: ItemPictureBinding): RecyclerView.ViewHolder(binding.root) {
 
@@ -28,7 +28,6 @@ class DetailsPictureViewHolder(val binding: ItemPictureBinding): RecyclerView.Vi
         // Remove unwanted buttons
         binding.itemPictureButtonDelete.visibility = GONE
         binding.itemPictureButtonEdit.visibility = GONE
-
 
     }
 

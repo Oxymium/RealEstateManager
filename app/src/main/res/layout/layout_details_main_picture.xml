@@ -7,11 +7,9 @@
             type="com.oxymium.realestatemanager.viewmodel.EstateViewModel"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/layout_details_main_picture"
@@ -19,6 +17,7 @@
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             android:background="@drawable/dot_grid_repeating"
+            android:contentDescription="@string/main_picture"
             app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -30,13 +29,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#7F000000"
-            app:convertTimeInMillisToDate="@{estateViewModel.selectedEstate.soldDate}"
+            app:convertTimeInMillisToDate="@{estateViewModel.queriedEstate.soldDate}"
             android:textAlignment="center"
-            app:soldVisibility="@{estateViewModel.selectedEstate.wasSold}"
+            app:soldVisibility="@{estateViewModel.queriedEstate.wasSold}"
             android:textSize="@dimen/details_font_medium"
             android:textStyle="bold"
             android:textColor="@color/red_500"
-            android:hint="wasSold"
+            android:hint="@string/fragment_details_hint_sold"
             android:drawablePadding="2dp"
             android:textColorHint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
@@ -49,77 +48,189 @@
             android:id="@+id/layout_details_secondary_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
             android:background="#7F000000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@id/layout_details_main_picture"
             >
 
-            <TextView
-                android:id="@+id/layout_details_surface"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text='@{String.valueOf(estateViewModel.selectedEstate.surface + "m²")}'
-                android:textSize="@dimen/details_font_medium"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:paddingBottom="2dp"
-                android:hint="@string/fragment_details_hint_surface"
-                android:textColorHint="@color/white"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/layout_details_rooms"
-                app:layout_constraintBottom_toBottomOf="@id/layout_details_secondary_info"
-                />
-
-            <TextView
-                android:id="@+id/layout_details_rooms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:text="@{String.valueOf(estateViewModel.selectedEstate.rooms)}"
-                android:textSize="@dimen/details_font_medium"
-                android:textColor="@color/white"
-                android:hint="@string/fragment_details_hint_rooms"
-                android:textColorHint="@color/white"
-                app:drawableStartCompat="@drawable/ic_crop_square_white_24dp"
-                app:layout_constraintStart_toEndOf="@id/layout_details_surface"
-                app:layout_constraintEnd_toStartOf="@id/layout_details_bedrooms"
-                app:layout_constraintBottom_toBottomOf="@id/layout_details_secondary_info"
-                />
-
-            <TextView
-                android:id="@+id/layout_details_bedrooms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:text="@{String.valueOf(estateViewModel.selectedEstate.rooms)}"
-                android:textSize="@dimen/details_font_medium"
-                android:textColor="@color/white"
-                android:hint="@string/fragment_details_hint_rooms"
-                android:textColorHint="@color/white"
-                app:drawableStartCompat="@drawable/ic_bed_white_24dp"
-                android:drawablePadding="2dp"
-                app:layout_constraintStart_toEndOf="@id/layout_details_rooms"
-                app:layout_constraintEnd_toStartOf="@id/layout_details_bathrooms"
-                app:layout_constraintBottom_toBottomOf="@id/layout_details_secondary_info"
-                />
-
-            <TextView
-                android:id="@+id/layout_details_bathrooms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="start"
-                android:text="@{String.valueOf(estateViewModel.selectedEstate.rooms)}"
-                android:textSize="@dimen/details_font_medium"
-                android:textColor="@color/white"
-                android:hint="@string/fragment_details_hint_rooms"
-                android:drawablePadding="2dp"
-                android:textColorHint="@color/white"
-                app:drawableStartCompat="@drawable/ic_shower_white_24dp"
-                app:layout_constraintStart_toEndOf="@id/layout_details_bedrooms"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/layout_details_secondary_info"
-                />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <!-- SURFACE-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_details_surface_part"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/layout_details_rooms_part"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <ImageView
+                        android:id="@+id/layout_details_surface_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/texture_box"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/fragment_details_hint_surface"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/layout_details_surface"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <TextView
+                        android:id="@+id/layout_details_surface"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text='@{String.valueOf(estateViewModel.queriedEstate.surface + "m²")}'
+                        android:textSize="@dimen/details_font_medium"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:hint="@string/fragment_details_hint_surface"
+                        android:textColorHint="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_details_surface_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- ROOMS-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_details_rooms_part"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@+id/layout_details_surface_part"
+                    app:layout_constraintEnd_toStartOf="@id/layout_details_bedrooms_part"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <ImageView
+                        android:id="@+id/layout_details_rooms_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_crop_square_white_24dp"
+                        android:contentDescription="@string/rooms_input_hint"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_details_rooms"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <TextView
+                        android:id="@+id/layout_details_rooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(estateViewModel.queriedEstate.rooms)}"
+                        android:textSize="@dimen/details_font_medium"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:hint="@string/fragment_details_hint_rooms"
+                        android:textColorHint="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_details_rooms_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- BEDROOMS-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_details_bedrooms_part"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/layout_details_rooms_part"
+                    app:layout_constraintEnd_toStartOf="@id/layout_details_bathrooms_part"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <ImageView
+                        android:id="@+id/layout_details_bedrooms_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_bed_white_24dp"
+                        android:contentDescription="@string/fragment_details_hint_bedrooms"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_details_bedrooms"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <TextView
+                        android:id="@+id/layout_details_bedrooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(estateViewModel.queriedEstate.rooms)}"
+                        android:textSize="@dimen/details_font_medium"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:hint="@string/fragment_details_hint_bathrooms"
+                        android:textColorHint="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_details_bedrooms_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- BATHROOMS-->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_details_bathrooms_part"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/layout_details_bedrooms_part"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <ImageView
+                        android:id="@+id/layout_details_bathrooms_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_shower_white_24dp"
+                        android:contentDescription="@string/fragment_details_hint_bathrooms"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_details_bathrooms"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <TextView
+                        android:id="@+id/layout_details_bathrooms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(estateViewModel.queriedEstate.rooms)}"
+                        android:textSize="@dimen/details_font_medium"
+                        android:textColor="@color/white"
+                        android:textAlignment="center"
+                        android:hint="@string/fragment_details_hint_bathrooms"
+                        android:textColorHint="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_details_bathrooms_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

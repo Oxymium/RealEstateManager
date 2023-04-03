@@ -18,11 +18,6 @@ import com.github.mikephil.charting.data.PieEntry
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentLoanBinding
 import com.oxymium.realestatemanager.viewmodel.LoanViewModel
-import com.github.mikephil.charting.components.Legend
-
-
-
-
 
 // ------------
 // LaonFragment
@@ -50,7 +45,7 @@ class LoanFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         fragmentLoanBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_loan, container, false)
         fragmentLoanBinding.loanViewModel = loanViewModel
@@ -58,11 +53,7 @@ class LoanFragment: Fragment() {
         fragmentLoanBinding.fragmentLoanBorrowedAmountInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
-                    if (s.isNotEmpty()) {
-                        loanViewModel.updateBorrowedAmount(s.toString().toFloat())
-                    }else{
-
-                    }
+                    if (s.isNotEmpty()) loanViewModel.updateBorrowedAmount(s.toString().toFloat())
                 }
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -72,11 +63,7 @@ class LoanFragment: Fragment() {
         fragmentLoanBinding.fragmentLoanDepositInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
-                    if (s.isNotEmpty()) {
-                        loanViewModel.updateDeposit(s.toString().toFloat())
-                    }else{
-
-                    }
+                    if (s.isNotEmpty()) loanViewModel.updateDeposit(s.toString().toFloat())
                 }
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -86,11 +73,7 @@ class LoanFragment: Fragment() {
         fragmentLoanBinding.fragmentLoanDurationInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
-                    if (s.isNotEmpty()) {
-                        loanViewModel.updateDuration(s.toString().toInt())
-                    }else{
-
-                    }
+                    if (s.isNotEmpty()) loanViewModel.updateDuration(s.toString().toInt())
                 }
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -100,11 +83,7 @@ class LoanFragment: Fragment() {
         fragmentLoanBinding.fragmentLoanInterestRateInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
-                    if (s.isNotEmpty()) {
-                        loanViewModel.updateInterestRate(s.toString().toFloat())
-                    }else{
-
-                    }
+                    if (s.isNotEmpty()) loanViewModel.updateInterestRate(s.toString().toFloat())
                 }
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -119,32 +98,43 @@ class LoanFragment: Fragment() {
 
     private fun displayLoanChartData(){
 
-        loanViewModel.loan.observe(viewLifecycleOwner, {
-
-            loan ->
-
-            println(loan)
+        loanViewModel.loan.observe(viewLifecycleOwner) {
 
             val entries = listOf(
-                PieEntry(loan.borrowedAmount, "Borrowed"),
-                PieEntry(loan.deposit, "Deposit"),
-                PieEntry(calculateInterestsTotalAmount(loan.borrowedAmount, loan.interestRate), "Interests")
+                PieEntry(it.borrowedAmount, "Borrowed"),
+                PieEntry(it.deposit, "Deposit"),
+                PieEntry(
+                    calculateInterestsTotalAmount(it.borrowedAmount, it.interestRate),
+                    "Interests"
+                )
             )
             // Ready set & data
-            val set = PieDataSet(entries, "Cost: $" + calculateTotalEstateCost(loan.borrowedAmount, loan.interestRate, loan.deposit).toString())
+            val set = PieDataSet(
+                entries,
+                "Cost: $" + calculateTotalEstateCost(
+                    it.borrowedAmount,
+                    it.interestRate,
+                    it.deposit
+                ).toString()
+            )
             val data = PieData(set)
 
             // Visuals & flavours
             // ColorTemplate.PASTEL_COLORS
             set.colors = mutableListOf(
                 Color.rgb(64, 89, 128), Color.rgb(149, 165, 124), Color.rgb(217, 184, 162),
-                Color.rgb(191, 134, 134), Color.rgb(179, 48, 80))
+                Color.rgb(191, 134, 134), Color.rgb(179, 48, 80)
+            )
             set.valueTextColor = ContextCompat.getColor(requireActivity(), R.color.white)
-            set.valueTextSize = 14f;
+            set.valueTextSize = 14f
 
-            provideDataToPieChart(data, loan.duration, calculateMonthlyCost(loan.borrowedAmount, loan.interestRate, loan.duration))
+            provideDataToPieChart(
+                data,
+                it.duration,
+                calculateMonthlyCost(it.borrowedAmount, it.interestRate, it.duration)
+            )
 
-        })
+        }
 
     }
 
@@ -160,7 +150,7 @@ class LoanFragment: Fragment() {
         fragmentLoanBinding.fragmentLoanPieChart.legend.horizontalAlignment
         fragmentLoanBinding.fragmentLoanPieChart.description.isEnabled = false
         fragmentLoanBinding.fragmentLoanPieChart.centerText = "$decimalRounded/m - $loanDuration years"
-        fragmentLoanBinding.fragmentLoanPieChart.setCenterTextSize(14f);
+        fragmentLoanBinding.fragmentLoanPieChart.setCenterTextSize(14f)
         fragmentLoanBinding.fragmentLoanPieChart.setCenterTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
         fragmentLoanBinding.fragmentLoanPieChart.invalidate()
         fragmentLoanBinding.fragmentLoanPieChart.notifyDataSetChanged()

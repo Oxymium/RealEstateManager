@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="estateViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.EstateViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:tools="http://schemas.android.com/tools">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_estates_details_left"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_estates"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fragment_estates_details_right"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.25"
+            />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_estates_details_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_details"
+            app:layout_constraintStart_toEndOf="@id/fragment_estates_details_left"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

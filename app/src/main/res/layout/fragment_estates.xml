@@ -22,6 +22,65 @@
                 android:background="@drawable/dot_grid_repeating"
                 tools:context=".EstatesFragment">
 
+                <!-- RESULTS -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fragment_estates_results"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/space_cadet"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/fragment_estates_quickSearch_input"
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        >
+
+                    <ImageView
+                        android:id="@+id/fragment_estates_results_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:src="@drawable/home_city"
+                        app:tint="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/fragment_estates_results_text"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="9"
+                        />
+
+                    <TextView
+                        android:id="@+id/fragment_estates_results_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:searchResultsText="@{estateViewModel.estatesListSize}"
+                        app:searchResultsTextColor="@{estateViewModel.estatesListSize}"
+                        android:textAlignment="textStart"
+                        android:textStyle="bold"
+                        android:hint="0"
+                        android:textColorHint="@color/yellow_500"
+                        app:layout_constraintStart_toEndOf="@id/fragment_estates_results_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- QUICK SEARCH -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/fragment_estates_quickSearch_input"
                     android:layout_width="0dp"
@@ -33,8 +92,7 @@
                     app:hintTextColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/fragment_estates_search_button"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/fragment_estates_size_results"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_estates_results"
                     >
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -58,25 +116,7 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/fragment_estates_size_results"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:searchResultsText="@{estateViewModel.estatesListSize}"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:hint="Results:"
-                    app:searchResultsTextColor="@{estateViewModel.estatesListSize}"
-                    android:textColor="@color/black"
-                    android:background="@color/transparent"
-                    android:backgroundTint="@color/transparent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_estates_quickSearch_input"
-                    app:layout_constraintBottom_toTopOf="@id/fragment_estates_recyclerView"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    />
-
+                <!-- ESTATES -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/fragment_estates_recyclerView"
                     android:layout_width="match_parent"
@@ -88,7 +128,7 @@
                     tools:orientation="vertical"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_estates_size_results"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_estates_quickSearch_input"
                     app:layout_constraintBottom_toBottomOf="parent"
                     />
 
@@ -102,7 +142,7 @@
                     android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/fragment_estates_size_results"
+                    app:layout_constraintTop_toBottomOf="@id/fragment_estates_quickSearch_input"
                     />
 
                 <TextView
@@ -130,8 +170,8 @@
                     android:onClick="@{() -> estateViewModel.onClickSearchButton()}"
                     app:layout_constraintStart_toEndOf="@id/fragment_estates_quickSearch_input"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/fragment_estates_size_results"
+                    app:layout_constraintTop_toTopOf="@id/fragment_estates_quickSearch_input"
+                    app:layout_constraintBottom_toBottomOf="@id/fragment_estates_quickSearch_input"
                     app:layout_constraintHorizontal_bias="90"
                     />
 

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_steps"
+    app:startDestination="@id/stepOneFragment">
+
+    <fragment
+        android:id="@+id/stepOneFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_one.StepOneFragment"
+        android:label="StepOneFragment"
+        tools:layout="@layout/fragment_step_one"
+        />
+
+    <fragment
+        android:id="@+id/stepTwoFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_two.StepTwoFragment"
+        android:label="StepTwoFragment"
+        tools:layout="@layout/fragment_step_two"
+        />
+
+    <fragment
+        android:id="@+id/stepThreeFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_three.StepThreeFragment"
+        android:label="StepThreeFragment"
+        tools:layout="@layout/fragment_step_three"
+        />
+
+    <fragment
+        android:id="@+id/stepFourFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_four.StepFourFragment"
+        android:label="StepFourFragment"
+        tools:layout="@layout/fragment_step_three"
+        />
+
+    <fragment
+        android:id="@+id/stepFiveFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_five.StepFiveFragment"
+        android:label="StepFiveFragment"
+        tools:layout="@layout/fragment_step_four"
+        />
+
+    <fragment
+        android:id="@+id/stepSixFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_six.StepSixFragment"
+        android:label="StepSixFragment"
+        tools:layout="@layout/fragment_step_five"
+        />
+
+</navigation>

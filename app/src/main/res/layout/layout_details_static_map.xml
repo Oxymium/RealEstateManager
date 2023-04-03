@@ -11,13 +11,14 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:background="#7F000000"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="0dp" >
 
         <ImageView
             android:id="@+id/fragment_details_estate_static_map"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/dot_grid_repeating"
+            android:contentDescription="@string/fragment_details_hint_static_map"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

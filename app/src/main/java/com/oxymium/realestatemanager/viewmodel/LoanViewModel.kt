@@ -1,14 +1,8 @@
 package com.oxymium.realestatemanager.viewmodel
 
-import android.text.Editable
-import android.text.TextWatcher
-import androidx.databinding.BindingAdapter
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.github.mikephil.charting.data.PieData
-import com.github.mikephil.charting.data.PieEntry
+
 import com.oxymium.realestatemanager.model.Loan
 
 // -------------
@@ -17,7 +11,7 @@ import com.oxymium.realestatemanager.model.Loan
 
 class LoanViewModel: ViewModel() {
 
-    val loan = MutableLiveData<Loan>(Loan(0f, 0f, 20, 1.5f))
+    val loan = MutableLiveData(Loan(0f, 0f, 20, 1.5f))
 
     fun updateBorrowedAmount(borrowedAmount: Float){
         loan.value?.borrowedAmount = borrowedAmount

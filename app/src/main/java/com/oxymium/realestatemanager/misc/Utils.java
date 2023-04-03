@@ -1,6 +1,8 @@
 package com.oxymium.realestatemanager.misc;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 
 import java.text.DateFormat;
@@ -43,5 +45,24 @@ public class Utils {
         WifiManager wifi = (WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         return wifi.isWifiEnabled();
     }
+
+    // TODO
+    // Euro to dollars
+    public static int convertEuroToDollar(int euros){
+        return (int) Math.round(euros / 0.812);
+    }
+
+    // dd/MM/yyyy date
+    public static String getTodayDateNewFormat(){
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        return dateFormat.format(new Date());
+    }
+
+    public static boolean isInternetAvailable2(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
 
 }

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="createViewModel"
+            type="com.oxymium.realestatemanager.features.create.CreateViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/space_cadet"
+        >
+
+        <!-- SECONDARY PICTURES PART -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/step_four_main_body"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingStart="@dimen/create_padding_extra"
+            android:paddingEnd="@dimen/create_padding_extra"
+            android:paddingTop="@dimen/create_padding_extra"
+            android:paddingBottom="@dimen/create_padding_extra"
+            android:background="@color/space_cadet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"
+            >
+
+            <Space
+                android:id="@+id/step_four_top_space"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/step_four_secondary_pictures_part"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_four_secondary_pictures_part"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingStart="@dimen/create_padding_horizontal_margin"
+                android:paddingEnd="@dimen/create_padding_horizontal_margin"
+                android:paddingTop="@dimen/create_padding_vertical_margin"
+                android:paddingBottom="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_four_top_space">
+
+                <!-- WRAPPER -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <!-- SECONDARY PICTURES PART -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/create_padding_horizontal_margin"
+                        android:paddingEnd="@dimen/create_padding_horizontal_margin"
+                        android:paddingTop="@dimen/create_padding_vertical_margin"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        >
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/step_four_secondary_pictures_recyclerView"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            tools:listitem="@layout/item_picture"
+                            android:orientation="horizontal"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:contentDescription="@string/icon_main_picture"
+                android:src="@drawable/image_multiple_outline"
+                app:tint="@color/yellow_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/step_four_secondary_pictures_part"
+                app:layout_constraintBottom_toBottomOf="@id/step_four_top_space"
+                app:layout_constraintHorizontal_bias="0.05"
+                />
+
+            <ImageButton
+                android:id="@+id/step_four_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_plus_box_white_24dp"
+                app:tint="@color/yellow_500"
+                android:backgroundTint="@color/space_cadet"
+                android:onClick="@{() -> createViewModel.onClickAddSecondaryPictureButton() }"
+                android:contentDescription="@string/button_secondary_pictures_add"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/step_four_secondary_pictures_part"
+                app:layout_constraintBottom_toBottomOf="@id/step_four_top_space"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/hint_secondary_pictures"
+                android:textColor="@color/yellow_500"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/step_four_secondary_pictures_part"
+                app:layout_constraintBottom_toBottomOf="@id/step_four_top_space"
+                app:layout_constraintHorizontal_bias="0.95"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- PREVIEW PART -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/step_four_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingStart="@dimen/create_padding_extra"
+            android:paddingEnd="@dimen/create_padding_extra"
+            android:paddingTop="@dimen/create_padding_extra"
+            android:paddingBottom="@dimen/create_padding_extra"
+            android:background="@color/space_cadet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/step_four_main_body"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_weight="50"
+            >
+
+            <Space
+                android:id="@+id/layout_preview_top_space"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/step_four_preview_part"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_four_preview_part"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:paddingStart="1dp"
+                android:paddingEnd="1dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_preview_top_space"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <ImageView
+                    android:id="@+id/step_four_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:scaleType="centerCrop"
+                    android:adjustViewBounds="true"
+                    android:src="@{createViewModel.secondaryPicturePreview}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:contentDescription="@string/icon_main_picture"
+                android:src="@drawable/image_outline"
+                app:tint="@color/yellow_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/step_four_preview_part"
+                app:layout_constraintBottom_toBottomOf="@id/layout_preview_top_space"
+                app:layout_constraintHorizontal_bias="0.05" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textColor="@color/yellow_500"
+                android:textStyle="italic|bold"
+                android:textAlignment="textEnd"
+                android:hint="@string/hint_preview"
+                android:textColorHint="@color/yellow_500"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/step_four_preview_part"
+                app:layout_constraintBottom_toBottomOf="@id/layout_preview_top_space"
+                app:layout_constraintHorizontal_bias="0.95" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

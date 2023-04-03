@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -8,268 +9,38 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp"
-        android:paddingTop="5dp"
-        android:background="@color/independence"
-        tools:context=".ToolsFragment">
-
-        <androidx.cardview.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/fragment_tools_currency_cardView"
+        android:background="@color/space_cadet"
+        >
+        <!-- NAVIGATOR PART -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/navigator_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> toolsViewModel.onClickCurrencyCategory()}"
-            android:backgroundTint="@color/space_cadet"
-            card_view:cardUseCompatPadding="true"
-            card_view:cardPreventCornerOverlap="false"
-            card_view:cardElevation="3dp"
-            card_view:cardMaxElevation="3dp"
-            card_view:cardCornerRadius="5dp"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <include
+                android:id="@+id/navigator_bar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                layout="@layout/navigator_tools"
+                />
 
-                <View
-                    android:id="@+id/fragment_tools_top_currency"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="#80FFFFFF"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintHeight_percent="0.1"
-                    card_view:layout_constraintVertical_bias="0"
-                    />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/fragment_tools_description_picture_currency"
-                    android:src="@drawable/outline_swap_horiz_white_24"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintHorizontal_bias="0.9"
-                    card_view:layout_constraintVertical_bias="0.5"
-                    />
-
-                <TextView
-                    android:id="@+id/fragment_tools_category_currency_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fragment_tools_category_currency_title"
-                    android:textSize="@dimen/tools_category_font_title"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:paddingTop="@dimen/tools_category_text_padding"
-                    android:paddingBottom="@dimen/tools_category_text_padding"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="@id/fragment_tools_top_currency"
-                    card_view:layout_constraintBottom_toTopOf="@id/fragment_tools_category_currency_subtitle"
-                    card_view:layout_constraintHorizontal_bias="0.1"
-                    />
-
-                <TextView
-                    android:id="@+id/fragment_tools_category_currency_subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fragment_tools_category_currency_subtitle"
-                    android:textSize="@dimen/tools_category_font_subtitle"
-                    android:textColor="@color/white"
-                    android:textStyle="italic"
-                    android:textAlignment="center"
-                    android:paddingTop="@dimen/tools_category_text_padding"
-                    android:paddingBottom="@dimen/tools_category_text_padding"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="@id/fragment_tools_category_currency_title"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/fragment_tools_loan_cardView"
+        <FrameLayout
+            android:id="@+id/fragment_tools_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> toolsViewModel.onClickLoanCategory()}"
-            android:backgroundTint="@color/space_cadet"
-            card_view:cardUseCompatPadding="true"
-            card_view:cardPreventCornerOverlap="false"
-            card_view:cardElevation="3dp"
-            card_view:cardMaxElevation="3dp"
-            card_view:cardCornerRadius="5dp"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@id/fragment_tools_currency_cardView">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/fragment_tools_description_picture_loan"
-                    android:src="@drawable/outline_donut_large_white_24"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintHorizontal_bias="0.9"
-                    card_view:layout_constraintVertical_bias="0.5" />
-
-                <View
-                    android:id="@+id/fragment_tools_top_loan"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="#80FFFFFF"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintHeight_percent="0.1"
-                    card_view:layout_constraintVertical_bias="0"
-                    />
-
-                <TextView
-                    android:id="@+id/fragment_tools_category_loan_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fragment_tools_category_loan_title"
-                    android:textSize="@dimen/tools_category_font_title"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:paddingTop="@dimen/tools_category_text_padding"
-                    android:paddingBottom="@dimen/tools_category_text_padding"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="@id/fragment_tools_top_loan"
-                    card_view:layout_constraintBottom_toTopOf="@id/fragment_tools_category_loan_subtitle"
-                    card_view:layout_constraintHorizontal_bias="0.1"
-                    />
-
-                <TextView
-                    android:id="@+id/fragment_tools_category_loan_subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fragment_tools_category_loan_subtitle"
-                    android:textSize="@dimen/tools_category_font_subtitle"
-                    android:textColor="@color/white"
-                    android:textStyle="italic"
-                    android:textAlignment="center"
-                    android:paddingTop="@dimen/tools_category_text_padding"
-                    android:paddingBottom="@dimen/tools_category_text_padding"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="@id/fragment_tools_category_loan_title"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/fragment_tools_dev_cardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> toolsViewModel.onClickDevCategory()}"
-            android:backgroundTint="@color/space_cadet"
-            card_view:cardUseCompatPadding="true"
-            card_view:cardPreventCornerOverlap="false"
-            card_view:cardElevation="3dp"
-            card_view:cardMaxElevation="3dp"
-            card_view:cardCornerRadius="5dp"
-            card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@id/fragment_tools_loan_cardView">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <View
-                    android:id="@+id/fragment_tools_top_dev"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="#80FFFFFF"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintHeight_percent="0.1"
-                    card_view:layout_constraintVertical_bias="0"
-                    />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:contentDescription="@string/fragment_tools_description_picture_currency"
-                    android:src="@drawable/outline_help_outline_white_24"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    card_view:layout_constraintHorizontal_bias="0.9"
-                    card_view:layout_constraintVertical_bias="0.5"
-                    />
-
-                <TextView
-                    android:id="@+id/fragment_tools_category_dev_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fragment_tools_category_dev_title"
-                    android:textSize="@dimen/tools_category_font_title"
-                    android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:paddingTop="@dimen/tools_category_text_padding"
-                    android:paddingBottom="@dimen/tools_category_text_padding"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="@id/fragment_tools_top_dev"
-                    card_view:layout_constraintBottom_toTopOf="@id/fragment_tools_category_dev_subtitle"
-                    card_view:layout_constraintHorizontal_bias="0.1"
-                    />
-
-                <TextView
-                    android:id="@+id/fragment_tools_category_dev_subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/fragment_tools_category_dev_subtitle"
-                    android:textSize="@dimen/tools_category_font_subtitle"
-                    android:textColor="@color/white"
-                    android:textStyle="italic"
-                    android:textAlignment="center"
-                    android:paddingTop="@dimen/tools_category_text_padding"
-                    android:paddingBottom="@dimen/tools_category_text_padding"
-                    card_view:layout_constraintStart_toStartOf="parent"
-                    card_view:layout_constraintEnd_toEndOf="parent"
-                    card_view:layout_constraintTop_toBottomOf="@id/fragment_tools_category_dev_title"
-                    card_view:layout_constraintBottom_toBottomOf="parent"
-                    />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/navigator_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

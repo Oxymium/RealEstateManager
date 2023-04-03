@@ -1,61 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DesignSurface">
-    <option name="filePathToZoomLevelMap">
-      <map>
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2361111111111111" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/button_border.xml" value="0.2361111111111111" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/circular_border.xml" value="0.4912037037037037" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/content_save.xml" value="0.2361111111111111" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/create_button_border.xml" value="0.2361111111111111" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/item_spinner.xml" value="0.46535087719298246" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/nav_menu_colors.xml" value="0.23464912280701755" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/spinner_background.xml" value="0.33114035087719296" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/drawable/spinner_text.xml" value="0.33114035087719296" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/activity_nav_host.xml" value="0.33" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout-sw600dp/fragment_estates.xml" value="0.196875" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/activity_nav_host.xml" value="0.23333333333333334" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_create.xml" value="0.2591991341991342" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_currency.xml" value="0.1" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_details.xml" value="0.5" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_dev.xml" value="0.3972222222222222" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_estates.xml" value="0.47685185185185186" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_loan.xml" value="0.1" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_map.xml" value="0.4771689497716895" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/fragment_search.xml" value="0.5" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/item_estate.xml" value="0.5" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/item_picture.xml" value="0.47685185185185186" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_create_address.xml" value="0.5" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_create_agent.xml" value="0.47685185185185186" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_create_date.xml" value="0.5" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_create_main_picture.xml" value="0.47685185185185186" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_create_miscellaneous.xml" value="0.4421052631578947" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_create_numerics.xml" value="0.4009259259259259" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_create_pictures.xml" value="0.4064814814814815" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_create_secondary_pictures.xml" value="0.47685185185185186" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_create_type.xml" value="0.22175925925925927" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_create_validate.xml" value="0.22175925925925927" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_details_central_informations.xml" value="0.5" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_details_main_picture.xml" value="0.3425925925925926" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_details_secondary_informations.xml" value="0.3425925925925926" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_details_secondary_pictures.xml" value="0.3425925925925926" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_details_static_map.xml" value="0.3425925925925926" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_details_top_informations.xml" value="0.33" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/layout_estates_search.xml" value="0.5" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/map_fragment.xml" value="0.4837962962962963" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/spinner_available_spinner.xml" value="0.2412280701754386" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/spinner_dropdown.xml" value="0.3175438596491228" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/spinner_energy_text.xml" value="0.2412280701754386" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/spinner_internet_text.xml" value="0.2412280701754386" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/spinner_text.xml" value="0.3175438596491228" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/tempo_copy.xml" value="0.3425925925925926" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/layout/view_map.xml" value="0.24027777777777778" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/menu-sw600dp/nav_menu.xml" value="0.196875" />
-        <entry key="..\:/Users/Oxymium/AndroidStudioProjects/RealEstateManager/app/src/main/res/menu/nav_menu.xml" value="0.23333333333333334" />
-      </map>
-    </option>
-  </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

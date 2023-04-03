@@ -1,8 +1,9 @@
 package com.oxymium.realestatemanager.model
 
-import androidx.databinding.BaseObservable
-
-class Search(var startingDate: String? = null,
+// ------
+// Search
+// ------
+data class Search(var startingDate: String? = null,
              var endingDate: String? = null,
              var type: String? = null,
              var energy: String? = null,
@@ -18,20 +19,20 @@ class Search(var startingDate: String? = null,
              var location: String? = null,
              var nearby: String? = null,
              var minPictures: String? = null,
-             val id: Int = 0
+             // Used to initialize
+             val id: Long = 0
              ){
 
     // Base string query
-    val baseQuery = "SELECT *, COUNT(picture.id) AS nbPics FROM estate LEFT JOIN picture ON estate.id = picture.estate_id GROUP BY estate.id HAVING nbPics >="
+    val baseQuery = "SELECT *, estate.id, COUNT(picture.id) AS nbPics FROM estate LEFT JOIN picture ON estate.id = picture.estate_id GROUP BY estate.id HAVING nbPics >="
     val fullQuery = generateFullSearchQuery()
     // Generate corresponding SQL argument
 
-    private fun generateMinPicQuery(): String?{
-        var string: String? = null
-        if (minPictures.isNullOrEmpty()){
-            string = " 0"
+    private fun generateMinPicQuery(): String {
+        val string: String = if (minPictures.isNullOrEmpty()){
+            " 0"
         }else{
-            string = " $minPictures"
+            " $minPictures"
         }
         return string
     }
@@ -158,7 +159,7 @@ class Search(var startingDate: String? = null,
         for (i in nonNullList){
             generatedQuery += " AND$i" }
 
-        println("Test SEARCH OBJECT$queryArguments")
+        println("SEARCH OBJECT$queryArguments")
 
         return generatedQuery
     }

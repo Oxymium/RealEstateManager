@@ -4,8 +4,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.oxymium.realestatemanager.model.Agent
 import com.oxymium.realestatemanager.model.Estate
 import com.oxymium.realestatemanager.model.Picture
+import com.oxymium.realestatemanager.provideRandomAgents
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,11 +16,12 @@ import kotlinx.coroutines.launch
 // EstateRoomDatabase (ROOM)
 // -------------------------
 
-@Database(entities = [Estate::class, Picture::class], version = 2)
+@Database(entities = [Estate::class, Picture::class, Agent::class], version = 2)
 abstract class EstateRoomDatabase : RoomDatabase() {
 
     abstract fun estateDao(): EstateDao
     abstract fun pictureDao(): PictureDao
+    abstract fun agentDao(): AgentDao
 
     companion object {
         @Volatile
@@ -47,6 +50,22 @@ abstract class EstateRoomDatabase : RoomDatabase() {
             }
         }
 
+        // --- INSTANCE ---
+        fun getInstance(context: Context): EstateRoomDatabase? {
+            if (INSTANCE == null) {
+                synchronized(EstateRoomDatabase::class.java) {
+                    if (INSTANCE == null) {
+                        INSTANCE = Room.databaseBuilder(
+                            context.applicationContext,
+                            EstateRoomDatabase::class.java, "MyDatabase.db"
+                        )
+                            .build()
+                    }
+                }
+            }
+            return INSTANCE
+        }
+
         private class EstateDatabaseCallback(
             private val scope: CoroutineScope
         ) : RoomDatabase.Callback() {
@@ -60,6 +79,7 @@ abstract class EstateRoomDatabase : RoomDatabase() {
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
                         populateDatabase(database.estateDao())
+                        populateDatabase(database.agentDao())
                     }
                 }
             }
@@ -72,6 +92,10 @@ abstract class EstateRoomDatabase : RoomDatabase() {
         suspend fun populateDatabase(estateDao: EstateDao) {
         }
 
-        suspend fun populateDatabase(pictureDao: PictureDao){}
+        suspend fun populateDatabase(pictureDao: PictureDao) {}
+
+        suspend fun populateDatabase(agentDao: AgentDao){
+            for (agent in provideRandomAgents(15)) agentDao.insert(agent)
         }
+    }
 }

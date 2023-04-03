@@ -12,31 +12,32 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentMapBinding
-import com.oxymium.realestatemanager.model.Estate
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
 import com.oxymium.realestatemanager.viewmodel.EstateViewModelFactory
-import kotlinx.coroutines.*
 
 // -----------
 // MapFragment
 // -----------
 
-class MapFragment: Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+class MapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private val fragmentTAG = javaClass.simpleName
 
-    lateinit var mapView: MapView
+    private lateinit var mapView: MapView
 
     // Location
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -48,7 +49,11 @@ class MapFragment: Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListen
 
     // EstateViewModel
     private val estateViewModel: EstateViewModel by activityViewModels() {
-        EstateViewModelFactory((activity?.application as EstatesApplication).repository,(activity?.application as EstatesApplication).repository2 )
+        EstateViewModelFactory(
+            (activity?.application as EstatesApplication).repository3,
+            (activity?.application as EstatesApplication).repository,
+            (activity?.application as EstatesApplication).repository2
+        )
     }
 
     // DataBinding
@@ -76,22 +81,18 @@ class MapFragment: Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListen
 
         mapView.onCreate(savedInstanceState)
 
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity());
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        mapView.getMapAsync(this);
+        mapView.getMapAsync(this)
 
         return binding.root
     }
 
     // Map Callback
     override fun onMapReady(googleMap: GoogleMap) {
-
         Log.d(fragmentTAG, "onMapReady: CALLED")
 
-
-        if (ActivityCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION
+        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.ACCESS_COARSE_LOCATION
@@ -126,58 +127,51 @@ class MapFragment: Fragment(), OnMapReadyCallback, GoogleMap.OnMarkerClickListen
 
         }
 
-
-
         // Observe EstateViewModel to get AllEstates
-        // Observe EstateViewModel to get AllEstates
-        estateViewModel.allEstates.observe(viewLifecycleOwner,
-            { it ->
-                it.forEach() {
-                        GlobalScope.launch(Dispatchers.Main) {
-                            withContext(Dispatchers.IO) {
+        estateViewModel.allEstates.observe(viewLifecycleOwner){
+                it ->
+            it.forEach() {
 
-                                // Try and catch IOException to prevent no corresponding address error
-                                // Color marker differently depending on sold status RED = SOLD, GREEN = AVAILABLE
-                                val defaultMarker: BitmapDescriptor = if (it.wasSold) {
-                                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
-                                } else {
-                                    BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
-                                }
-                                val latLng: LatLng = GeoCoderUtils().getLatLngFromCompleteAddress(
-                                    requireActivity(),
-                                    GeoCoderUtils().fuseAllElementsFromAddress(
-                                        it.address,
-                                        it.zipCode.toString(),
-                                        it.location
-                                    )
-                                )
-
-                                // Check for non-null latLng (= GeoCoder failed to provide coordinates from address)
-                                if (latLng.latitude != 0.0 && latLng.longitude != 0.0) {
-                                    val marker = googleMap.addMarker(
-                                        MarkerOptions()
-                                            .position(latLng)
-                                            .title(it.id.toString())
-                                            .snippet("Type - " + it.type + "\n" + "Price - $" + it.price.toString())
-                                            .icon(defaultMarker)
-                                    )
-
-                                    marker?.tag = it
-                                } else {
-                                    println("EMPTY ADDRESS for Estate number: " + it.id)
-                                }
-
-                            }
-
+                        // Try and catch IOException to prevent no corresponding address error
+                        // Color marker differently depending on sold status RED = SOLD, GREEN = AVAILABLE
+                        val defaultMarker: BitmapDescriptor = if (it.wasSold) {
+                            BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)
+                        } else {
+                            BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)
                         }
-                    }
 
-            })
+                        val latLng: LatLng = GeoCoderUtils().getLatLngFromCompleteAddress(
+                            requireActivity(),
+                            GeoCoderUtils().fuseAllElementsFromAddress(
+                                it.street,
+                                it.zipCode,
+                                it.location
+                            )
+                        )
+//
+                        // Check for non-null latLng (= GeoCoder failed to provide coordinates from address)
+                        if (latLng.latitude != 0.0 && latLng.longitude != 0.0) {
+                            val marker = googleMap.addMarker(
+                                MarkerOptions()
+                                    .position(latLng)
+                                    .title(it.id.toString())
+                                    .snippet("Type - " + it.type + "\n" + "Price - $" + it.price.toString())
+                                    .icon(defaultMarker)
+                            )
+//
+                            marker?.tag = it
+                        } else {
+                            println("EMPTY ADDRESS for Estate number: " + it.id)
+//
+                        }
+            }
+        }
     }
 
     // OnClickMarker logic
     override fun onMarkerClick(marker: Marker): Boolean {
-        estateViewModel.getEstateFromId(marker.tag as Estate)
+        // TODO REPLACE ESTATE CALL
+        //estateViewModel.getEstateFromId(marker.tag as Estate)
         return false
     }
 

@@ -5,15 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.*
 import android.view.ViewGroup
 import android.widget.DatePicker
-import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
+import com.oxymium.realestatemanager.BuildConfig.MAPS_API_KEY
+import com.oxymium.realestatemanager.ENABLE_STATIC_MAP
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentDetailsBinding
@@ -22,8 +23,8 @@ import com.oxymium.realestatemanager.utils.DateUtils
 import com.oxymium.realestatemanager.utils.PictureListener
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
 import com.oxymium.realestatemanager.viewmodel.EstateViewModelFactory
-import java.util.*
-
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import java.util.Calendar
 
 // ---------------
 // DetailsFragment
@@ -39,7 +40,7 @@ class DetailsFragment: Fragment() {
 
     // EstateViewModel
     private val estateViewModel: EstateViewModel by activityViewModels() {
-        EstateViewModelFactory((activity?.application as EstatesApplication).repository,
+        EstateViewModelFactory((activity?.application as EstatesApplication).repository3, (activity?.application as EstatesApplication).repository,
             (activity?.application as EstatesApplication).repository2)
     }
 
@@ -53,6 +54,7 @@ class DetailsFragment: Fragment() {
 
     }
 
+    @ExperimentalCoroutinesApi
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -61,68 +63,92 @@ class DetailsFragment: Fragment() {
 
         fragmentDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
 
-        fragmentDetailsBinding.lifecycleOwner = activity
         fragmentDetailsBinding.estateViewModel = estateViewModel
         fragmentDetailsBinding.include1.estateViewModel = estateViewModel
         fragmentDetailsBinding.include2.estateViewModel = estateViewModel
         fragmentDetailsBinding.include3.estateViewModel = estateViewModel
         fragmentDetailsBinding.include4.estateViewModel = estateViewModel
         fragmentDetailsBinding.include5.estateViewModel = estateViewModel
+        fragmentDetailsBinding.include6.estateViewModel = estateViewModel
+        fragmentDetailsBinding.lifecycleOwner = activity
+
+        // Observe Estate ID
+        estateViewModel.selectedEstateId.observe(viewLifecycleOwner) {
+            it?.let {
+                // Query Estate
+                estateViewModel.getEstate(it)
+                // Query Picture
+                estateViewModel.getSecondaryPicturesByEstateId(it)
+            }
+        }
+
+        // Observe Agent
+        estateViewModel.agentId.observe(viewLifecycleOwner) {
+            it?.let{
+                estateViewModel.getAgentById(it)
+            }
+        }
 
         // RecyclerView setup
-        val gridLayoutManager = GridLayoutManager(context, 1, GridLayoutManager.HORIZONTAL, false)
-        fragmentDetailsBinding.include3.fragmentDetailsEstatePicturesRecyclerView.layoutManager = gridLayoutManager
+        val gridLayoutManager = GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
+        fragmentDetailsBinding.include4.fragmentDetailsEstatePicturesRecyclerView.layoutManager = gridLayoutManager
 
-        // Observe picture list
-        estateViewModel.allPicturesForCurrentEstate.observe(viewLifecycleOwner,
-            { detailsPictureAdapter.submitList(it)
-            })
+        // Observe secondary pictures list
+        estateViewModel.secondaryPicturesForCurrentEstate.observe(viewLifecycleOwner){
+            detailsPictureAdapter.submitList(it)
+        }
 
         // Setup adapter
         detailsPictureAdapter = DetailsPictureAdapter(
+            // onClick secondary picture
             PictureListener {
-                    picture -> Glide.with(this@DetailsFragment).load(picture.path.toUri()).into(fragmentDetailsBinding.include1.layoutDetailsMainPicture)
-
+                    picture -> Glide.with(this@DetailsFragment).load(picture.path).placeholder(R.drawable.estate_placeholder7).into(fragmentDetailsBinding.include1.layoutDetailsMainPicture)
             }
         )
+
+        // Adapter init
+        fragmentDetailsBinding.include4.fragmentDetailsEstatePicturesRecyclerView.adapter = detailsPictureAdapter
+
         // Load Main Picture in Details
-        estateViewModel.selectedEstate.observe(viewLifecycleOwner, {
-                selectedEstate ->
+        estateViewModel.queriedEstate.observe(viewLifecycleOwner) { queriedEstate ->
             // Check for null selected estate (when app starts on tablet, user won't have selected anything yet)
-            if (selectedEstate != null) {
-                // Disable sold button if Estate already sold
-                if (selectedEstate.wasSold) {
-                    fragmentDetailsBinding.layoutDetailsSellButton.visibility = GONE
-                }else{
-                    fragmentDetailsBinding.layoutDetailsSellButton.visibility = VISIBLE
-                }
-                Glide.with(this@DetailsFragment)
-                    .load(selectedEstate.mainPicturePath)
+            if (queriedEstate != null) {
+
+                Glide
+                    .with(this@DetailsFragment)
+                    .load(queriedEstate.mainPicturePath)
                     .placeholder(R.drawable.estate_placeholder4)
                     .into(fragmentDetailsBinding.include1.layoutDetailsMainPicture)
 
-                // Static map API call "https://maps.googleapis.com/maps/api/staticmap?center=Annecy+Le+Vieux,Bois+Fleuris,France&zoom=14&size=400x400&key=AIzaSyBfhFAJtJzQmOIRhGuPjuyyThh5CzK_6p8"
-                var latLng = GeoCoderUtils().getLatLngFromCompleteAddress(requireActivity(), GeoCoderUtils().fuseAllElementsFromAddress(selectedEstate.address, selectedEstate.zipCode.toString(), selectedEstate.location))
+                // Load static map
+                if (ENABLE_STATIC_MAP) {
+                    val latLng = GeoCoderUtils().getLatLngFromCompleteAddress(
+                        requireActivity(), GeoCoderUtils().fuseAllElementsFromAddress(
+                            queriedEstate.street,
+                            queriedEstate.zipCode.toString(),
+                            queriedEstate.location
+                        )
+                    )
 
-                /* Glide.with(this@DetailsFragment)
-                    .load("https://maps.googleapis.com/maps/api/staticmap?center=${latLng.latitude},${latLng.longitude}&zoom=14&size=400x400&key=AIzaSyBfhFAJtJzQmOIRhGuPjuyyThh5CzK_6p8")
-                    .placeholder(R.drawable.estate_placeholder4)
-                    .into(fragmentDetailsBinding.include5.fragmentDetailsEstateStaticMap) */
+                    Glide.with(this@DetailsFragment)
+                        .load("https://maps.googleapis.com/maps/api/staticmap?center=${latLng.latitude},${latLng.longitude}&zoom=14&size=400x400&key=${MAPS_API_KEY}")
+                        .placeholder(R.drawable.estate_placeholder4)
+                        .into(fragmentDetailsBinding.include6.fragmentDetailsEstateStaticMap)
+                }else{
+                    Snackbar.make(binding.root, "Static map turned off", Snackbar.LENGTH_LONG).show()
+                }
+
             }
 
-        })
+        }
 
         // Observe sale date trigger
-        estateViewModel.wasSellButtonClicked.observe(viewLifecycleOwner, {
-                sellButtonWasClicked ->
-            if (sellButtonWasClicked == 1){
+        estateViewModel.wasSellButtonClicked.observe(viewLifecycleOwner) { sellButtonWasClicked ->
+            if (sellButtonWasClicked == 1) {
                 estateViewModel.wasSellButtonClicked.value = 0
                 alertDialogSellingDate()
             }
-        })
-
-        // Adapter init
-        fragmentDetailsBinding.include3.fragmentDetailsEstatePicturesRecyclerView.adapter = detailsPictureAdapter
+        }
 
         return binding.root
 
@@ -161,7 +187,7 @@ class DetailsFragment: Fragment() {
         builder.setTitle("Selling date")
         builder.setView(picker)
         builder.setPositiveButton("Save")
-        { dialog, which ->
+        { _, _ ->
             // Update with selected Date as sold
             soldDateInMillis?.let { estateViewModel.updateEstateIntoDatabase(it) }
         }
@@ -173,3 +199,4 @@ class DetailsFragment: Fragment() {
         builder.show()
     }
 }
+

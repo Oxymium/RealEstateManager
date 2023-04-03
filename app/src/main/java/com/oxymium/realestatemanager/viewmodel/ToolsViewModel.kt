@@ -1,9 +1,9 @@
 package com.oxymium.realestatemanager.viewmodel
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.oxymium.realestatemanager.model.Estate
+import com.oxymium.realestatemanager.R
 
 // --------------
 // ToolsViewModel
@@ -11,27 +11,24 @@ import com.oxymium.realestatemanager.model.Estate
 
 class ToolsViewModel: ViewModel() {
 
-    private val viewModelTAG = javaClass.simpleName
-
-    // DEFAULT: 0
-    var categoryClicked: MutableLiveData<Int> = MutableLiveData(0)
-
-    // CURRENCY CATEGORY = 1
-    fun onClickCurrencyCategory(){
-        Log.d(viewModelTAG, "onClickCurrencyCategory: ")
-        categoryClicked.postValue(1)
+    // -------------------
+    // FRAGMENT NAVIGATION
+    // -------------------
+    val selectedTool: LiveData<Int> get() = _selectedTool
+    private val _selectedTool: MutableLiveData<Int> = MutableLiveData<Int>()
+    fun updateSelectedTool(value: Int){
+        _selectedTool.value = when (value){
+            1 -> R.id.currencyFragment
+            2 -> R.id.loanFragment
+            3 -> R.id.devFragment
+            else -> 0
+        }
     }
 
-    // LOAN CATEGORY = 2
-    fun onClickLoanCategory(){
-        Log.d(viewModelTAG, "onClickCurrencyCategory: ")
-        categoryClicked.postValue(2)
-    }
-
-    // DEV CATEGORY = 3
-    fun onClickDevCategory(){
-        Log.d(viewModelTAG, "onClickDevCategory: ")
-        categoryClicked.postValue(3)
+    val currentTool: LiveData<Int> get() = _currentTool
+    private val _currentTool = MutableLiveData<Int>()
+    fun updateCurrentTool(value: Int){
+        _currentTool.value = value
     }
 
 }

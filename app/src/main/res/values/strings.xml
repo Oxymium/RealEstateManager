@@ -14,18 +14,32 @@
 
     <!-- ESTATES FRAG. -->
     <string name="quick_search_hint">Quick Search</string>
+    <string name="results_hint_0">0 Estates found</string>
+    <string name="results_hint_1">1 Estate found</string>
+    <string name="results_hint">Estates found:</string>
     <string name="fragment_estates_text_emptyRecyclerView">Start by touching the CREATE icon.</string>
 
     <!-- DETAILS FRAG. -->
+    <string name="fragment_details_hint_sold">was sold</string>
     <string name="fragment_details_hint_type">Type</string>
     <string name="fragment_details_hint_surface">Surface</string>
     <string name="fragment_details_hint_rooms">Rooms</string>
+    <string name="details_energy_score">%1$s Kwh/m²/year</string>
+    <string name="details_energy_hint">XXX Kwh/m²/year</string>
     <string name="fragment_details_hint_price">Price</string>
     <string name="fragment_details_hint_bedrooms">Bedrooms</string>
     <string name="fragment_details_hint_bathrooms">Bathrooms</string>
     <string name="fragment_details_hint_highSpeedInternet">Internet</string>
     <string name="fragment_details_hint_energy">Energy</string>
+    <string name="fragment_details_hint_static_map">Static map</string>
 
+    <!-- DETAILS PLACEHOLDER -->
+    <string name="fragment_details_placeholder_display_text">Oops, seems like there\'s nothing to see yet</string>
+    <string name="fragment_details_placeholder_display_text_2">「Select」or「Create」an Estate</string>
+    <string name="fragment_details_placeholder_icon">Estates</string>
+
+    <!-- NAVIGATOR -->
+    <string name="navigator_tools">Tools</string>
 
     <!-- ESTATE ITEM -->
     <string name="item_estate_description_picture">Estate picture</string>
@@ -37,14 +51,11 @@
     <string name="item_estate_hint_type">Type</string>
 
     <!-- CREATE FRAG. -->
-    <string name="layout_create_date_picture">Date icon</string>
-    <string name="layout_create_date_title">Current date</string>
-    <string name="layout_create_date_hint">dd/mm/yyyy</string>
-    <string name="layout_create_numerics_title">Numerics</string>
-    <string name="layout_create_numerics_picture">Date icon</string>
-    <string name="layout_create_price_input_hint">Price in dollars</string>
-    <string name="layout_create_surface_input_hint">Surface m²</string>
-
+    <string name="create_title">「CREATE」</string>
+    <string name="create_guideline">Proceed through 6 steps</string>
+    <string name="edit_title">「EDIT」</string>
+    <string name="edit_subtitle">Estate n° %1$s</string>
+    <string name="edit_guideline">Edit any values</string>
     <string name="layout_create_type_title">Type</string>
     <string name="layout_create_type_picture">Type icon</string>
 
@@ -140,6 +151,82 @@
         <item>No</item>
     </string-array>
 
+    <!-- ICONS. -->
+    <string name="icon_agent">Agent icon</string>
+    <string name="icon_type">Type icon</string>
+    <string name="icon_values">Values icon</string>
+    <string name="icon_energy">Energy score icon</string>
+    <string name="icon_main_picture">Main picture icon</string>
+    <string name="main_picture">Main picture</string>
+    <string name="button_main_picture_add">Add main picture button</string>
+    <string name="button_main_picture_delete">Delete main picture button</string>
+    <string name="button_secondary_pictures_add">Add secondary pictures button</string>
+    <string name="icon_description">Description icon</string>
+    <string name="icon_misc">Misc icon</string>
+    <string name="icon_address">Address icon</string>
+    <string name="icon_nearby_places">Nearby places icon</string>
+
+    <!-- HINT VALUES -->
+    <string name="hint_agent">Agent</string>
+    <string name="hint_type">Type</string>
+    <string name="hint_values">Values</string>
+    <string name="hint_energy">Energy score</string>
+    <string name="hint_picture">Picture</string>
+    <string name="hint_secondary_pictures">Secondary Picture(s)</string>
+    <string name="hint_preview">Preview</string>
+    <string name="hint_description">Description</string>
+    <string name="hint_misc">Misc.</string>
+    <string name="hint_address">Address</string>
+    <string name="hint_street">Street</string>
+    <string name="hint_zipCode">Zip Code (ex. XXXXX)</string>
+    <string name="hint_location">Location (ex. Paris)</string>
+    <string name="hint_nearby_places">Nearby Places</string>
+
+    <!-- NAVIGATOR BAR. -->
+    <string name="navigator_bar_steps">%1$s/%2$d steps</string>
+    <string name="navigator_bar_steps_hint">X/Y steps</string>
+
+    <!-- STEP ONE. -->
+    <string name="fragment_step_one_">No</string>
+    <string name="fragment_step_one_agent_text">%1$s %2$s</string>
+    <string name="fragment_step_one_agent_text_null">Select one agent</string>
+    <string name="fragment_step_one_type_text">%1$s</string>
+    <string name="fragment_step_one_type_text_null">Select one type</string>
+
+    <!-- STEP TWO. -->
+    <string name="fragment_step_two_">No</string>
+    <string name="fragment_step_two_energy_class_hint">Energy class - %1$s \n%2$s</string>
+    <string name="layout_create_date_picture">Date icon</string>
+    <string name="layout_create_date_title">Current date</string>
+    <string name="layout_create_date_hint">dd/mm/yyyy</string>
+    <string name="price_input_hint">price in dollars</string>
+    <string name="surface_input_hint">surface m²</string>
+    <string name="rooms_input_hint">room(s)</string>
+    <string name="bedrooms_input_hint">bedroom(s)</string>
+    <string name="bathrooms_input_hint">bathroom(s)</string>
+    <string name="energy_hint">kWh/m²/year</string>
+    <string name="energy_input_hint">kWh/m²/year - %1$s</string>
+
+    <!-- STEP THREE. -->
+    <string name="fragment_step_three_category">Values</string>
+
+    <!-- STEP FOUR. -->
+    <string name="fragment_step_four_category">Secondary Picture(s)</string>
+
+    <!-- STEP FIVE. -->
+    <string name="hint_garden">Garden</string>
+    <string name="hint_furnished">Furnished</string>
+    <string name="hint_high_speed_internet">High-speed internet</string>
+    <string name="hint_disabled_accessibility">Disabled accessibility</string>
+
+    <!-- ALERT DIALOG. -->
+    <string name="alert_create_title">Save into Database</string>
+    <string name="alert_create_message">Do you want to save this Estate as is?</string>
+    <string name="alert_missing_title">Missing elements</string>
+    <string name="alert_positive">Yes</string>
+    <string name="alert_neutral">OK</string>
+    <string name="alert_negative">Cancel</string>
+    <string name="alert_random_debug">Random (debug)</string>
 
     <!-- TOOLS FRAG. -->
     <string name="fragment_tools_description_picture_currency">Currency icon</string>
@@ -158,7 +245,6 @@
     <string name="fragment_dev_button_addThousandRandom_text">+1000 random Estate</string>
     <string name="fragment_dev_button_addTenThousandRandom_text">+10000 random Estate</string>
 
-
     <!-- CURRENCY FRAG. -->
     <string name="fragment_currency_hint_exchangeRate">Exchange rate</string>
     <string name="fragment_currency_hint_firstCurrency">Currency 1</string>
@@ -169,5 +255,16 @@
     <string name="fragment_loan_hint_deposit">Deposit</string>
     <string name="fragment_loan_hint_duration">Duration</string>
     <string name="fragment_loan_hint_interestRate">Interest rate</string>
+
+    <!-- ENERGY CLASS MESSAGES -->
+    <string name="energy_class_awaiting">Awaiting input…</string>
+    <string name="energy_class_a">Excellent energy performance</string>
+    <string name="energy_class_b">Very good energy performance</string>
+    <string name="energy_class_c">Good energy performance</string>
+    <string name="energy_class_d">Good energy performance</string>
+    <string name="energy_class_e">Average energy performance</string>
+    <string name="energy_class_f">Weak energy performance</string>
+    <string name="energy_class_g">Bad energy performance</string>
+
 
 </resources>

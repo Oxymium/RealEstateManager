@@ -7,20 +7,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentCurrencyBinding
 import com.oxymium.realestatemanager.viewmodel.CurrencyViewModel
-import com.oxymium.realestatemanager.viewmodel.EstateViewModel
-import com.oxymium.realestatemanager.viewmodel.EstateViewModelFactory
-import com.oxymium.realestatemanager.viewmodel.ToolsViewModel
 
 // ----------------
 // CurrencyFragment
@@ -48,7 +40,7 @@ class CurrencyFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         fragmentCurrencyBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_currency, container, false)
         fragmentCurrencyBinding.currencyViewModel = currencyViewModel
@@ -73,9 +65,8 @@ class CurrencyFragment: Fragment() {
             override fun afterTextChanged(s: Editable) {
                 // Check if user input to prevent loops
                 if (fragmentCurrencyBinding.fragmentCurrencyFirstCurrencyInput.hasFocus()) {
-                    // Check also is Editable is empty to prevent error
-                    if (s.isNotEmpty())
-                    currencyViewModel.firstCurrency.postValue(s.toString().toDouble())
+                    // Check also if Editable is empty to prevent error
+                    if (s.isNotEmpty()) currencyViewModel.firstCurrency.postValue(s.toString().toDouble())
                 }
             }
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}

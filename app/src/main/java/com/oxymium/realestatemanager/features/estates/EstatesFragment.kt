@@ -24,7 +24,7 @@ import com.oxymium.realestatemanager.utils.OnSwipeTouchListener
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
 import com.oxymium.realestatemanager.viewmodel.EstateViewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import java.util.*
+import java.util.Calendar
 
 
 // ---------------
@@ -42,6 +42,7 @@ class EstatesFragment: Fragment() {
     // EstateViewModel
     private val estateViewModel: EstateViewModel by activityViewModels() {
         EstateViewModelFactory(
+            (activity?.application as EstatesApplication).repository3,
             (activity?.application as EstatesApplication).repository,
             (activity?.application as EstatesApplication).repository2
         )
@@ -66,46 +67,40 @@ class EstatesFragment: Fragment() {
 
         fragmentEstatesBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_estates, container, false)
 
+        fragmentEstatesBinding.lifecycleOwner = activity
         fragmentEstatesBinding.estateViewModel = estateViewModel
         fragmentEstatesBinding.include1.estateViewModel = estateViewModel
-        fragmentEstatesBinding.lifecycleOwner = activity
 
         // RecyclerView setup
         var gridLayoutManager: GridLayoutManager
-        estateViewModel.isTablet.observe(viewLifecycleOwner, {
-            when (it) {
-                true -> {
-                    gridLayoutManager =
-                        GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false)
-                    fragmentEstatesBinding.fragmentEstatesRecyclerView.layoutManager =
-                        gridLayoutManager
-                }
-                false -> {
-                    gridLayoutManager =
-                        GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
-                    fragmentEstatesBinding.fragmentEstatesRecyclerView.layoutManager =
-                        gridLayoutManager
-                }
+        estateViewModel.isTablet.observe(viewLifecycleOwner) {
+            gridLayoutManager = when (it) {
+                // Single row for Tablet
+                true -> GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+                // 3 items otherwise
+                false -> GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
             }
-        })
+            fragmentEstatesBinding.fragmentEstatesRecyclerView.layoutManager = gridLayoutManager
+        }
 
         // Observe estate list
-        estateViewModel.estateListLiveData.observe(viewLifecycleOwner,
-            {
-                estateAdapter.submitList(it)
-                // Update listSize value to display number of Estate in the list
-                estateViewModel.estatesListSize.postValue(it.size)
-            })
+        estateViewModel.estateListLiveData.observe(viewLifecycleOwner){
+            estateAdapter.submitList(it)
+            // Update listSize value to display number of Estate in the list
+            estateViewModel.estatesListSize.value = it.size
+        }
 
         // Initialize query
-        estateViewModel.queryValue.observe(viewLifecycleOwner, {
+        estateViewModel.queryValue.observe(viewLifecycleOwner) {
             estateViewModel.setSearchQuery(it, 1)
-        })
+        }
 
         // Observe search query & update
-        estateViewModel.searchQuery.observe(viewLifecycleOwner, {
-                searchQuery -> estateViewModel.setSearchQuery(searchQuery.generateFullSearchQuery(), 2)
-            println(searchQuery.generateFullSearchQuery() + " THIS HAS CHANGED") })
+        estateViewModel.searchQuery.observe(viewLifecycleOwner) {
+                searchQuery ->
+            estateViewModel.setSearchQuery(searchQuery.generateFullSearchQuery(), 2)
+            println(searchQuery.generateFullSearchQuery() + " THIS HAS CHANGED")
+        }
 
         // Reset query value when user swipe screen
         fragmentEstatesBinding.fragmentEstateSwipeRefreshLayout.setOnRefreshListener {
@@ -117,12 +112,14 @@ class EstatesFragment: Fragment() {
         }
 
         // Setup adapter
-        estateAdapter = EstateAdapter(EstateListener { estate ->
+        estateAdapter = EstateAdapter(EstateListener {
             // Send selected Estate to ViewModel
-            estateViewModel.selectedEstate.postValue(estate)
-            estateViewModel.getEstateFromId(estate)
-            estateViewModel.startDetailsFragmentFrom.postValue(1)
-            Log.d("estate Clicked:", estate.id.toString())
+            // ID
+            estateViewModel.updateSelectedEstateId(it.id)
+            // AGENT ID
+            estateViewModel.updateAgentId(it.agent_id)
+
+            estateViewModel.toggleShouldStartDetailsFragment(true)
         })
 
         // Adapter init
@@ -161,8 +158,7 @@ class EstatesFragment: Fragment() {
         // -----------
 
         // Date selector trigger
-        estateViewModel.wasDateClicked.observe(viewLifecycleOwner, {
-                dateClicked ->
+        estateViewModel.wasDateClicked.observe(viewLifecycleOwner) { dateClicked ->
             when (dateClicked) {
                 1 -> {
                     alertDialogDate(dateClicked)
@@ -186,7 +182,7 @@ class EstatesFragment: Fragment() {
                     estateViewModel.wasDateClicked.value = 0
                 }
             }
-        })
+        }
 
 
         // (TYPE) Spinner listener
@@ -225,15 +221,15 @@ class EstatesFragment: Fragment() {
                     view: View?,
                     position: Int,
                     id: Long){
-                    if (parent?.getItemAtPosition(position) == "Any"){ estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.energy = null}}
-                    else{ estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.energy = parent?.getItemAtPosition(position).toString()}}}}
+                    if (parent?.getItemAtPosition(position) == "Any"){ estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.energy = null}}
+                    else{ estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.energy = parent?.getItemAtPosition(position).toString()}}}}
 
         // (MIN PRICE) Text listener
         fragmentEstatesBinding.include1.layoutSearchPriceMinInput.addTextChangedListener(object :
             TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.minPrice = null}}
-                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.minPrice = s.toString()}}}
+                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.minPrice = null}}
+                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.minPrice = s.toString()}}}
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
 
@@ -241,8 +237,8 @@ class EstatesFragment: Fragment() {
         fragmentEstatesBinding.include1.layoutSearchPriceMaxInput.addTextChangedListener(object :
             TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.maxPrice = null} }
-                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.maxPrice = s.toString()}} }
+                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.maxPrice = null} }
+                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.maxPrice = s.toString()}} }
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
 
@@ -250,8 +246,8 @@ class EstatesFragment: Fragment() {
         fragmentEstatesBinding.include1.layoutSearchSurfaceMinInput.addTextChangedListener(object :
             TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.minSurface = null} }
-                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.minSurface = s.toString()}}}
+                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.minSurface = null} }
+                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.minSurface = s.toString()}}}
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
 
@@ -259,8 +255,8 @@ class EstatesFragment: Fragment() {
         fragmentEstatesBinding.include1.layoutSearchSurfaceMaxInput.addTextChangedListener(object :
             TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.maxSurface = null}}
-                s.let {estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.maxSurface = s.toString()}} }
+                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.maxSurface = null}}
+                s.let {estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.maxSurface = s.toString()}} }
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
 
@@ -269,8 +265,8 @@ class EstatesFragment: Fragment() {
             object :
                 TextWatcher {
                 override fun afterTextChanged(s: Editable) {
-                    if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.minRooms = null}}
-                    s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.minRooms = s.toString()} } }
+                    if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.minRooms = null}}
+                    s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.minRooms = s.toString()} } }
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int){}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {} })
 
@@ -278,8 +274,8 @@ class EstatesFragment: Fragment() {
         fragmentEstatesBinding.include1.layoutSearchLocationInput.addTextChangedListener(object :
             TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.location = null} }
-                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.location = s.toString()}}}
+                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.location = null} }
+                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.location = s.toString()}}}
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
@@ -288,8 +284,8 @@ class EstatesFragment: Fragment() {
         fragmentEstatesBinding.include1.layoutSearchNearbyInput.addTextChangedListener(object :
             TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.nearby = null}}
-                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.nearby = s.toString()}}}
+                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.nearby = null}}
+                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.nearby = s.toString()}}}
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
@@ -336,28 +332,28 @@ class EstatesFragment: Fragment() {
         fragmentEstatesBinding.include1.layoutSearchMiniPicturesAmountInput.addTextChangedListener(object :
             TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.minPictures = null}}
-                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.minPictures = s.toString()}}}
+                if (s.isEmpty()) { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.minPictures = null}}
+                s.let { estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.minPictures = s.toString()}}}
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}})
 
         // CHECKBOXES reset time periods
         fragmentEstatesBinding.include1.layoutSearchAllTimePeriods.setOnCheckedChangeListener{
-                buttonView, isChecked ->
+                _, isChecked ->
             if (isChecked) {
                 println("Called checbox clicked")
-                estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.startingDate = null }
-                estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.endingDate = null }
+                estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.startingDate = null }
+                estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.endingDate = null }
                 // TODO updateViewModel with new values
                 //estateViewModel.startingAddedDate.value = estateViewModel.startingAddedDate.value?.run{ 0L}
                 //estateViewModel.endingAddedDate.value = estateViewModel.endingAddedDate.value?.run{ 0L}
             }}
 
         fragmentEstatesBinding.include1.layoutSearchAllTimeSold.setOnCheckedChangeListener{
-                buttonView, isChecked ->
+                _, isChecked ->
             if (isChecked) {
-                estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.startingDateSold = null }
-                estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it -> it.endingDateSold = null }
+                estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.startingDateSold = null }
+                estateViewModel.searchQuery.value = estateViewModel.searchQuery.value?.also { it.endingDateSold = null }
                 // TODO updateViewModel with new values
                 //estateViewModel.startingSoldDate.value = estateViewModel.startingSoldDate.value?.apply{ estateViewModel.startingSoldDate.value = 0L}
                 //estateViewModel.endingSoldDate.value = estateViewModel.endingSoldDate.value?.apply{ estateViewModel.endingSoldDate.value = 0L}
@@ -413,7 +409,7 @@ class EstatesFragment: Fragment() {
         builder.setTitle(title)
         builder.setView(picker)
         builder.setPositiveButton("Save")
-        { dialog, which ->
+        { _, _ ->
 
             // Update viewModel with string date in format DD/MM/YYYY with DD < 10 = 0X && MM < 10 = 0X
             if (from ==1){ estateViewModel.startingAddedDate.value = pickedDateInMillis }
@@ -425,7 +421,7 @@ class EstatesFragment: Fragment() {
 
         builder.setNegativeButton(
             "Cancel"
-        ) { dialog, which -> dialog.cancel() }
+        ) { dialog, _ -> dialog.cancel() }
 
         builder.show()
     }

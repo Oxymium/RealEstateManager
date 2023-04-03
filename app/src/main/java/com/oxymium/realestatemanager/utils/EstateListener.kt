@@ -7,7 +7,6 @@ import com.oxymium.realestatemanager.model.Estate
 // ----------------------------------
 
 class EstateListener(val estateClickListener: (estate: Estate) -> Unit) {
-
     fun onClickEstate(estate: Estate) = estateClickListener(estate)
 
 }

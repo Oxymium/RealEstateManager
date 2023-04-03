@@ -42,6 +42,7 @@
                     android:scaleType="centerCrop"
                     android:contentDescription="@string/item_estate_description_picture"
                     android:background="@color/space_cadet"
+                    app:itemEstateSoldTint="@{estate.wasSold}"
                     android:src="@{estate.mainPicturePath}"
                     card_view:layout_constraintDimensionRatio="H,1:1"
                     card_view:layout_constraintStart_toStartOf="parent"
@@ -85,8 +86,9 @@
                     android:id="@+id/item_estate_energy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{estate.energy}"
                     android:textSize="@dimen/item_estate_font_small"
+                    app:itemEstateEnergyScoreTextColor="@{estate.energyScore}"
+                    app:itemEstateEnergyScoreText="@{estate.energyScore}"
                     android:textColor="@color/isabelline"
                     android:textStyle="bold"
                     android:textAlignment="center"
@@ -117,7 +119,6 @@
                     />
 
                 <!-- Middle part -->
-
                 <View
                     android:id="@+id/item_estate_part_middle"
                     android:layout_width="0dp"
@@ -149,7 +150,6 @@
                     />
 
                 <!-- Bottom part -->
-
                 <View
                     android:id="@+id/item_estate_part_bottom"
                     android:layout_width="0dp"

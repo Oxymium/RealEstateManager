@@ -1,7 +1,6 @@
 package com.oxymium.realestatemanager.database
 
 import android.app.Application
-import com.oxymium.realestatemanager.model.Estate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -19,6 +18,5 @@ class EstatesApplication : Application() {
         val database by lazy { EstateRoomDatabase.getDatabase(this, applicationScope) }
         val repository by lazy { EstateRepository(database.estateDao()) }
         val repository2 by lazy { PictureRepository(database.pictureDao()) }
-
-
+        val repository3 by lazy { AgentRepository(database.agentDao()) }
 }
