@@ -416,6 +416,73 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_search_secondary_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_search_mini_pictures_amount"
+                >
+
+                <CheckBox
+                    android:id="@+id/layout_search_garden"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Garden"
+                    android:textColorHint="@color/white"
+                    android:background="@color/space_cadet"
+                    android:checked="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/layout_search_disability"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <CheckBox
+                    android:id="@+id/layout_search_disability"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Disability"
+                    android:textColorHint="@color/white"
+                    android:background="@color/space_cadet"
+                    android:checked="true"
+                    app:layout_constraintStart_toEndOf="@id/layout_search_garden"
+                    app:layout_constraintEnd_toStartOf="@id/layout_search_furnished"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <CheckBox
+                    android:id="@+id/layout_search_furnished"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Furnished"
+                    android:textColorHint="@color/white"
+                    android:background="@color/space_cadet"
+                    android:checked="true"
+                    app:layout_constraintStart_toEndOf="@id/layout_search_disability"
+                    app:layout_constraintEnd_toStartOf="@id/layout_search_high_speed_internet"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <CheckBox
+                    android:id="@+id/layout_search_high_speed_internet"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="High speed internet"
+                    android:textColorHint="@color/white"
+                    android:background="@color/space_cadet"
+                    android:checked="true"
+                    app:layout_constraintStart_toEndOf="@id/layout_search_furnished"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

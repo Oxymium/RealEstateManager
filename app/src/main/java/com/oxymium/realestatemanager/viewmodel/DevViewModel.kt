@@ -8,6 +8,8 @@ import com.oxymium.realestatemanager.RANDOM_PICTURES
 import com.oxymium.realestatemanager.SECONDARY_PICTURES_AMOUNT_LIMIT
 import com.oxymium.realestatemanager.database.EstateRepository
 import com.oxymium.realestatemanager.database.PictureRepository
+import com.oxymium.realestatemanager.demoSet1WithAddress
+import com.oxymium.realestatemanager.demoSet1WithAddress2
 import com.oxymium.realestatemanager.generateRandomEstate
 import com.oxymium.realestatemanager.model.Estate
 import kotlinx.coroutines.launch
@@ -61,4 +63,12 @@ class DevViewModel(private val estateRepository: EstateRepository, private val p
     // Delete all
     fun onClickDeleteAllButton(){ viewModelScope.launch { estateRepository.deleteAll() }}
 
+    // Demo set
+    fun onClickDemoSetButton() {
+        viewModelScope.launch {
+            // INSERT DEMO SETS IN DB
+            demoSet1WithAddress.forEach{ estateRepository.insert(it) }
+            demoSet1WithAddress2.forEach{ estateRepository.insert(it) }
+        }
+    }
 }

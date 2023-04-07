@@ -176,10 +176,9 @@
         <!-- DELETE ALL PART -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/dev_delete_all_part"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="15dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/step_five_main_body"
             >
@@ -196,6 +195,30 @@
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- DEMO PART -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dev_add_demo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dev_delete_all_part"
+            >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LOAD DEMO SET"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/green_500"
+                android:onClick="@{ () -> devViewModel.onClickDemoSetButton() }"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -59,8 +59,7 @@ class DevFragment: Fragment() {
         fragmentDevBinding.devViewModel = devViewModel
         fragmentDevBinding.lifecycleOwner = activity
 
-
-                // RANDOM GIVEN INPUT
+        // RANDOM GIVEN INPUT
         fragmentDevBinding.devGenerateEstateNumberInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
