@@ -41,79 +41,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_create_numerics_top_space">
 
-            <ImageButton
-                android:id="@+id/tools_navigator_currency_button"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/navigation_tools_recycler_view"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{ () -> toolsViewModel.updateCurrentTool(1) }"
-                android:src="@drawable/outline_swap_horiz_white_24"
-                app:tint="@color/isabelline"
-                android:backgroundTint="@color/space_cadet"
-                android:contentDescription="@string/fragment_tools_category_currency_title"
+                tools:listitem="@layout/item_step"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_centerVertical="true"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/create_navigator_loan_button"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:background="@color/yellow_500"
-                app:navigatorStepsUnderlineVisibility="@{ toolsViewModel.currentTool == 1 }"
-                app:layout_constraintStart_toStartOf="@+id/tools_navigator_currency_button"
-                app:layout_constraintTop_toBottomOf="@+id/tools_navigator_currency_button"
-                app:layout_constraintEnd_toEndOf="@+id/tools_navigator_currency_button"
-                />
-
-            <ImageButton
-                android:id="@+id/create_navigator_loan_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{ () -> toolsViewModel.updateCurrentTool(2) }"
-                android:src="@drawable/chart_pie"
-                app:tint="@color/isabelline"
-                android:backgroundTint="@color/space_cadet"
-                android:contentDescription="@string/fragment_tools_category_loan_title"
-                app:layout_constraintStart_toEndOf="@+id/tools_navigator_currency_button"
-                app:layout_constraintEnd_toStartOf="@+id/create_navigator_dev_button"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:background="@color/yellow_500"
-                app:navigatorStepsUnderlineVisibility="@{ toolsViewModel.currentTool == 2 }"
-                app:layout_constraintStart_toStartOf="@+id/create_navigator_loan_button"
-                app:layout_constraintTop_toBottomOf="@+id/create_navigator_loan_button"
-                app:layout_constraintEnd_toEndOf="@+id/create_navigator_loan_button"
-                />
-
-            <ImageButton
-                android:id="@+id/create_navigator_dev_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{ () -> toolsViewModel.updateCurrentTool(3) }"
-                android:src="@drawable/outline_help_outline_white_24"
-                app:tint="@color/isabelline"
-                android:backgroundTint="@color/space_cadet"
-                android:contentDescription="@string/fragment_tools_category_dev_title"
-                app:layout_constraintStart_toEndOf="@+id/create_navigator_loan_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:background="@color/yellow_500"
-                app:navigatorStepsUnderlineVisibility="@{ toolsViewModel.currentTool == 3 }"
-                app:layout_constraintStart_toStartOf="@+id/create_navigator_dev_button"
-                app:layout_constraintTop_toBottomOf="@+id/create_navigator_dev_button"
-                app:layout_constraintEnd_toEndOf="@+id/create_navigator_dev_button"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -123,10 +62,12 @@
             android:layout_height="wrap_content"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="@string/navigator_tools"
+            app:navigatorToolsTitle="@{ toolsViewModel.currentTool }"
             android:textColor="@color/isabelline"
             android:textStyle="italic|bold"
             android:textAlignment="center"
+            android:hint="Tools"
+            android:textColorHint="@color/white"
             android:background="@color/space_cadet"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

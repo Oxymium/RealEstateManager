@@ -18,7 +18,6 @@ import com.oxymium.realestatemanager.ENABLE_STATIC_MAP
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentDetailsBinding
-import com.oxymium.realestatemanager.features.map.GeoCoderUtils
 import com.oxymium.realestatemanager.utils.DateUtils
 import com.oxymium.realestatemanager.utils.PictureListener
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
@@ -39,7 +38,7 @@ class DetailsFragment: Fragment() {
     private val binding get() = fragmentDetailsBinding
 
     // EstateViewModel
-    private val estateViewModel: EstateViewModel by activityViewModels() {
+    private val estateViewModel: EstateViewModel by activityViewModels {
         EstateViewModelFactory((activity?.application as EstatesApplication).repository3, (activity?.application as EstatesApplication).repository,
             (activity?.application as EstatesApplication).repository2)
     }
@@ -59,11 +58,12 @@ class DetailsFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         fragmentDetailsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
 
         fragmentDetailsBinding.estateViewModel = estateViewModel
+        fragmentDetailsBinding.navigatorBar.estateViewModel = estateViewModel
         fragmentDetailsBinding.include1.estateViewModel = estateViewModel
         fragmentDetailsBinding.include2.estateViewModel = estateViewModel
         fragmentDetailsBinding.include3.estateViewModel = estateViewModel
@@ -122,16 +122,8 @@ class DetailsFragment: Fragment() {
 
                 // Load static map
                 if (ENABLE_STATIC_MAP) {
-                    val latLng = GeoCoderUtils().getLatLngFromCompleteAddress(
-                        requireActivity(), GeoCoderUtils().fuseAllElementsFromAddress(
-                            queriedEstate.street,
-                            queriedEstate.zipCode.toString(),
-                            queriedEstate.location
-                        )
-                    )
-
                     Glide.with(this@DetailsFragment)
-                        .load("https://maps.googleapis.com/maps/api/staticmap?center=${latLng.latitude},${latLng.longitude}&zoom=14&size=400x400&key=${MAPS_API_KEY}")
+                        .load("https://maps.googleapis.com/maps/api/staticmap?center=${queriedEstate.latitude},${queriedEstate.longitude}&zoom=14&size=400x400&key=${MAPS_API_KEY}")
                         .placeholder(R.drawable.estate_placeholder4)
                         .into(fragmentDetailsBinding.include6.fragmentDetailsEstateStaticMap)
                 }else{
@@ -143,11 +135,8 @@ class DetailsFragment: Fragment() {
         }
 
         // Observe sale date trigger
-        estateViewModel.wasSellButtonClicked.observe(viewLifecycleOwner) { sellButtonWasClicked ->
-            if (sellButtonWasClicked == 1) {
-                estateViewModel.wasSellButtonClicked.value = 0
-                alertDialogSellingDate()
-            }
+        estateViewModel.wasSellButtonClicked.observe(viewLifecycleOwner) {
+            if (it) alertDialogSellingDate()
         }
 
         return binding.root
@@ -162,7 +151,7 @@ class DetailsFragment: Fragment() {
 
         val newCalendar = Calendar.getInstance()
         newCalendar.timeInMillis = DateUtils().getTodayInMillis()
-        var soldDateInMillis: Long? = null
+        var soldDateInMillis: Long = newCalendar.timeInMillis
 
         // Alert Dialog
         val builder: AlertDialog.Builder = AlertDialog.Builder(activity)
@@ -189,7 +178,7 @@ class DetailsFragment: Fragment() {
         builder.setPositiveButton("Save")
         { _, _ ->
             // Update with selected Date as sold
-            soldDateInMillis?.let { estateViewModel.updateEstateIntoDatabase(it) }
+            soldDateInMillis.let { estateViewModel.updateEstateIntoDatabase(it) }
         }
 
         builder.setNegativeButton(

@@ -3,48 +3,65 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph_steps"
-    app:startDestination="@id/stepOneFragment">
+    app:startDestination="@id/stepOverviewFragment">
 
     <fragment
-        android:id="@+id/stepOneFragment"
-        android:name="com.oxymium.realestatemanager.features.create.step_one.StepOneFragment"
-        android:label="StepOneFragment"
-        tools:layout="@layout/fragment_step_one"
+        android:id="@+id/stepAgentFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_agent.StepAgentFragment"
+        android:label="StepAgentFragment"
+        tools:layout="@layout/fragment_step_agents"
         />
 
     <fragment
-        android:id="@+id/stepTwoFragment"
-        android:name="com.oxymium.realestatemanager.features.create.step_two.StepTwoFragment"
-        android:label="StepTwoFragment"
-        tools:layout="@layout/fragment_step_two"
+        android:id="@+id/stepTypeFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_type.StepTypeFragment"
+        android:label="StepTypeFragment"
+        tools:layout="@layout/fragment_step_types"
         />
 
     <fragment
-        android:id="@+id/stepThreeFragment"
-        android:name="com.oxymium.realestatemanager.features.create.step_three.StepThreeFragment"
-        android:label="StepThreeFragment"
-        tools:layout="@layout/fragment_step_three"
+        android:id="@+id/stepValuesEnergyScoreFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_values_energy_score.StepValuesEnergyScoreFragment"
+        android:label="StepValuesEnergyScoreFragment"
+        tools:layout="@layout/fragment_step_values_energy_score"
         />
 
     <fragment
-        android:id="@+id/stepFourFragment"
-        android:name="com.oxymium.realestatemanager.features.create.step_four.StepFourFragment"
-        android:label="StepFourFragment"
-        tools:layout="@layout/fragment_step_three"
+        android:id="@+id/stepNearbyPlacesFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_nearby_places.StepNearbyPlacesFragment"
+        android:label="StepNearbyPlacesFragment"
+        tools:layout="@layout/fragment_step_nearby_places"
         />
 
     <fragment
-        android:id="@+id/stepFiveFragment"
-        android:name="com.oxymium.realestatemanager.features.create.step_five.StepFiveFragment"
-        android:label="StepFiveFragment"
-        tools:layout="@layout/fragment_step_four"
+        android:id="@+id/stepAddressFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_address.StepAddressFragment"
+        android:label="StepAddressFragment"
+        tools:layout="@layout/fragment_step_address"
         />
-
     <fragment
-        android:id="@+id/stepSixFragment"
-        android:name="com.oxymium.realestatemanager.features.create.step_six.StepSixFragment"
-        android:label="StepSixFragment"
-        tools:layout="@layout/fragment_step_five"
+        android:id="@+id/stepMiscFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_misc.StepMiscFragment"
+        android:label="StepMiscFragment"
+        tools:layout="@layout/fragment_step_misc"
+        />
+    <fragment
+        android:id="@+id/stepMainPictureFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_picture_main.StepMainPictureFragment"
+        android:label="StepMainPictureFragment"
+        tools:layout="@layout/fragment_step_main_picture"
+        />
+    <fragment
+        android:id="@+id/stepSecondaryPicturesFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_pictures_secondary.StepSecondaryPicturesFragment"
+        android:label="StepSecondaryPicturesFragment"
+        tools:layout="@layout/fragment_step_secondary_pictures"
+        />
+    <fragment
+        android:id="@+id/stepOverviewFragment"
+        android:name="com.oxymium.realestatemanager.features.create.step_overview.StepOverviewFragment"
+        android:label="StepOverviewFragment"
+        tools:layout="@layout/fragment_step_overview"
         />
 
 </navigation>

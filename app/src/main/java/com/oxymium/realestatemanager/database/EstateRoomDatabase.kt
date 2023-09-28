@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 // EstateRoomDatabase (ROOM)
 // -------------------------
 
-@Database(entities = [Estate::class, Picture::class, Agent::class], version = 2)
+@Database(entities = [Estate::class, Picture::class, Agent::class], version = 4)
 abstract class EstateRoomDatabase : RoomDatabase() {
 
     abstract fun estateDao(): EstateDao
@@ -68,7 +68,7 @@ abstract class EstateRoomDatabase : RoomDatabase() {
 
         private class EstateDatabaseCallback(
             private val scope: CoroutineScope
-        ) : RoomDatabase.Callback() {
+        ) : Callback() {
             /**
              * Override the onCreate method to populate the database.
              */
@@ -87,7 +87,6 @@ abstract class EstateRoomDatabase : RoomDatabase() {
 
         /**
          * Populate the database in a new coroutine.
-         * If you want to start with more words, just add them.
          */
         suspend fun populateDatabase(estateDao: EstateDao) {
         }

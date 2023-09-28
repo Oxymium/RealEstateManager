@@ -3,25 +3,31 @@ package com.oxymium.realestatemanager.model
 // ------
 // Search
 // ------
-data class Search(var startingDate: String? = null,
-             var endingDate: String? = null,
-             var type: String? = null,
-             var energy: String? = null,
-             var highSpeedInternet: String? = null,
-             var available: String? = null,
-             var startingDateSold: String? = null,
-             var endingDateSold: String? = null,
-             var minPrice: String? = null,
-             var maxPrice: String? = null,
-             var minSurface: String? = null,
-             var maxSurface: String? = null,
-             var minRooms: String? = null,
-             var location: String? = null,
-             var nearby: String? = null,
-             var minPictures: String? = null,
-             // Used to initialize
-             val id: Long = 0
-             ){
+data class Search(
+    var startingDate: String? = null,
+    var endingDate: String? = null,
+    var type: String? = null,
+    var energy: String? = null,
+    var available: String? = null,
+    var startingDateSold: String? = null,
+    var endingDateSold: String? = null,
+    var minPrice: String? = null,
+    var maxPrice: String? = null,
+    var minSurface: String? = null,
+    var maxSurface: String? = null,
+    var minRooms: String? = null,
+    var minBedrooms: String? = null,
+    var minBathrooms: String? = null,
+    var location: String? = null,
+    var nearby: String? = null,
+    var minPictures: String? = null,
+    var highSpeedInternet: String? = null,
+    var furnished: String? = null,
+    var disabledAccessibility: String? = null,
+    var garden: String? = null,
+    // Used to initialize
+    val id: Long = 0
+){
 
     // Base string query
     val baseQuery = "SELECT *, estate.id, COUNT(picture.id) AS nbPics FROM estate LEFT JOIN picture ON estate.id = picture.estate_id GROUP BY estate.id HAVING nbPics >="
@@ -60,14 +66,7 @@ data class Search(var startingDate: String? = null,
     private fun generateEnergyQuery(): String?{
         var string: String? = null
         if (!energy.isNullOrEmpty()){
-            string = " energyScore LIKE '$energy'"}
-        return string
-    }
-
-    private fun generateInternetQuery(): String?{
-        var string: String? = null
-        if (!highSpeedInternet.isNullOrEmpty()){
-            string = " highSpeedInternet = $highSpeedInternet"}
+            string = " energyType LIKE '$energy'"}
         return string
     }
 
@@ -127,17 +126,59 @@ data class Search(var startingDate: String? = null,
         return string
     }
 
+    private fun generateMinBedroomsQuery(): String?{
+        var string: String? = null
+        if (!minBedrooms.isNullOrEmpty()){
+            string = " bedrooms >= $minBedrooms"}
+        return string
+    }
+
+    private fun generateMinBathroomsQuery(): String?{
+        var string: String? = null
+        if (!minBathrooms.isNullOrEmpty()){
+            string = " bathrooms >= $minBathrooms"}
+        return string
+    }
+
     private fun generateLocationQuery(): String?{
         var string: String? = null
         if (!location.isNullOrEmpty()){
-            string = " location LIKE '$location%'"}
+            string = " location LIKE '$location'"}
         return string
     }
 
     private fun generateNearbyQuery(): String?{
         var string: String? = null
         if (!nearby.isNullOrEmpty()){
-            string = " nearbyPlaces LIKE '$nearby%'"}
+            string = " nearbyPlaces LIKE '%$nearby%'"}
+        return string
+    }
+
+    private fun generateInternetQuery(): String?{
+        var string: String? = null
+        if (!highSpeedInternet.isNullOrEmpty()){
+            string = " highSpeedInternet = $highSpeedInternet"}
+        return string
+    }
+
+    private fun generateFurnishedQuery(): String?{
+        var string: String? = null
+        if (!furnished.isNullOrEmpty()){
+            string = " furnished = '$furnished'" }
+        return string
+    }
+
+    private fun generateDisabledAccessibilityQuery(): String?{
+        var string: String? = null
+        if (!disabledAccessibility.isNullOrEmpty()){
+            string = " disabledAccessibility = '$disabledAccessibility'" }
+        return string
+    }
+
+    private fun generateGardenQuery(): String?{
+        var string: String? = null
+        if (!garden.isNullOrEmpty()){
+            string = " garden = '$garden'" }
         return string
     }
 
@@ -150,14 +191,33 @@ data class Search(var startingDate: String? = null,
         val minPicAmount = generateMinPicQuery()
         generatedQuery += minPicAmount
         // Add all remaining query arguments to a List
-        val queryArguments = listOf(generateStartingDateQuery(), generateStartingDateQuery(), generateEndingDateQuery(), generateTypeQuery(), generateEnergyQuery(), generateInternetQuery(),
-            generateAvailableQuery(), generateStartingDateSoldQuery(), generateEndingDateSoldQuery(), generateMinPriceQuery(), generateMaxPriceQuery(), generateMinSurfaceQuery(), generateMaxSurfaceQuery(),
-            generateMinRoomsQuery(), generateLocationQuery(), generateNearbyQuery())
+        val queryArguments = listOf(
+            generateStartingDateQuery(),
+            generateStartingDateQuery(),
+            generateEndingDateQuery(),
+            generateTypeQuery(),
+            generateEnergyQuery(),
+            generateAvailableQuery(),
+            generateStartingDateSoldQuery(),
+            generateEndingDateSoldQuery(),
+            generateMinPriceQuery(),
+            generateMaxPriceQuery(),
+            generateMinSurfaceQuery(),
+            generateMaxSurfaceQuery(),
+            generateMinRoomsQuery(),
+            generateMinBedroomsQuery(),
+            generateMinBathroomsQuery(),
+            generateLocationQuery(),
+            generateNearbyQuery(),
+            generateInternetQuery(),
+            generateFurnishedQuery(),
+            generateDisabledAccessibilityQuery(),
+            generateGardenQuery()
+        )
         // Remove all NULL elements from said list
         val nonNullList = queryArguments.filterNotNull()
         // Iterate through elements and add AND between parameters
-        for (i in nonNullList){
-            generatedQuery += " AND$i" }
+        for (i in nonNullList) generatedQuery += " AND$i"
 
         println("SEARCH OBJECT$queryArguments")
 

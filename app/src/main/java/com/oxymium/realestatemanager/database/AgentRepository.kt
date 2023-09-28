@@ -11,7 +11,7 @@ class AgentRepository(val agentDao: AgentDao) {
 
     // GET ALL AGENTS
     // Get allEstates from the DB as Flow
-    val allAgents: Flow<List<Agent>> = agentDao.getAllAgents()
+    fun getAllAgents(): Flow<List<Agent>> = agentDao.getAllAgents()
 
     fun getAgentById(agentId: Long?): Flow<Agent> = agentDao.getAgentById(agentId)
 

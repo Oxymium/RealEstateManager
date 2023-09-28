@@ -6,12 +6,22 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/createEstateFragment">
 
+    <!-- Create Estate Fragment -->
     <fragment
         android:id="@+id/createEstateFragment"
-        android:name="com.oxymium.realestatemanager.features.create.step_one.CreateEstateFragment"
+        android:name="com.oxymium.realestatemanager.features.create.CreateEstateFragment"
         android:label="CreateEstateFragment"
         tools:layout="@layout/fragment_create_estate"
-        />
+        >
+        <action
+            android:id="@+id/action_createEstateFragment_to_estatesFragment"
+            app:destination="@id/estatesFragment" />
+        <action
+            android:id="@+id/action_createEstateFragment_to_estatesDetailsFragment"
+            app:destination="@id/estatesDetailsFragment" />
+    </fragment>
+
+    <!-- Tools Fragment -->
     <fragment
         android:id="@+id/toolsFragment"
         android:name="com.oxymium.realestatemanager.features.tools.ToolsFragment"
@@ -19,6 +29,7 @@
         tools:layout="@layout/fragment_tools"
         />
 
+    <!-- Estates Fragment -->
     <fragment
         android:id="@+id/estatesFragment"
         android:name="com.oxymium.realestatemanager.features.estates.EstatesFragment"
@@ -30,24 +41,43 @@
             app:destination="@id/detailsFragment" />
     </fragment>
 
+    <!-- EstatesDetails Fragment -->
     <fragment
         android:id="@+id/estatesDetailsFragment"
         android:name="com.oxymium.realestatemanager.features.estates.EstatesDetailsFragment"
         android:label="EstatesDetailsFragment"
         tools:layout="@layout/fragment_estates_details"
-        />
+        >
+        <action
+            android:id="@+id/action_estatesDetailsFragment_to_createEstateFragment"
+            app:destination="@id/createEstateFragment" />
+        <action
+            android:id="@+id/action_estatesDetailsFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
 
+    <!-- MapSelected Fragment -->
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.oxymium.realestatemanager.features.map.MapFragment"
-        android:label="MapFragment"
-        tools:layout="@layout/fragment_map"
-        />
+        android:id="@+id/mapSelectedFragment"
+        android:name="com.oxymium.realestatemanager.features.map.MapSelectedFragment"
+        android:label="MapSelectedFragment"
+        tools:layout="@layout/fragment_map_selected"
+        >
+        <action
+            android:id="@+id/action_mapSelectedFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <!-- Details Fragment -->
     <fragment
         android:id="@+id/detailsFragment"
         android:name="com.oxymium.realestatemanager.features.estates.DetailsFragment"
         android:label="DetailsFragment"
         tools:layout="@layout/fragment_details"
-        />
+        >
+        <action
+            android:id="@+id/action_detailsFragment_to_createEstateFragment"
+            app:destination="@id/createEstateFragment" />
+    </fragment>
 
 </navigation>

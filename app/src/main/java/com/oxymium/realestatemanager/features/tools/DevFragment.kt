@@ -31,14 +31,14 @@ class DevFragment: Fragment() {
     private val binding get() = fragmentDevBinding
 
     // ViewModel
-    private val createViewModel: CreateViewModel by activityViewModels() {
+    private val createViewModel: CreateViewModel by activityViewModels {
         CreateViewModelFactory(
             (activity?.application as EstatesApplication).repository3,
             (activity?.application as EstatesApplication).repository, (activity?.application as EstatesApplication).repository2)
     }
 
     // DevViewModel
-    private val devViewModel: DevViewModel by activityViewModels() {
+    private val devViewModel: DevViewModel by activityViewModels {
         DevViewModelFactory((activity?.application as EstatesApplication).repository, (activity?.application as EstatesApplication).repository2)
     }
 
@@ -53,7 +53,7 @@ class DevFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         fragmentDevBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_dev, container, false)
         fragmentDevBinding.devViewModel = devViewModel

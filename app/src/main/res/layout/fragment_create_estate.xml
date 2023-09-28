@@ -13,7 +13,29 @@
         android:layout_height="match_parent"
         android:background="@color/space_cadet"
         >
-        <!-- NAVIGATOR PART -->
+
+        <!-- TOP NAVIGATOR PART -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/navigator_layout_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <include
+                android:id="@+id/navigator_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                layout="@layout/navigator_steps_header"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!-- BOTTOM NAVIGATOR PART -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/navigator_layout"
             android:layout_width="match_parent"
@@ -38,7 +60,7 @@
             android:layout_height="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/navigator_layout_top"
             app:layout_constraintBottom_toTopOf="@id/navigator_layout"
             />
 

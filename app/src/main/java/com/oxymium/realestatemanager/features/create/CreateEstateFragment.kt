@@ -1,4 +1,4 @@
-package com.oxymium.realestatemanager.features.create.step_one
+package com.oxymium.realestatemanager.features.create
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -9,17 +9,26 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentCreateEstateBinding
-import com.oxymium.realestatemanager.features.create.CreateViewModel
-import com.oxymium.realestatemanager.features.create.step_five.StepFiveFragment
-import com.oxymium.realestatemanager.features.create.step_four.StepFourFragment
-import com.oxymium.realestatemanager.features.create.step_six.StepSixFragment
-import com.oxymium.realestatemanager.features.create.step_three.StepThreeFragment
-import com.oxymium.realestatemanager.features.create.step_two.StepTwoFragment
+import com.oxymium.realestatemanager.features.create.step_address.StepAddressFragment
+import com.oxymium.realestatemanager.features.create.step_agent.StepAgentFragment
+import com.oxymium.realestatemanager.features.create.step_misc.StepMiscFragment
+import com.oxymium.realestatemanager.features.create.step_nearby_places.StepNearbyPlacesFragment
+import com.oxymium.realestatemanager.features.create.step_overview.StepOverviewFragment
+import com.oxymium.realestatemanager.features.create.step_picture_main.StepMainPictureFragment
+import com.oxymium.realestatemanager.features.create.step_pictures_secondary.StepSecondaryPicturesFragment
+import com.oxymium.realestatemanager.features.create.step_type.StepTypeFragment
+import com.oxymium.realestatemanager.features.create.step_values_energy_score.StepValuesEnergyScoreFragment
+import com.oxymium.realestatemanager.features.create.steps.RecyclerViewScrollListener
+import com.oxymium.realestatemanager.features.create.steps.StepListener
+import com.oxymium.realestatemanager.features.create.steps.StepsAdapter
 import com.oxymium.realestatemanager.features.estates.CreateEstatePlaceholderFragment
 import com.oxymium.realestatemanager.generateRandomEstate
+import com.oxymium.realestatemanager.model.ReachedSide
 import com.oxymium.realestatemanager.viewmodel.CreateViewModelFactory
 
 // ---------------
@@ -34,7 +43,10 @@ class CreateEstateFragment: Fragment() {
     private lateinit var fragmentCreateEstateBinding: FragmentCreateEstateBinding
     private val binding get() = fragmentCreateEstateBinding
 
-    private val createViewModel: CreateViewModel by activityViewModels() {
+    // RecyclerView
+    private lateinit var stepsAdapter: StepsAdapter
+
+    private val createViewModel: CreateViewModel by activityViewModels {
         CreateViewModelFactory(
             (activity?.application as EstatesApplication).repository3,
             (activity?.application as EstatesApplication).repository,
@@ -58,6 +70,7 @@ class CreateEstateFragment: Fragment() {
         fragmentCreateEstateBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_estate, container, false)
         fragmentCreateEstateBinding.lifecycleOwner = activity
         fragmentCreateEstateBinding.createViewModel = createViewModel
+        fragmentCreateEstateBinding.navigatorHeader.createViewModel = createViewModel
         fragmentCreateEstateBinding.navigatorBar.createViewModel = createViewModel
 
         createViewModel.updateCurrentStep(0)
@@ -67,13 +80,60 @@ class CreateEstateFragment: Fragment() {
         observeCreationSteps()
         observeMissingElements()
 
+        // RecyclerView setup
+        val linearLayoutManager = LinearLayoutManager(requireActivity(), GridLayoutManager.HORIZONTAL, false)
+        fragmentCreateEstateBinding.navigatorBar.navigatorCreateRecyclerView.layoutManager = linearLayoutManager
+
+        // Observe list of steps
+        createViewModel.createSteps.observe(viewLifecycleOwner){
+            stepsAdapter.submitList(it?.toList())
+            println(it)
+        }
+
+        // Setup adapter
+        stepsAdapter = StepsAdapter(
+            // StepListener
+            StepListener {
+                createViewModel.updateCurrentStep(it.number)
+            }
+        )
+
+        createViewModel.currentStep.observe(viewLifecycleOwner) { step ->
+            step?.let {
+                createViewModel.updateCreateStep(createViewModel.createSteps.value?.map { createSteps ->
+                    createSteps.copy(isSelected = step == createSteps.number)
+                })
+            }
+
+        }
+
+        // RecyclerView adapter init
+        fragmentCreateEstateBinding.navigatorBar.navigatorCreateRecyclerView.adapter = stepsAdapter
+
+        // RecyclerView side reached
+        val onScrollToBeginning: () -> Unit = {
+            createViewModel.updateReachedStepSide(ReachedSide.LeftSide)
+        }
+
+        val onScrollToEnd: () -> Unit = {
+            createViewModel.updateReachedStepSide(ReachedSide.RightSide)
+        }
+
+        val scrollListener = RecyclerViewScrollListener(onScrollToBeginning, onScrollToEnd, null, null)
+        fragmentCreateEstateBinding.navigatorBar.navigatorCreateRecyclerView.addOnScrollListener(scrollListener)
+
         return binding.root
     }
 
     private fun observeEditedEstate(){
         createViewModel.editedEstate.observe(viewLifecycleOwner){
             // If there's an instance of an Estate to edit, pre-load all values into the fields
-            it?.let { createViewModel.preloadAllFieldsWithEstateToEditValues(it) }
+            it?.let {
+                // LOAD ESTATE
+                createViewModel.updateEstate(it)
+                // LOAD SECONDARY PICTURES
+                createViewModel.getPicturesForGivenEstateId(it.id)
+            }
         }
     }
 
@@ -91,21 +151,29 @@ class CreateEstateFragment: Fragment() {
             if (it == selectedStep) return@observe
             this.replaceFragment(when (it) {
                 null -> CreateEstatePlaceholderFragment()
-                1 -> StepOneFragment()
-                2 -> StepTwoFragment()
-                3 -> StepThreeFragment()
-                4 -> StepFourFragment()
-                5 -> StepFiveFragment()
-                6 -> StepSixFragment()
+                0 -> StepOverviewFragment()
+                1 -> StepAgentFragment()
+                2 -> StepTypeFragment()
+                3 -> StepValuesEnergyScoreFragment()
+                4 -> StepMainPictureFragment()
+                5 -> StepSecondaryPicturesFragment()
+                6 -> StepMiscFragment()
+                7 -> StepAddressFragment()
+                8 -> StepNearbyPlacesFragment()
                 else -> CreateEstatePlaceholderFragment()
             })
             createViewModel.updateSelectedStep(it)
         }
     }
 
+    // If elements are missing, display prompt with said missing elements, otherwise, display saving prompt
     private fun observeMissingElements(){
         createViewModel.missingElementsAsStrings.observe(viewLifecycleOwner){
-            if (it != null) displayMissingDialog()
+            if (it != null) {
+                displayMissingDialog()
+                // Reset
+                //createViewModel.missingElementsAsStrings.value = null
+            }
             else displaySaveDialog()
         }
     }
@@ -119,7 +187,9 @@ class CreateEstateFragment: Fragment() {
         }.apply {
             this?.setNeutralButton(R.string.alert_neutral) { _, _ -> }
             // Testing purposes
-            this?.setNegativeButton(R.string.alert_random_debug) { _, _ -> createViewModel.fillCreateWithOneRandomEstate(generateRandomEstate()) }
+            this?.setNegativeButton(R.string.alert_random_debug) { _, _ ->
+                createViewModel.fillEstateFields(generateRandomEstate())
+                createViewModel.fillSecondaryPictures() }
         }
         val dialog: AlertDialog? = builder?.create()
         dialog!!.show()
@@ -137,7 +207,7 @@ class CreateEstateFragment: Fragment() {
             this?.setPositiveButton(R.string.alert_positive) { _, _ ->
                 when(createViewModel.editedEstate.value){
                     // IF NO ESTATE TO EDIT = INSERT (CREATE NEW ONE)
-                    null -> createViewModel.insertEstateIntoDatabase()
+                    null -> createViewModel.insertEstateAndPicturesIntoDatabase()
                     // OTHERWISE, EDIT EXISTING ESTATE
                     else -> createViewModel.updateEstateIntoDatabase()
                 }

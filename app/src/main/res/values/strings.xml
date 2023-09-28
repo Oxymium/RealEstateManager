@@ -64,10 +64,11 @@
     <string name="layout_create_street_input_hint">Street</string>
     <string name="layout_create_zipCode_input_hint">Zip Code (ex. XXXXX)</string>
     <string name="layout_create_location_input_hint">Location (ex. Paris)</string>
+    <string name="layout_create_latitude_input_hint">Latitude</string>
+    <string name="layout_create_longitude_input_hint">Longitude</string>
 
     <string name="layout_create_description_high_speed_internet">High-speed internet</string>
-    <string name="layout_create_description_input_hint">Description (max 400c)</string>
-    <string name="layout_create_description_nearby_hint">Nearby places (max 400c)</string>
+    <string name="layout_create_description_input_hint">Description (max. 400 characters)</string>
 
     <string name="layout_create_main_picture_title">Picture</string>
     <string name="layout_create_main_picture_picture">Picture icon</string>
@@ -132,14 +133,16 @@
 
     <string-array name="array_search_energy_score">
         <item>Any</item>
-        <item>A+</item>
         <item>A</item>
         <item>B</item>
         <item>C</item>
         <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
     </string-array>
 
-    <string-array name="array_search_highSpeedInternet">
+    <string-array name="array_search_choices">
         <item>Both</item>
         <item>Yes</item>
         <item>No</item>
@@ -199,11 +202,11 @@
     <string name="layout_create_date_picture">Date icon</string>
     <string name="layout_create_date_title">Current date</string>
     <string name="layout_create_date_hint">dd/mm/yyyy</string>
-    <string name="price_input_hint">price in dollars</string>
-    <string name="surface_input_hint">surface m²</string>
-    <string name="rooms_input_hint">room(s)</string>
-    <string name="bedrooms_input_hint">bedroom(s)</string>
-    <string name="bathrooms_input_hint">bathroom(s)</string>
+    <string name="price_input_hint">Price in dollars</string>
+    <string name="surface_input_hint">Surface m²</string>
+    <string name="rooms_input_hint">Room(s)</string>
+    <string name="bedrooms_input_hint">Bedroom(s)</string>
+    <string name="bathrooms_input_hint">Bathroom(s)</string>
     <string name="energy_hint">kWh/m²/year</string>
     <string name="energy_input_hint">kWh/m²/year - %1$s</string>
 
@@ -248,13 +251,24 @@
     <!-- CURRENCY FRAG. -->
     <string name="fragment_currency_hint_exchangeRate">Exchange rate</string>
     <string name="fragment_currency_hint_firstCurrency">Currency 1</string>
-    <string name="fragment_currency_hint_secondCurrency">Currency 2</string>
+    <string name="fragment_currency_hint_result">Result</string>
+
+    <!-- STEP VALUES. -->
+    <string name="step_overview">Overview</string>
+    <string name="step_agent">Step 1 - Agent</string>
+    <string name="step_type">Step 2 - Type</string>
+    <string name="step_values_energy_score">Step 3 - Values &amp; Energy Score</string>
+    <string name="step_main_picture">Step 4 - Main Picture</string>
+    <string name="step_secondary_pictures">Step 5 - Secondary Pictures</string>
+    <string name="step_misc">Step 6 - Miscellaneous</string>
+    <string name="step_address">Step 7 - Address</string>
+    <string name="step_nearby_places">Step 8 - Nearby Places</string>
 
     <!-- LOAN FRAG. -->
-    <string name="fragment_loan_hint_borrowedAmount">Borrowed amount</string>
+    <string name="fragment_loan_hint_borrowedAmount">Borrowed</string>
     <string name="fragment_loan_hint_deposit">Deposit</string>
     <string name="fragment_loan_hint_duration">Duration</string>
-    <string name="fragment_loan_hint_interestRate">Interest rate</string>
+    <string name="fragment_loan_hint_interestRate">Rate</string>
 
     <!-- ENERGY CLASS MESSAGES -->
     <string name="energy_class_awaiting">Awaiting input…</string>

@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="mapSelectedViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.MapSelectedViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="2dp"
+        android:paddingVertical="2dp"
+        android:background="@color/space_cadet_75_percent_opacity"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <!-- ENERGY SCORE -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_map_selected_extras_energy_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/layout_map_selected_extras_rooms"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <ImageView
+                android:id="@+id/layout_map_selected_extras_energy_class_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> mapSelectedViewModel.onClickIcons(1) }"
+                android:src="@drawable/bee_flower"
+                app:tint="@color/map_selected_icon_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(mapSelectedViewModel.selectedEstate.energyClassLetter)}"
+                android:textColor="@color/white"
+                android:hint="X"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="@id/layout_map_selected_extras_energy_class_picture"
+                app:layout_constraintEnd_toEndOf="@id/layout_map_selected_extras_energy_class_picture"
+                app:layout_constraintTop_toBottomOf="@id/layout_map_selected_extras_energy_class_picture"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- ROOMS -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_map_selected_extras_rooms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/layout_map_selected_extras_energy_class"
+            app:layout_constraintEnd_toStartOf="@id/layout_map_selected_extras_bedrooms"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <ImageView
+                android:id="@+id/layout_map_selected_extras_rooms_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> mapSelectedViewModel.onClickIcons(2) }"
+                android:src="@drawable/crop_square"
+                app:tint="@color/map_selected_icon_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(mapSelectedViewModel.selectedEstate.rooms)}"
+                android:textColor="@color/white"
+                android:hint="X"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="@id/layout_map_selected_extras_rooms_picture"
+                app:layout_constraintEnd_toEndOf="@id/layout_map_selected_extras_rooms_picture"
+                app:layout_constraintTop_toBottomOf="@id/layout_map_selected_extras_rooms_picture"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- BEDROOMS -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_map_selected_extras_bedrooms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/layout_map_selected_extras_rooms"
+            app:layout_constraintEnd_toStartOf="@id/layout_map_selected_extras_bathrooms"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <ImageView
+                android:id="@+id/layout_map_selected_extras_bedrooms_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> mapSelectedViewModel.onClickIcons(3) }"
+                android:src="@drawable/bed"
+                app:tint="@color/map_selected_icon_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(mapSelectedViewModel.selectedEstate.bedrooms)}"
+                android:textColor="@color/white"
+                android:hint="X"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="@id/layout_map_selected_extras_bedrooms_picture"
+                app:layout_constraintEnd_toEndOf="@id/layout_map_selected_extras_bedrooms_picture"
+                app:layout_constraintTop_toBottomOf="@id/layout_map_selected_extras_bedrooms_picture"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- BATHROOMS -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_map_selected_extras_bathrooms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/layout_map_selected_extras_bedrooms"
+            app:layout_constraintEnd_toStartOf="@id/layout_map_selected_extras_internet"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <ImageView
+                android:id="@+id/layout_map_selected_extras_bathrooms_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> mapSelectedViewModel.onClickIcons(4) }"
+                android:src="@drawable/shower"
+                app:tint="@color/map_selected_icon_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(mapSelectedViewModel.selectedEstate.bathrooms)}"
+                android:textColor="@color/white"
+                android:hint="X"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="@id/layout_map_selected_extras_bathrooms_picture"
+                app:layout_constraintEnd_toEndOf="@id/layout_map_selected_extras_bathrooms_picture"
+                app:layout_constraintTop_toBottomOf="@id/layout_map_selected_extras_bathrooms_picture"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- HIGH-SPEED INTERNET -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_map_selected_extras_internet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/layout_map_selected_extras_bathrooms"
+            app:layout_constraintEnd_toStartOf="@id/layout_map_selected_extras_furnished"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <ImageView
+                android:id="@+id/layout_map_selected_extras_internet_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> mapSelectedViewModel.onClickIcons(5) }"
+                android:src="@drawable/speedometer"
+                app:tint="@color/map_selected_icon_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:selectedBooleanValues="@{ mapSelectedViewModel.selectedEstate.highSpeedInternet }"
+                android:textColor="@color/white"
+                android:hint="X"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="@id/layout_map_selected_extras_internet_picture"
+                app:layout_constraintEnd_toEndOf="@id/layout_map_selected_extras_internet_picture"
+                app:layout_constraintTop_toBottomOf="@id/layout_map_selected_extras_internet_picture"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- FURNISHED -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_map_selected_extras_furnished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/layout_map_selected_extras_internet"
+            app:layout_constraintEnd_toStartOf="@id/layout_map_selected_extras_garden"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <ImageView
+                android:id="@+id/layout_map_selected_extras_furnished_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> mapSelectedViewModel.onClickIcons(6) }"
+                android:src="@drawable/table_furniture"
+                app:tint="@color/map_selected_icon_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:selectedBooleanValues="@{ mapSelectedViewModel.selectedEstate.furnished }"
+                android:textColor="@color/white"
+                android:hint="X"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="@id/layout_map_selected_extras_furnished_picture"
+                app:layout_constraintEnd_toEndOf="@id/layout_map_selected_extras_furnished_picture"
+                app:layout_constraintTop_toBottomOf="@id/layout_map_selected_extras_furnished_picture"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- GARDEN -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_map_selected_extras_garden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/layout_map_selected_extras_furnished"
+            app:layout_constraintEnd_toStartOf="@id/layout_map_selected_extras_disabled_accessibility"
+            app:layout_constraintTop_toTopOf="parent" >
+
+            <ImageView
+                android:id="@+id/layout_map_selected_extras_garden_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> mapSelectedViewModel.onClickIcons(7) }"
+                android:src="@drawable/shovel"
+                app:tint="@color/map_selected_icon_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:selectedBooleanValues="@{ mapSelectedViewModel.selectedEstate.garden }"
+                android:textColor="@color/white"
+                android:hint="X"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="@id/layout_map_selected_extras_garden_picture"
+                app:layout_constraintEnd_toEndOf="@id/layout_map_selected_extras_garden_picture"
+                app:layout_constraintTop_toBottomOf="@id/layout_map_selected_extras_garden_picture"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- DISABLED ACCESSIBILITY -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_map_selected_extras_disabled_accessibility"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/layout_map_selected_extras_garden"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <ImageView
+                android:id="@+id/layout_map_selected_extras_disabled_accessibility_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{ () -> mapSelectedViewModel.onClickIcons(8) }"
+                android:src="@drawable/human_wheelchair"
+                app:tint="@color/map_selected_icon_color"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:selectedBooleanValues="@{ mapSelectedViewModel.selectedEstate.disabledAccessibility }"
+                android:textColor="@color/white"
+                android:hint="X"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="@id/layout_map_selected_extras_disabled_accessibility_picture"
+                app:layout_constraintEnd_toEndOf="@id/layout_map_selected_extras_disabled_accessibility_picture"
+                app:layout_constraintTop_toBottomOf="@id/layout_map_selected_extras_disabled_accessibility_picture"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

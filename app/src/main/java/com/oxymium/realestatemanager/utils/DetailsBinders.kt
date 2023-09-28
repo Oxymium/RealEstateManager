@@ -11,6 +11,12 @@ class DetailsBinders {
     companion object{
 
         @JvmStatic
+        @BindingAdapter("app:detailsNavigatorTitle")
+        fun setDetailsNavigatorTitle(textView: TextView, estateId: Long?){
+            textView.text = "Estate #${estateId}"
+        }
+
+        @JvmStatic
         @BindingAdapter("app:detailsEnergyClassIcon")
         fun setEnergyClassIcon(imageView: ImageView, energyScore: Int?){
             val context = imageView.context

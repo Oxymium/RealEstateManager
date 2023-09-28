@@ -1,6 +1,5 @@
 package com.oxymium.realestatemanager.features.tools
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,6 +16,7 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentLoanBinding
+import com.oxymium.realestatemanager.model.Loan
 import com.oxymium.realestatemanager.viewmodel.LoanViewModel
 
 // ------------
@@ -50,7 +50,12 @@ class LoanFragment: Fragment() {
         fragmentLoanBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_loan, container, false)
         fragmentLoanBinding.loanViewModel = loanViewModel
 
-        fragmentLoanBinding.fragmentLoanBorrowedAmountInput.addTextChangedListener(
+        // Observer
+        loanViewModel.loan.observe(viewLifecycleOwner){
+            displayLoanChartData(it)
+        }
+
+        fragmentLoanBinding.loanBorrowInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
                     if (s.isNotEmpty()) loanViewModel.updateBorrowedAmount(s.toString().toFloat())
@@ -60,7 +65,7 @@ class LoanFragment: Fragment() {
                 }
             })
 
-        fragmentLoanBinding.fragmentLoanDepositInput.addTextChangedListener(
+        fragmentLoanBinding.loanDepositInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
                     if (s.isNotEmpty()) loanViewModel.updateDeposit(s.toString().toFloat())
@@ -70,7 +75,7 @@ class LoanFragment: Fragment() {
                 }
             })
 
-        fragmentLoanBinding.fragmentLoanDurationInput.addTextChangedListener(
+        fragmentLoanBinding.loanDurationInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
                     if (s.isNotEmpty()) loanViewModel.updateDuration(s.toString().toInt())
@@ -80,7 +85,7 @@ class LoanFragment: Fragment() {
                 }
             })
 
-        fragmentLoanBinding.fragmentLoanInterestRateInput.addTextChangedListener(
+        fragmentLoanBinding.loanRateInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
                     if (s.isNotEmpty()) loanViewModel.updateInterestRate(s.toString().toFloat())
@@ -90,84 +95,73 @@ class LoanFragment: Fragment() {
                 }
             })
 
-        displayLoanChartData()
-
 
         return binding.root
+
     }
 
-    private fun displayLoanChartData(){
+    private fun displayLoanChartData(loan: Loan){
 
-        loanViewModel.loan.observe(viewLifecycleOwner) {
+        // Monthly cost
+        val monthlyPayments = loan.monthlyPayment()
+        // Total amount (monthly cost * duration in Years * 12)
+        val totalPayments = monthlyPayments * (loan.duration * 12)
+        // Sum of all interests (total amount minus sum of all interests)
+        val totalInterests = totalPayments - loan.borrowedAmount
 
-            val entries = listOf(
-                PieEntry(it.borrowedAmount, "Borrowed"),
-                PieEntry(it.deposit, "Deposit"),
-                PieEntry(
-                    calculateInterestsTotalAmount(it.borrowedAmount, it.interestRate),
-                    "Interests"
-                )
-            )
-            // Ready set & data
-            val set = PieDataSet(
-                entries,
-                "Cost: $" + calculateTotalEstateCost(
-                    it.borrowedAmount,
-                    it.interestRate,
-                    it.deposit
-                ).toString()
-            )
-            val data = PieData(set)
+        val entries = listOf(
+            PieEntry(loan.borrowedAmount, null, ContextCompat.getDrawable(requireActivity(), R.drawable.ic_bank_transfer_out_white_24dp), null),
+            PieEntry(loan.deposit, null, ContextCompat.getDrawable(requireActivity(), R.drawable.ic_piggy_bank_white_24dp), null),
+            PieEntry(totalInterests, null, ContextCompat.getDrawable(requireActivity(), R.drawable.ic_percent_white_24dp), null)
+        )
 
-            // Visuals & flavours
-            // ColorTemplate.PASTEL_COLORS
-            set.colors = mutableListOf(
-                Color.rgb(64, 89, 128), Color.rgb(149, 165, 124), Color.rgb(217, 184, 162),
-                Color.rgb(191, 134, 134), Color.rgb(179, 48, 80)
-            )
-            set.valueTextColor = ContextCompat.getColor(requireActivity(), R.color.white)
-            set.valueTextSize = 14f
+        // Ready set & data
+        val set = PieDataSet(
+            entries,
+            "Cost: $totalPayments"
+        )
 
-            provideDataToPieChart(
-                data,
-                it.duration,
-                calculateMonthlyCost(it.borrowedAmount, it.interestRate, it.duration)
-            )
+        set.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
 
+        val data = PieData(set)
+
+        // Visuals & flavours
+        set.colors = mutableListOf(
+            ContextCompat.getColor(requireActivity(), R.color.pie_chart_1),
+            ContextCompat.getColor(requireActivity(), R.color.pie_chart_2),
+            ContextCompat.getColor(requireActivity(), R.color.pie_chart_3)
+        )
+        set.valueTextColor = ContextCompat.getColor(requireActivity(), R.color.white)
+        set.valueTextSize = 14f
+
+        provideDataToPieChart(
+            data,
+            loan.duration,
+            loan.monthlyPayment()
+        )
+
+    }
+
+    private fun provideDataToPieChart(data: PieData, loanDuration: Int, monthlyPayment: Float){
+
+        val decimalRounded = String.format("%.2f", monthlyPayment)
+        val yearsToMonths = loanDuration * 12
+
+        fragmentLoanBinding.loanPieChart.apply {
+            this.data = data
+            setHoleColor(ContextCompat.getColor(requireActivity(), R.color.transparent))
+            legend.apply{
+                textSize = 13f
+                textColor = ContextCompat.getColor(requireActivity(), R.color.white)
+                isEnabled = true
+                horizontalAlignment
+            }
+            description.isEnabled = false
+            centerText = "$decimalRounded u/m \n over $loanDuration years or $yearsToMonths months"
+            setCenterTextSize(14f)
+            setCenterTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
+            invalidate()
+            notifyDataSetChanged()
         }
-
     }
-
-    private fun provideDataToPieChart(data: PieData, loanDuration: Int, monthlyCost: Float){
-
-        val decimalRounded = String.format("%.2f", monthlyCost)
-
-        fragmentLoanBinding.fragmentLoanPieChart.data = data
-        fragmentLoanBinding.fragmentLoanPieChart.setHoleColor(ContextCompat.getColor(requireActivity(), R.color.transparent))
-        fragmentLoanBinding.fragmentLoanPieChart.legend.isEnabled = true
-        fragmentLoanBinding.fragmentLoanPieChart.legend.textColor = ContextCompat.getColor(requireActivity(), R.color.white)
-        fragmentLoanBinding.fragmentLoanPieChart.legend.textSize = 13f
-        fragmentLoanBinding.fragmentLoanPieChart.legend.horizontalAlignment
-        fragmentLoanBinding.fragmentLoanPieChart.description.isEnabled = false
-        fragmentLoanBinding.fragmentLoanPieChart.centerText = "$decimalRounded/m - $loanDuration years"
-        fragmentLoanBinding.fragmentLoanPieChart.setCenterTextSize(14f)
-        fragmentLoanBinding.fragmentLoanPieChart.setCenterTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
-        fragmentLoanBinding.fragmentLoanPieChart.invalidate()
-        fragmentLoanBinding.fragmentLoanPieChart.notifyDataSetChanged()
-
-    }
-
-    private fun calculateInterestsTotalAmount(borrowedAmount: Float, interestRate: Float): Float {
-        return borrowedAmount * (1 + interestRate / 100) - borrowedAmount
-    }
-
-    private fun calculateMonthlyCost(borrowedAmount: Float, interestRate: Float, duration: Int): Float {
-       return ((calculateInterestsTotalAmount(borrowedAmount, interestRate) + borrowedAmount) / (duration * 12))
-    }
-
-    private  fun calculateTotalEstateCost(borrowedAmount: Float, interestRate: Float, deposit: Float): Float{
-        return calculateInterestsTotalAmount(borrowedAmount, interestRate) + deposit + borrowedAmount
-    }
-
-
 }

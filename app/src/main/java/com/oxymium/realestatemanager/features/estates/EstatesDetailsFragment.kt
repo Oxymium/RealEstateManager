@@ -29,7 +29,7 @@ class EstatesDetailsFragment: Fragment() {
     private val binding get() = fragmentEstatesDetailsBinding
 
     // EstateViewModel
-    private val estateViewModel: EstateViewModel by activityViewModels() {
+    private val estateViewModel: EstateViewModel by activityViewModels {
         EstateViewModelFactory((activity?.application as EstatesApplication).repository3, (activity?.application as EstatesApplication).repository,
             (activity?.application as EstatesApplication).repository2)
     }

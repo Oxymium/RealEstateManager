@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/createEstateFragment"
-        android:name="com.oxymium.realestatemanager.features.create.step_one.CreateEstateFragment"
+        android:name="com.oxymium.realestatemanager.features.create.CreateEstateFragment"
         android:label="CreateEstateFragment"
         tools:layout="@layout/fragment_create_estate"
         />
@@ -36,12 +36,6 @@
             android:id="@+id/action_toolsFragment_to_devFragment"
             app:destination="@id/devFragment" />
     </fragment>
-
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.oxymium.realestatemanager.features.map.MapFragment"
-        android:label="MapFragment"
-        tools:layout="@layout/fragment_map" />
 
     <fragment
         android:id="@+id/detailsFragment"
@@ -73,5 +67,16 @@
         android:label="EstatesDetailsFragment"
         tools:layout="@layout/fragment_estates_details"
         />
+
+    <fragment
+        android:id="@+id/mapSelectedFragment"
+        android:name="com.oxymium.realestatemanager.features.map.MapSelectedFragment"
+        android:label="MapSelectedFragment"
+        tools:layout="@layout/fragment_map_selected"
+        >
+        <action
+            android:id="@+id/action_mapSelectedFragment_to_estatesDetailsFragment"
+            app:destination="@id/estatesDetailsFragment" />
+    </fragment>
 
 </navigation>

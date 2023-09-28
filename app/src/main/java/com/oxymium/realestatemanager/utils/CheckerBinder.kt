@@ -21,6 +21,17 @@ class CheckerBinder {
             }
         }
 
+        // Double values
+        @JvmStatic
+        @BindingAdapter("app:checkerColor")
+        fun changeCheckerColor(view: View, value: Double?) {
+            val context = view.context
+            view.background = when (value){
+                null -> provideCompatDrawable(context, R.color.red_500)
+                else -> provideCompatDrawable(context, R.color.green_500)
+            }
+        }
+
         // String values
         @JvmStatic
         @BindingAdapter("app:checkerColor")

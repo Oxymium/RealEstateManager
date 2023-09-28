@@ -51,8 +51,8 @@
 
                 <ImageView
                     android:id="@+id/item_picture_picture"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
                     android:scaleType="centerCrop"
                     android:src="@{picture.path}"
                     android:contentDescription="@string/item_estate_description_picture"
@@ -80,7 +80,7 @@
 
                 <TextView
                     android:id="@+id/item_estate_description"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{picture.comment}"
                     android:textSize="@dimen/item_estate_font_small"
@@ -89,33 +89,12 @@
                     android:textAlignment="center"
                     android:hint="@string/item_estate_hint_rooms"
                     android:textColorHint="@color/white"
+                    android:background="#7F000000"
                     card_view:layout_constraintStart_toStartOf="@id/item_picture_part_bottom"
                     card_view:layout_constraintEnd_toEndOf="@id/item_picture_part_bottom"
-                    card_view:layout_constraintTop_toTopOf="@id/item_picture_part_bottom"
-                    card_view:layout_constraintBottom_toBottomOf="@id/item_picture_part_bottom"
+                    card_view:layout_constraintBottom_toTopOf="@id/item_picture_button_edit"
                     card_view:layout_constraintHorizontal_bias="0.5"
                     />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            app:layout_constraintStart_toEndOf="@id/item_picture_cardView"
-            app:layout_constraintTop_toTopOf="@id/item_picture_cardView"
-            app:layout_constraintBottom_toBottomOf="@id/item_picture_cardView"
-            >
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                >
 
                 <ImageButton
                     android:id="@+id/item_picture_button_edit"
@@ -124,9 +103,9 @@
                     android:src="@drawable/ic_comment_edit_white_24dp"
                     android:backgroundTint="@color/transparent"
                     android:onClick="@{() -> pictureClickCommentListener.onClickPictureCommentButton(picture)}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/item_picture_button_delete"
+                    card_view:layout_constraintStart_toStartOf="@id/item_picture_part_bottom"
+                    card_view:layout_constraintTop_toTopOf="@id/item_picture_part_bottom"
+                    card_view:layout_constraintBottom_toBottomOf="@id/item_picture_part_bottom"
                     app:layout_constraintVertical_bias="0"
                     app:layout_constraintHorizontal_bias="1"
                     />
@@ -138,14 +117,14 @@
                     android:src="@drawable/ic_delete_white_24dp"
                     android:backgroundTint="@color/transparent"
                     android:onClick="@{() -> pictureClickDeleteListener.onClickPictureDeleteButton(picture)}"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toTopOf="@id/item_picture_button_edit"
+                    card_view:layout_constraintEnd_toEndOf="@id/item_picture_part_bottom"
+                    card_view:layout_constraintTop_toTopOf="@id/item_picture_part_bottom"
+                    card_view:layout_constraintBottom_toBottomOf="@id/item_picture_part_bottom"
                     />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

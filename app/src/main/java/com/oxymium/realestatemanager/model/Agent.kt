@@ -19,12 +19,17 @@ data class Agent(
     var lastName: String,
     @ColumnInfo(name = "phone_number")
     var phoneNumber: String,
-    @PrimaryKey(autoGenerate = true) override var id: Long?
+    @ColumnInfo(name = "mail")
+    var mail: String,
+    @ColumnInfo(name = "agency")
+    var agency: String,
+    @PrimaryKey(autoGenerate = true)
+    override var id: Long?
 ): SelectableItem
 
 {
-    constructor(firstName: String, lastName: String, phoneNumber: String) : this(false, firstName, lastName, phoneNumber, null)
+    constructor(firstName: String, lastName: String, phoneNumber: String, mail: String, agency: String) : this(false, firstName, lastName, phoneNumber, mail, agency, null)
     // No-arg constructor
-    constructor() : this(false, "", "","", 0)
+    constructor() : this(false, "", "","", "", "", 0)
 }
 

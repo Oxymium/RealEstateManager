@@ -81,7 +81,7 @@ class EstateContentProvider: ContentProvider() {
 
     private fun provideEstate(values: ContentValues): Estate?{
         // TODO ContentProvider tweaks
-        val estate: Estate? = Estate()
+        val estate: Estate = Estate()
         if (values.containsKey("addedDate")) estate?.addedDate = values.getAsLong("addedDate")
         if (values.containsKey("wasSold")) estate?.wasSold = values.getAsBoolean("wasSold")
         if (values.containsKey("soldDate")) estate?.soldDate = values.getAsLong("soldDate")

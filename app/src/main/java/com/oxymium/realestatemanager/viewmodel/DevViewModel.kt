@@ -8,8 +8,9 @@ import com.oxymium.realestatemanager.RANDOM_PICTURES
 import com.oxymium.realestatemanager.SECONDARY_PICTURES_AMOUNT_LIMIT
 import com.oxymium.realestatemanager.database.EstateRepository
 import com.oxymium.realestatemanager.database.PictureRepository
-import com.oxymium.realestatemanager.demoSet1WithAddress
-import com.oxymium.realestatemanager.demoSet1WithAddress2
+import com.oxymium.realestatemanager.demoSet1WithAddressAndLatLng
+import com.oxymium.realestatemanager.demoSet2WithAddressAndLatLng
+import com.oxymium.realestatemanager.demoSet3WithAddressAndLatLng
 import com.oxymium.realestatemanager.generateRandomEstate
 import com.oxymium.realestatemanager.model.Estate
 import kotlinx.coroutines.launch
@@ -51,7 +52,6 @@ class DevViewModel(private val estateRepository: EstateRepository, private val p
         viewModelScope.launch {
             val insertedId: Long = estateRepository.insert(estate)
             updateNotificationId(insertedId)
-            // TODO provide different number of pictures for testing
             val randomAmountOfPictures = (1..SECONDARY_PICTURES_AMOUNT_LIMIT).random()
             for (i in 1 .. randomAmountOfPictures){
                 val picture = RANDOM_PICTURES.random()
@@ -67,8 +67,9 @@ class DevViewModel(private val estateRepository: EstateRepository, private val p
     fun onClickDemoSetButton() {
         viewModelScope.launch {
             // INSERT DEMO SETS IN DB
-            demoSet1WithAddress.forEach{ estateRepository.insert(it) }
-            demoSet1WithAddress2.forEach{ estateRepository.insert(it) }
+            demoSet1WithAddressAndLatLng.forEach{ estateRepository.insert(it) }
+            demoSet2WithAddressAndLatLng.forEach{ estateRepository.insert(it) }
+            demoSet3WithAddressAndLatLng.forEach { estateRepository.insert(it) }
         }
     }
 }

@@ -11,9 +11,9 @@
     <item
         android:id="@+id/toolsFragment"
         android:title="@string/bottom_nav_category_4"
-        android:icon="@drawable/baseline_insights_white_24"/>
+        android:icon="@drawable/tools"/>
     <item
-        android:id="@+id/mapFragment"
+        android:id="@+id/mapSelectedFragment"
         android:title="@string/bottom_nav_category_5"
-        android:icon="@drawable/baseline_map_white_24"/>
+        android:icon="@drawable/map_search"/>
 </menu>

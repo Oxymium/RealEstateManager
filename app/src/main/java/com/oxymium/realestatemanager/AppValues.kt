@@ -4,6 +4,7 @@ import com.oxymium.realestatemanager.model.Agent
 import com.oxymium.realestatemanager.model.Estate
 import com.oxymium.realestatemanager.model.Label
 import com.oxymium.realestatemanager.model.Picture
+import com.oxymium.realestatemanager.model.Step
 import java.util.Random
 
 // Turn on/off the static map
@@ -12,8 +13,27 @@ const val ENABLE_STATIC_MAP = false
 // Amount of secondary pictures limit
 const val SECONDARY_PICTURES_AMOUNT_LIMIT = 9
 
-// Provide random phone number on compile
+// Provide Steps for Create/Edit
+val CREATE_STEPS = listOf(
+    Step(0, 0, R.drawable.view_grid),
+    Step(1, 1, R.drawable.account_tie),
+    Step(2, 2, R.drawable.home_city),
+    Step(3, 3, R.drawable.numeric),
+    Step(4, 4, R.drawable.image_outline),
+    Step(5, 5, R.drawable.image_multiple_outline),
+    Step(6, 6, R.drawable.comment_edit),
+    Step(7, 7, R.drawable.baseline_map_24),
+    Step(8, 8, R.drawable.tag_multiple),
+    )
 
+// Provide Steps for Tools
+val TOOLS_STEPS = listOf(
+    Step(1, 1, R.drawable.cash_multiple),
+    Step( 2, 2, R.drawable.chart_pie),
+    Step(3, 3, R.drawable.dev_to)
+)
+
+// Provide random phone number on compile
 fun generateRandomNumberAsString(): String{
     val numberAsString = when (val number = (0..99).random()){
         // Add 0 for numbers 0..9
@@ -30,10 +50,14 @@ fun generateRandomPhoneNumber(): String{
 // Provide random Agents (phone numbers generated at runtime to prevent privacy issues)
 val MOCK_FIRSTNAMES = listOf("Dawn", "Blake", "Mack", "Felicia", "Regina", "Jack", "Sabrina", "Alyce", "Marcelino", "Stacy", "Al", "Magnus", "Declan", "Liana", "Bella", "Clayton" )
 val MOCK_LASTNAMES = listOf("Walls", "Welch", "Stout", "Harrington", "Mckenzie", "Campbell", "Padilla", "Rowe", "Hansen", "Stein", "Hines", "Leblanc", "Bird", "Garner", "Wong", "Wood")
+val MOCK_MAILS = listOf("mock@gmailing.com", "mock@protonmailing.com")
+val MOCK_AGENCIES = listOf("Paris", "Le Havre", "Annecy")
 fun provideRandomAgents(quantity: Int): List<Agent>{
     val agents = mutableListOf<Agent>()
     repeat(quantity) {
-        agents.add(Agent(MOCK_FIRSTNAMES.random(), MOCK_LASTNAMES.random(), generateRandomPhoneNumber()))
+        agents.add(
+            Agent(MOCK_FIRSTNAMES.random(), MOCK_LASTNAMES.random(), generateRandomPhoneNumber(), MOCK_MAILS.random(), MOCK_AGENCIES.random())
+        )
     }
     return agents
 }
@@ -122,6 +146,16 @@ fun generateRandomEstate(): Estate {
     val randomBedrooms = (1..15).random()
     val randomBathrooms = (1..10).random()
     val randomEnergyScore = (1..701).random()
+    val randomEnergyType = when (randomEnergyScore){
+        in 1..50 -> "A"
+        in 51..90 -> "B"
+        in 91..150 -> "C"
+        in 151..230 -> "D"
+        in 231..330 -> "E"
+        in 331..450 -> "F"
+        in (451..Int.MAX_VALUE) -> "G"
+        else -> "G"
+    }
 
     val randomStreets = arrayOf("21 rue de la Paix", "19 rue des Tulipes", "07 avenue des bois fleuris").random()
     val randomZipCodes = arrayOf("00001", "00002", "00003", "00004", "00005").random()
@@ -156,6 +190,7 @@ fun generateRandomEstate(): Estate {
         randomType,
         randomPrice,
         randomEnergyScore,
+        randomEnergyType,
         randomSurface,
         randomRooms,
         randomBedrooms,
@@ -163,6 +198,8 @@ fun generateRandomEstate(): Estate {
         randomStreets,
         randomZipCodes,
         randomLocations,
+        0.0,
+        0.0,
         randomHighSpeedInternet,
         randomGarden,
         randomDisabledAccessibility,

@@ -46,7 +46,8 @@ public class Utils {
         return wifi.isWifiEnabled();
     }
 
-    // TODO
+    // -> NEW METHODS
+
     // Euro to dollars
     public static int convertEuroToDollar(int euros){
         return (int) Math.round(euros / 0.812);
@@ -58,7 +59,7 @@ public class Utils {
         return dateFormat.format(new Date());
     }
 
-    public static boolean isInternetAvailable2(Context context) {
+    public static boolean isInternetAvailableImproved(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();

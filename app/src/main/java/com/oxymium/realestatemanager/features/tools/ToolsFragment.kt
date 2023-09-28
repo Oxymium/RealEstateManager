@@ -8,9 +8,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentToolsBinding
+import com.oxymium.realestatemanager.features.create.steps.StepListener
+import com.oxymium.realestatemanager.features.create.steps.StepsAdapter
 import com.oxymium.realestatemanager.viewmodel.ToolsViewModel
 
 // -------------
@@ -24,6 +28,9 @@ class ToolsFragment: Fragment() {
     // DataBinding
     private lateinit var fragmentToolsBinding: FragmentToolsBinding
     private val binding get() = fragmentToolsBinding
+
+    // RecyclerView
+    private lateinit var stepsAdapter: StepsAdapter
 
     // ViewModel
     private val toolsViewModel: ToolsViewModel by activityViewModels()
@@ -46,7 +53,38 @@ class ToolsFragment: Fragment() {
         binding.toolsViewModel = toolsViewModel
         binding.navigatorBar.toolsViewModel = toolsViewModel
 
-        observeCreationSteps()
+        toolsViewModel.updateCurrentTool(0)
+        observeToolsSteps()
+
+        // RecyclerView setup
+        val linearLayoutManager = LinearLayoutManager(requireActivity(), GridLayoutManager.HORIZONTAL, false)
+        fragmentToolsBinding.navigatorBar.navigationToolsRecyclerView.layoutManager = linearLayoutManager
+
+        // Observe list of steps
+        toolsViewModel.toolSteps.observe(viewLifecycleOwner){
+            stepsAdapter.submitList(it?.toList())
+            println(it)
+        }
+
+        // Setup adapter
+        stepsAdapter = StepsAdapter(
+            // StepListener
+            StepListener {
+                toolsViewModel.updateCurrentTool(it.number)
+            }
+        )
+
+        toolsViewModel.currentTool.observe(viewLifecycleOwner) { step ->
+            step?.let {
+                toolsViewModel.updateToolSteps(toolsViewModel.toolSteps.value?.map { toolSteps ->
+                    toolSteps.copy(isSelected = step == toolSteps.number)
+                })
+            }
+
+        }
+
+        // RecyclerView adapter init
+        fragmentToolsBinding.navigatorBar.navigationToolsRecyclerView.adapter = stepsAdapter
 
         return binding.root
     }
@@ -58,19 +96,18 @@ class ToolsFragment: Fragment() {
         transaction?.commit()
     }
 
-    // Navigation handler for Creation process
-    private fun observeCreationSteps(){
-        val selectedTool = toolsViewModel.selectedTool.value
+    // Navigation handler for Tools
+    private fun observeToolsSteps(){
         toolsViewModel.currentTool.observe(viewLifecycleOwner) {
-            if (it == selectedTool) return@observe
             this.replaceFragment(when (it) {
+                null -> ToolsPlaceholderFragment()
+                0 -> ToolsPlaceholderFragment()
                 1 -> CurrencyFragment()
                 2 -> LoanFragment()
                 3 -> DevFragment()
-                else -> CurrencyFragment()
+                else -> ToolsPlaceholderFragment()
             })
             toolsViewModel.updateSelectedTool(it)
         }
     }
-
 }

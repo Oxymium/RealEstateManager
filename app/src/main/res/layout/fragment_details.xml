@@ -25,11 +25,21 @@
             tools:context=".CreateFragment">
 
             <include
+                android:id="@+id/navigator_bar"
+                layout="@layout/navigator_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/include1"
+                />
+
+            <include
                 android:id="@+id/include1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 layout="@layout/layout_details_main_picture"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/navigator_bar"
                 app:layout_constraintBottom_toTopOf="@id/include2"
                 />
 
@@ -80,36 +90,6 @@
                 app:layout_constraintTop_toBottomOf="@id/include5"
                 app:layout_constraintBottom_toBottomOf="parent"
                 />
-
-            <ImageButton
-                android:id="@+id/layout_details_edit_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_home_edit_white_36dp"
-                app:tint="@color/green_500"
-                android:backgroundTint="@color/independence"
-                android:onClick="@{() -> estateViewModel.onClickEditButton()}"
-                app:layout_constraintEnd_toStartOf="@id/layout_details_sell_button"
-                app:layout_constraintTop_toBottomOf="@+id/include3"
-                app:layout_constraintBottom_toTopOf="@+id/include4"
-                />
-
-            <ImageButton
-                android:id="@+id/layout_details_sell_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_handshake_white_36dp"
-                app:tint="@color/green_500"
-                android:backgroundTint="@color/independence"
-                app:toggleSellButtonVisibility="@{estateViewModel.queriedEstate.wasSold}"
-                android:onClick="@{() -> estateViewModel.onClickSellButton()}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/include3"
-                app:layout_constraintBottom_toTopOf="@+id/include4"
-                app:layout_constraintHorizontal_bias="0.98"
-                 />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

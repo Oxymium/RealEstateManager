@@ -33,5 +33,4 @@ class CreatePictureAdapter(private val pictureListener: PictureListener, private
             return oldItem.comment == newItem.comment
         }
     }
-
 }

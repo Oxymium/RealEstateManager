@@ -19,45 +19,51 @@ import androidx.room.PrimaryKey
 
 data class Estate(
     @ColumnInfo(name = "addedDate")
-    var addedDate:Long,
+    var addedDate: Long?,
     @ColumnInfo(name = "wasSold")
-    var wasSold: Boolean,
+    var wasSold: Boolean?,
     @ColumnInfo(name = "soldDate")
-    var soldDate: Long,
+    var soldDate: Long?,
     @ColumnInfo(name = "type")
-    var type:String,
+    var type:String?,
     @ColumnInfo(name = "price")
-    var price: Int,
+    var price: Int?,
     @ColumnInfo(name = "energyScore")
     var energyScore: Int?,
+    @ColumnInfo(name = "energyClassLetter")
+    var energyClassLetter: String?,
     @ColumnInfo(name = "surface")
-    var surface:Int,
+    var surface:Int?,
     @ColumnInfo(name = "rooms")
-    var rooms:Int,
+    var rooms:Int?,
     @ColumnInfo(name = "bedrooms")
-    var bedrooms:Int,
+    var bedrooms:Int?,
     @ColumnInfo(name = "bathrooms")
-    var bathrooms:Int,
+    var bathrooms:Int?,
     @ColumnInfo(name = "street")
-    var street: String,
+    var street: String?,
     @ColumnInfo(name = "zipCode")
-    var zipCode: String,
+    var zipCode: String?,
     @ColumnInfo(name = "location")
-    var location: String,
+    var location: String?,
+    @ColumnInfo(name = "latitude")
+    var latitude: Double?,
+    @ColumnInfo(name = "longitude")
+    var longitude: Double?,
     @ColumnInfo(name = "highSpeedInternet")
-    var highSpeedInternet: Boolean,
+    var highSpeedInternet: Boolean?,
     @ColumnInfo(name = "furnished")
-    var furnished: Boolean,
+    var furnished: Boolean?,
     @ColumnInfo(name = "disabledAccessibility")
-    var disabledAccessibility: Boolean,
+    var disabledAccessibility: Boolean?,
     @ColumnInfo(name = "garden")
-    var garden: Boolean,
+    var garden: Boolean?,
     @ColumnInfo(name = "nearbyPlaces")
-    var nearbyPlaces: String,
+    var nearbyPlaces: String?,
     @ColumnInfo(name = "description")
-    var description: String,
+    var description: String?,
     @ColumnInfo(name = "mainPicturePath")
-    var mainPicturePath: String,
+    var mainPicturePath: String?,
     @ColumnInfo(name = "agent_id", index = true)
     var agent_id: Long?,
     @PrimaryKey(autoGenerate = true)
@@ -67,28 +73,31 @@ data class Estate(
 {
     // No-arg constructor
     constructor() : this(
-        0,
-        false,
-        0,
-        "",
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        "",
-        "",
-        "",
-        false,
-        false,
-        false,
-        false,
-        "",
-        "",
-        "",
-        0,
-        0)
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null)
 }
 
 

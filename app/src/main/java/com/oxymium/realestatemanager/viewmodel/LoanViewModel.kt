@@ -1,5 +1,6 @@
 package com.oxymium.realestatemanager.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -11,26 +12,39 @@ import com.oxymium.realestatemanager.model.Loan
 
 class LoanViewModel: ViewModel() {
 
-    val loan = MutableLiveData(Loan(0f, 0f, 20, 1.5f))
-
+    val loan: LiveData<Loan> get() = _loan
+    private val _loan = MutableLiveData(
+        Loan(
+            0f,
+            0f,
+            20,
+            1.5f)
+    )
+    private fun updateLoan(loan: Loan){
+        _loan.value = loan
+    }
     fun updateBorrowedAmount(borrowedAmount: Float){
-        loan.value?.borrowedAmount = borrowedAmount
-        loan.value = loan.value
+        val currentLoan = loan.value ?: Loan()
+        currentLoan.borrowedAmount = borrowedAmount
+        updateLoan(currentLoan)
     }
 
     fun updateDeposit(deposit: Float){
-        loan.value?.deposit = deposit
-        loan.value = loan.value
+        val currentLoan = loan.value ?: Loan()
+        currentLoan.deposit = deposit
+        updateLoan(currentLoan)
     }
 
     fun updateDuration(duration: Int){
-        loan.value?.duration = duration
-        loan.value = loan.value
+        val currentLoan = loan.value ?: Loan()
+        currentLoan.duration = duration
+        updateLoan(currentLoan)
     }
 
     fun updateInterestRate(interestRate: Float){
-        loan.value?.interestRate = interestRate
-        loan.value = loan.value
+        val currentLoan = loan.value ?: Loan()
+        currentLoan.interestRate = interestRate
+        updateLoan(currentLoan)
     }
 
 }

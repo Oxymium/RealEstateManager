@@ -1,11 +1,13 @@
 package com.oxymium.realestatemanager.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.oxymium.realestatemanager.R
 import junit.framework.TestCase.assertEquals
 import org.junit.Rule
 import org.junit.Test
 
-class ToolsViewModelTest(){
+
+class ToolsViewModelTest {
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -13,33 +15,31 @@ class ToolsViewModelTest(){
     private val toolsViewModel = ToolsViewModel()
 
     @Test
-    fun onClickCurrencyCategoryTest(){
-        // GIVEN
-        val category = toolsViewModel.categoryClicked.value
-        // WHEN
-        toolsViewModel.onClickCurrencyCategory()
-        // THEN
-        assertEquals(1, category)
+    fun updateSelectedToolTest(){
+        // Given
+        val value = 1
+        val expectedFragmentReference = R.id.currencyFragment
+
+        // When
+        toolsViewModel.updateSelectedTool(value)
+        val selectedTool = toolsViewModel.selectedTool.value
+
+        // Then
+        assertEquals(expectedFragmentReference, selectedTool)
+
     }
 
     @Test
-    fun onClickLoanCategoryTest(){
-        // GIVEN
-        val category = toolsViewModel.categoryClicked.value
-        // WHEN
-        toolsViewModel.onClickLoanCategory()
-        // THEN
-        assertEquals(2, category)
-    }
+    fun currentToolTest(){
+        // Given
+        val value = 100
 
-    @Test
-    fun onClickDevyCategoryTest(){
-        // GIVEN
-        val category = toolsViewModel.categoryClicked.value
-        // WHEN
-        toolsViewModel.onClickDevCategory()
-        // THEN
-        assertEquals(3, category)
+        // When
+        toolsViewModel.updateCurrentTool(value)
+        val currentTool = toolsViewModel.currentTool.value
+
+        // Then
+        assertEquals(value, currentTool)
     }
 
 }

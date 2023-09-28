@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.callbackFlow
 // GeoCoderUtils
 // --------------
 
-class GeoCoderUtils() {
+class GeoCoderUtils {
 
     // FUSE address + zipCode + Location into one String
     fun fuseAllElementsFromAddress(address: String, postalCode: String, location: String): String{

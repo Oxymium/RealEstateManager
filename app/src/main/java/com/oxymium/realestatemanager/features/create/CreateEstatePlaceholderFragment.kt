@@ -28,7 +28,7 @@ class CreateEstatePlaceholderFragment: Fragment() {
     private lateinit var fragmentCreateEstatePlaceholderBinding: FragmentCreateEstatePlaceholderBinding
     private val binding get() = fragmentCreateEstatePlaceholderBinding
 
-    private val createEstateViewModel: CreateViewModel by activityViewModels() {
+    private val createEstateViewModel: CreateViewModel by activityViewModels {
         CreateViewModelFactory(
             (activity?.application as EstatesApplication).repository3,
             (activity?.application as EstatesApplication).repository,

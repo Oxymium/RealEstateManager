@@ -1,30 +1,24 @@
 package com.oxymium.realestatemanager.viewmodel
 
-import android.content.Context
-import android.location.Address
-import android.location.Geocoder
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
+import com.oxymium.realestatemanager.ESTATE_TYPES
 import com.oxymium.realestatemanager.RANDOM_PICTURES
 import com.oxymium.realestatemanager.database.AgentRepository
 import com.oxymium.realestatemanager.database.EstateRepository
 import com.oxymium.realestatemanager.database.PictureRepository
 import com.oxymium.realestatemanager.model.Agent
 import com.oxymium.realestatemanager.model.Estate
+import com.oxymium.realestatemanager.model.Label
 import com.oxymium.realestatemanager.model.Picture
 import com.oxymium.realestatemanager.model.Search
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
@@ -57,7 +51,7 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
     var queryValue: MutableLiveData<String> = MutableLiveData("")
 
     // Get all estates from REPO
-    val allEstates: LiveData<List<Estate>> = estateRepository.allEstates.asLiveData()
+    val allEstates: LiveData<List<Estate>> = estateRepository.getAllEstates().asLiveData()
 
     // Store estate list size
     var estatesListSize: MutableLiveData<Int> = MutableLiveData(0)
@@ -169,18 +163,29 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
         }
     }
 
-    var searchButtonToggle: MutableLiveData<Int> = MutableLiveData(0)
-
-    fun onClickSearchButton(){
-        when (searchButtonToggle.value) {
-            0 -> searchButtonToggle.value = 1
-            1 -> searchButtonToggle.value = 0
-        }
+    val toggleSearchButton: LiveData<Boolean> get() = _toggleSearchButton
+    private val _toggleSearchButton = MutableLiveData(false)
+    fun updateToggleSearchButton(boolean: Boolean){
+        _toggleSearchButton.value = boolean
     }
+    fun onClickSearchButton(){
+        if (toggleSearchButton.value == true) updateToggleSearchButton(false)
+        else updateToggleSearchButton(true)
+    }
+
+    // ------------------------
+    // QUERY ALL TYPES & AGENTS
+    // ------------------------
+    val types: LiveData<List<Label>> get() = _types
+    private val _types = MutableLiveData(ESTATE_TYPES)
+
+    val agents = agentRepository.getAllAgents().asLiveData()
 
     // -----------------
     // onClick Edit/Sell
     // -----------------
+
+    // EDIT
     val estateToEdit: LiveData<Estate?> get() = _estateToEdit
     private val _estateToEdit = MutableLiveData<Estate?>()
     fun updateEstateToEdit(estate: Estate?){
@@ -190,9 +195,17 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
         updateEstateToEdit(queriedEstate.value)
     }
 
-    var wasSellButtonClicked: MutableLiveData<Int> = MutableLiveData(0)
+    // SELL
+    val wasSellButtonClicked: LiveData<Boolean> get() = _wasSellButtonClicked
+    private val _wasSellButtonClicked = MutableLiveData(false)
+    private fun updateWasSellButtonClicked(boolean: Boolean){
+        _wasSellButtonClicked.value = boolean
+    }
+
     fun onClickSellButton(){
-        wasSellButtonClicked.postValue(1)
+        updateWasSellButtonClicked(true)
+        // Reset
+        updateWasSellButtonClicked(false)
     }
 
     fun updateEstateIntoDatabase(soldDateInMillis: Long) =
@@ -230,42 +243,5 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
     fun onClickEndingDateSoldButton(){
         wasDateClicked.value = 4
     }
-
-    // MAP
-
-    val addresses: LiveData<List<Address>> get() = _addresses
-    private val _addresses = MutableLiveData<List<Address>>()
-    fun updateAddresses(addresses: List<Address>){
-        _addresses.value = addresses
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    fun flowGeocodeTest(context: Context, fusedAddress: String, maxResults: Int): Flow<List<Address>> = callbackFlow {
-        val geocoder = Geocoder(context)
-        val listener = object : Geocoder.GeocodeListener{
-            override fun onGeocode(addresses: MutableList<Address>) {
-                try {
-                    if (!isClosedForSend) trySend(addresses).isSuccess
-                }catch (e: Exception){
-                    close(e)
-                }
-            }
-            override fun onError(errorMessage: String?) {
-                // Handle error
-            }
-        }
-        geocoder.getFromLocationName(fusedAddress, 1, listener)
-        awaitClose()
-    }
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    fun getLatLngFromEstates(context: Context, fusedAddress: String){
-        viewModelScope.launch {
-            flowGeocodeTest(context, fusedAddress, 1).collect{
-                updateAddresses(it)
-            }
-        }
-    }
-
 
 }

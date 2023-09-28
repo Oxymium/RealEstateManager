@@ -1,8 +1,5 @@
 package com.oxymium.realestatemanager.utils
 
-import android.annotation.SuppressLint
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -20,15 +17,13 @@ class Binders {
 
     companion object {
 
-
         // Toggle Sold Button visibility
         @JvmStatic
         @BindingAdapter("app:toggleSellButtonVisibility")
         fun toggleSellButtonVisibility(imageButton: ImageButton, sold: Boolean){
-            if (sold){
-                imageButton.visibility = GONE
-            }else{
-                imageButton.visibility = VISIBLE
+            imageButton.visibility = when (sold){
+                true -> GONE
+                else -> VISIBLE
             }
         }
 
@@ -83,46 +78,20 @@ class Binders {
         // Search results custom text
         @JvmStatic
         @BindingAdapter("app:toggleSearchVisibility")
-        fun toggleSearchVisibility(view: View, state: Int?) {
-
-            when (state) {
-                0 -> {
+        fun toggleSearchVisibility(view: View, boolean: Boolean?) {
+            when (boolean) {
+                false -> {
                     view.visibility = GONE
                     val animation: Animation = AnimationUtils.loadAnimation(view.context, R.anim.move_out_animation)
                     view.startAnimation(animation)
                 }
-                1 ->
+                true ->
                 {
                     view.visibility = VISIBLE
                     val animation: Animation = AnimationUtils.loadAnimation(view.context, R.anim.move_in_animation)
                     view.startAnimation(animation)
                 }
 
-            }
-        }
-
-        // High speed internet icon tint
-        @SuppressLint("UseCompatTextViewDrawableApis")
-        @JvmStatic
-        @BindingAdapter("app:internetIconTint")
-        fun changeInternetDrawableTint(textView: TextView, highSpeedInternet: Boolean?) {
-
-            when (highSpeedInternet) {
-                true -> textView.compoundDrawableTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50"))
-                false -> textView.compoundDrawableTintList = ColorStateList.valueOf(Color.parseColor("#E91E63"))
-                else -> {}
-
-            }
-        }
-
-        // High speed internet text color
-        @JvmStatic
-        @BindingAdapter("app:internetTextColor")
-        fun changeInternetTextColor(textView: TextView, highSpeedInternet: Boolean?) {
-
-            when (highSpeedInternet) {
-                true -> textView.setTextColor(ColorStateList.valueOf(Color.parseColor("#4CAF50")))
-                false -> textView.setTextColor(ColorStateList.valueOf(Color.parseColor("#E91E63")))
                 else -> {}
             }
         }

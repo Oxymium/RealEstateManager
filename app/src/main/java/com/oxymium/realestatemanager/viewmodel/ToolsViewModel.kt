@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.oxymium.realestatemanager.R
+import com.oxymium.realestatemanager.TOOLS_STEPS
+import com.oxymium.realestatemanager.model.Step
 
 // --------------
 // ToolsViewModel
@@ -14,8 +16,8 @@ class ToolsViewModel: ViewModel() {
     // -------------------
     // FRAGMENT NAVIGATION
     // -------------------
-    val selectedTool: LiveData<Int> get() = _selectedTool
-    private val _selectedTool: MutableLiveData<Int> = MutableLiveData<Int>()
+    val selectedTool: LiveData<Int?> get() = _selectedTool
+    private val _selectedTool: MutableLiveData<Int?> = MutableLiveData<Int?>(null)
     fun updateSelectedTool(value: Int){
         _selectedTool.value = when (value){
             1 -> R.id.currencyFragment
@@ -29,6 +31,12 @@ class ToolsViewModel: ViewModel() {
     private val _currentTool = MutableLiveData<Int>()
     fun updateCurrentTool(value: Int){
         _currentTool.value = value
+    }
+
+    val toolSteps: LiveData<List<Step>?> get() = _toolSteps
+    private val _toolSteps = MutableLiveData(TOOLS_STEPS)
+    fun updateToolSteps(toolSteps: List<Step>?){
+        _toolSteps.value = toolSteps
     }
 
 }

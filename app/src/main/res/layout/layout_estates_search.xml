@@ -99,7 +99,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dropdown"
-                android:entries="@array/array_search_highSpeedInternet"
+                android:entries="@array/array_search_choices"
                 android:background="@drawable/spinner_background"
                 app:layout_constraintStart_toEndOf="@id/layout_search_type_spinner"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -113,11 +113,53 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:spinnerMode="dropdown"
-                android:entries="@array/array_search_highSpeedInternet"
+                android:entries="@array/array_search_choices"
                 android:background="@drawable/spinner_background"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/layout_search_wasSold_spinner"
                 app:layout_constraintTop_toBottomOf="@id/layout_search_energyScore_spinner"
+                app:layout_constraintHorizontal_bias="0.02"
+                />
+
+            <!-- DISABLED ACCESSIBILITY -->
+            <Spinner
+                android:id="@+id/layout_search_disability_access_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:entries="@array/array_search_available"
+                android:background="@drawable/spinner_background"
+                app:layout_constraintStart_toEndOf="@id/layout_search_hasHighSpeedInternet_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_search_type_spinner"
+                app:layout_constraintHorizontal_bias="0.02"
+                />
+
+            <!-- GARDEN -->
+            <Spinner
+                android:id="@+id/layout_search_garden_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:entries="@array/array_search_available"
+                android:background="@drawable/spinner_background"
+                app:layout_constraintStart_toEndOf="@id/layout_search_hasHighSpeedInternet_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_search_type_spinner"
+                app:layout_constraintHorizontal_bias="0.02"
+                />
+
+            <!-- FURNISHED -->
+            <Spinner
+                android:id="@+id/layout_search_furnished_spinner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dropdown"
+                android:entries="@array/array_search_available"
+                android:background="@drawable/spinner_background"
+                app:layout_constraintStart_toEndOf="@id/layout_search_hasHighSpeedInternet_spinner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_search_type_spinner"
                 app:layout_constraintHorizontal_bias="0.02"
                 />
 

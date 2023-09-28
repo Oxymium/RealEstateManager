@@ -41,168 +41,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout_create_numerics_top_space">
 
-            <ImageButton
-                android:id="@+id/create_navigator_button_step_1"
-                android:layout_width="wrap_content"
+            <!-- STEPS -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/navigator_create_recyclerView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:onClick="@{ () -> createViewModel.updateCurrentStep(1) }"
-                app:navigatorStepButtonColor="@{ createViewModel.selectedAgentId != null &amp;&amp; createViewModel.selectedType != null }"
-                android:src="@drawable/numeric_1_box_multiple"
-                app:tint="@color/isabelline"
-                android:backgroundTint="@color/space_cadet"
+                tools:listitem="@layout/item_step"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_centerVertical="true"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_step_2"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:background="@color/yellow_500"
-                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 1 }"
-                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_1"
-                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_1"
-                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_1"
-                />
-
-            <ImageButton
-                android:id="@+id/create_navigator_button_step_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{ () -> createViewModel.updateCurrentStep(2) }"
-                app:navigatorStepButtonColor="@{createViewModel.price != null &amp;&amp; createViewModel.surface != null &amp;&amp; createViewModel.rooms != null &amp;&amp; createViewModel.bedrooms != null &amp;&amp; createViewModel.bathrooms != null &amp;&amp; createViewModel.energyScore != null }"
-                android:src="@drawable/numeric_2_box_multiple"
-                app:tint="@color/isabelline"
-                android:backgroundTint="@color/space_cadet"
-                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_1"
-                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_step_3"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:background="@color/yellow_500"
-                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 2 }"
-                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_2"
-                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_2"
-                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_2"
-                />
-
-            <ImageButton
-                android:id="@+id/create_navigator_button_step_3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{ () -> createViewModel.updateCurrentStep(3) }"
-                app:navigatorStepButtonColor="@{createViewModel.mainPicturePath != null }"
-                android:src="@drawable/numeric_3_box_multiple"
-                app:tint="@color/isabelline"
-                android:backgroundTint="@color/space_cadet"
-                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_2"
-                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_step_4"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:background="@color/yellow_500"
-                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 3 }"
-                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_3"
-                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_3"
-                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_3"
-                />
-
-            <ImageButton
-                android:id="@+id/create_navigator_button_step_4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{ () -> createViewModel.updateCurrentStep(4) }"
-                app:navigatorStepButtonColor="@{createViewModel.secondaryPictures.size() != 0 }"
-                android:src="@drawable/numeric_4_box_multiple"
-                app:tint="@color/isabelline"
-                android:backgroundTint="@color/space_cadet"
-                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_3"
-                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_step_5"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:background="@color/yellow_500"
-                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 4 }"
-                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_4"
-                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_4"
-                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_4"
-                />
-
-
-            <ImageButton
-                android:id="@+id/create_navigator_button_step_5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{ () -> createViewModel.updateCurrentStep(5) }"
-                app:navigatorStepButtonColor="@{createViewModel.description != null }"
-                android:src="@drawable/numeric_5_box_multiple"
-                app:tint="@color/isabelline"
-                android:backgroundTint="@color/space_cadet"
-                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_4"
-                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_step_6"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:background="@color/yellow_500"
-                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 5 }"
-                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_5"
-                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_5"
-                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_5"
-                />
-
-
-            <ImageButton
-                android:id="@+id/create_navigator_button_step_6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{ () -> createViewModel.updateCurrentStep(6) }"
-                app:navigatorStepButtonColor="@{createViewModel.street != null &amp;&amp; createViewModel.zipCode != null &amp;&amp; createViewModel.location != null }"
-                android:src="@drawable/numeric_6_box_multiple"
-                app:tint="@color/isabelline"
-                android:backgroundTint="@color/space_cadet"
-                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_5"
-                app:layout_constraintEnd_toStartOf="@id/create_navigator_button_save"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="3dp"
-                android:background="@color/yellow_500"
-                app:navigatorStepsUnderlineVisibility="@{ createViewModel.currentStep == 6 }"
-                app:layout_constraintStart_toStartOf="@id/create_navigator_button_step_6"
-                app:layout_constraintTop_toBottomOf="@id/create_navigator_button_step_6"
-                app:layout_constraintEnd_toEndOf="@id/create_navigator_button_step_6"
-                />
-
-
-            <ImageButton
-                android:id="@+id/create_navigator_button_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{ () -> createViewModel.onClickSaveEstateButton() }"
-                android:src="@drawable/content_save_all_outline"
-                app:tint="@color/isabelline"
-                android:backgroundTint="@color/space_cadet"
-                app:layout_constraintStart_toEndOf="@id/create_navigator_button_step_6"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -211,15 +59,44 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <ImageView
+            android:id="@+id/navigator_create_chevron_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/chevron_double_left"
+            app:tint="@color/white"
+            app:leftChevronVisibility="@{ createViewModel.reachedStepSide }"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/navigator_create_title"
+            app:layout_constraintTop_toTopOf="@id/navigator_create_title"
+            app:layout_constraintBottom_toBottomOf="@id/navigator_create_title"
+            />
+
+        <ImageView
+            android:id="@+id/navigator_create_chevron_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/chevron_double_right"
+            app:rightChevronVisibility="@{ createViewModel.reachedStepSide }"
+            app:layout_constraintStart_toEndOf="@id/navigator_create_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/navigator_create_title"
+            app:layout_constraintBottom_toBottomOf="@id/navigator_create_title"
+            app:tint="@color/white"
+            />
+
         <TextView
+            android:id="@+id/navigator_create_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            android:text="Steps"
+            app:navigatorTextView="@{createViewModel.currentStep}"
             android:textColor="@color/isabelline"
             android:textStyle="italic|bold"
             android:textAlignment="center"
+            android:hint="Steps"
+            android:textColorHint="@color/white"
             android:background="@color/space_cadet"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
