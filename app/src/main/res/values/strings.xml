@@ -22,6 +22,7 @@
     <!-- DETAILS FRAG. -->
     <string name="fragment_details_hint_sold">was sold</string>
     <string name="fragment_details_hint_type">Type</string>
+    <string name="fragment_details_added_date">Added date</string>
     <string name="fragment_details_hint_surface">Surface</string>
     <string name="fragment_details_hint_rooms">Rooms</string>
     <string name="details_energy_score">%1$s Kwh/m²/year</string>
@@ -50,9 +51,20 @@
     <string name="item_estate_hint_rooms">Rooms</string>
     <string name="item_estate_hint_type">Type</string>
 
+    <!-- AGENT ITEM -->
+    <string name="item_agent_firstname">Firstname</string>
+    <string name="item_agent_lastname">Lastname</string>
+    <string name="item_agent_phone">Phone</string>
+    <string name="item_agent_mail">Mail</string>
+    <string name="item_agent_agency">Agency</string>
+
+    <!-- STEP ITEM -->
+    <string name="item_step_description_picture">Step</string>
+
     <!-- CREATE FRAG. -->
     <string name="create_title">「CREATE」</string>
     <string name="create_guideline">Proceed through 6 steps</string>
+    <string name="create_guideline_secondary">Select a category</string>
     <string name="edit_title">「EDIT」</string>
     <string name="edit_subtitle">Estate n° %1$s</string>
     <string name="edit_guideline">Edit any values</string>
@@ -168,6 +180,8 @@
     <string name="icon_misc">Misc icon</string>
     <string name="icon_address">Address icon</string>
     <string name="icon_nearby_places">Nearby places icon</string>
+    <string name="icon_tool">Tool icon</string>
+    <string name="icon_date">Date icon</string>
 
     <!-- HINT VALUES -->
     <string name="hint_agent">Agent</string>
@@ -280,5 +294,8 @@
     <string name="energy_class_f">Weak energy performance</string>
     <string name="energy_class_g">Bad energy performance</string>
 
+    <!-- PLACEHOLDER VALUES -->
+    <string name="placeholder_create">「Create」</string>
+    <string name="placeholder_tools">「Tools」</string>
 
 </resources>

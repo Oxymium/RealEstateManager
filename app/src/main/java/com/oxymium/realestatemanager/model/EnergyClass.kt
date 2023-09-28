@@ -33,7 +33,7 @@ sealed class EnergyClass(val letter: String){
     }
 
     companion object {
-        val scoreToLetterMap = mapOf(
+        private val scoreToLetterMap = mapOf(
             0..70 to "A",
             71..110 to "B",
             111..180 to "C",

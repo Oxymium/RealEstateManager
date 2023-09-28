@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import com.oxymium.realestatemanager.R
 
-class CustomSpinnerAdapter(context: Context, private val resLayout: Int, private val values: List<String>): ArrayAdapter<String>(context, resLayout, values) {
+class CustomSpinnerAdapter(context: Context, resLayout: Int, private val values: List<String>): ArrayAdapter<String>(context, resLayout, values) {
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         // Use the custom dropdown item layout for all dropdown items
