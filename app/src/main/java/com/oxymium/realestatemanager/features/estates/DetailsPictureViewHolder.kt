@@ -5,8 +5,7 @@ import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.oxymium.realestatemanager.databinding.ItemPictureBinding
-import com.oxymium.realestatemanager.model.Picture
-import com.oxymium.realestatemanager.utils.PictureListener
+import com.oxymium.realestatemanager.model.databaseitems.Picture
 
 // ------------------------
 // DetailsPictureViewHolder

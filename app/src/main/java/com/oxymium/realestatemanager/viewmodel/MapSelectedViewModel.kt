@@ -4,15 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.maps.model.LatLng
-import com.oxymium.realestatemanager.database.EstateRepository
+import com.oxymium.realestatemanager.database.estate.EstateRepository
 import com.oxymium.realestatemanager.model.CategoryHelper
-import com.oxymium.realestatemanager.model.Estate
-import kotlinx.coroutines.delay
+import com.oxymium.realestatemanager.model.databaseitems.Estate
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-const val HELPER_DURATION_MILLIS = 2000L
 class MapSelectedViewModel(val estateRepository: EstateRepository): ViewModel() {
 
     val selectedEstate: LiveData<Estate?> get() = _selectedEstate
@@ -27,33 +24,11 @@ class MapSelectedViewModel(val estateRepository: EstateRepository): ViewModel() 
         )
     }
 
-    // Keep current LatLng
-    val previouslyCenteredLocation: LatLng get() = _previouslyCenteredLocation
-    private var _previouslyCenteredLocation = LatLng(0.0, 0.0)
-    fun updatePreviouslyCenteredLocation(latLng: LatLng){
-        _previouslyCenteredLocation = latLng
-    }
-
-    // Keep current Zoom level
-    val previouslyZoomedLevel: Float get() = _previouslyZoomedLevel
-    private var _previouslyZoomedLevel: Float = 0.0f
-    fun updatePreviouslyZoomedLevel(zoomLevel: Float){
-        _previouslyZoomedLevel = zoomLevel
-    }
-
     // Icon helper
     val iconHelper: LiveData<CategoryHelper?> get() = _iconHelper
     private val _iconHelper = MutableLiveData<CategoryHelper?>(null)
     fun updateIconHelper(categoryHelper: CategoryHelper?){
         _iconHelper.value = categoryHelper
-    }
-
-    private fun onCLickDisplayHelpMessageWithDuration(categoryHelper: CategoryHelper?){
-        viewModelScope.launch{
-            updateIconHelper(categoryHelper)
-            delay(HELPER_DURATION_MILLIS)
-            updateIconHelper(null)
-        }
     }
 
     fun onClickIcons(value: Int){

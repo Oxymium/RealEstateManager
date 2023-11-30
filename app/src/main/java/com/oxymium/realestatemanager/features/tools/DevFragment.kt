@@ -14,9 +14,9 @@ import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentDevBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
-import com.oxymium.realestatemanager.viewmodel.CreateViewModelFactory
 import com.oxymium.realestatemanager.viewmodel.DevViewModel
-import com.oxymium.realestatemanager.viewmodel.DevViewModelFactory
+import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
+import com.oxymium.realestatemanager.viewmodel.factories.DevViewModelFactory
 
 // -----------
 // DevFragment
@@ -33,13 +33,16 @@ class DevFragment: Fragment() {
     // ViewModel
     private val createViewModel: CreateViewModel by activityViewModels {
         CreateViewModelFactory(
-            (activity?.application as EstatesApplication).repository3,
-            (activity?.application as EstatesApplication).repository, (activity?.application as EstatesApplication).repository2)
+            (activity?.application as EstatesApplication).agentRepository,
+            (activity?.application as EstatesApplication).estateRepository,
+            (activity?.application as EstatesApplication).pictureRepository)
     }
 
     // DevViewModel
     private val devViewModel: DevViewModel by activityViewModels {
-        DevViewModelFactory((activity?.application as EstatesApplication).repository, (activity?.application as EstatesApplication).repository2)
+        DevViewModelFactory(
+            (activity?.application as EstatesApplication).estateRepository,
+            (activity?.application as EstatesApplication).pictureRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -19,9 +19,8 @@ import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentDetailsBinding
 import com.oxymium.realestatemanager.utils.DateUtils
-import com.oxymium.realestatemanager.utils.PictureListener
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
-import com.oxymium.realestatemanager.viewmodel.EstateViewModelFactory
+import com.oxymium.realestatemanager.viewmodel.factories.EstateViewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.Calendar
 
@@ -39,8 +38,10 @@ class DetailsFragment: Fragment() {
 
     // EstateViewModel
     private val estateViewModel: EstateViewModel by activityViewModels {
-        EstateViewModelFactory((activity?.application as EstatesApplication).repository3, (activity?.application as EstatesApplication).repository,
-            (activity?.application as EstatesApplication).repository2)
+        EstateViewModelFactory(
+            (activity?.application as EstatesApplication).agentRepository,
+            (activity?.application as EstatesApplication).estateRepository,
+            (activity?.application as EstatesApplication).pictureRepository)
     }
 
     // RecyclerView Adapter
@@ -102,7 +103,12 @@ class DetailsFragment: Fragment() {
         detailsPictureAdapter = DetailsPictureAdapter(
             // onClick secondary picture
             PictureListener {
-                    picture -> Glide.with(this@DetailsFragment).load(picture.path).placeholder(R.drawable.estate_placeholder7).into(fragmentDetailsBinding.include1.layoutDetailsMainPicture)
+                    picture ->
+                Glide
+                    .with(this@DetailsFragment)
+                    .load(picture.path)
+                    .placeholder(R.drawable.estate_7)
+                    .into(fragmentDetailsBinding.include1.layoutDetailsMainPicture)
             }
         )
 
@@ -117,14 +123,14 @@ class DetailsFragment: Fragment() {
                 Glide
                     .with(this@DetailsFragment)
                     .load(queriedEstate.mainPicturePath)
-                    .placeholder(R.drawable.estate_placeholder4)
+                    .placeholder(R.drawable.estate_4)
                     .into(fragmentDetailsBinding.include1.layoutDetailsMainPicture)
 
                 // Load static map
                 if (ENABLE_STATIC_MAP) {
                     Glide.with(this@DetailsFragment)
                         .load("https://maps.googleapis.com/maps/api/staticmap?center=${queriedEstate.latitude},${queriedEstate.longitude}&zoom=14&size=400x400&key=${MAPS_API_KEY}")
-                        .placeholder(R.drawable.estate_placeholder4)
+                        .placeholder(R.drawable.estate_4)
                         .into(fragmentDetailsBinding.include6.fragmentDetailsEstateStaticMap)
                 }else{
                     Snackbar.make(binding.root, "Static map turned off", Snackbar.LENGTH_LONG).show()

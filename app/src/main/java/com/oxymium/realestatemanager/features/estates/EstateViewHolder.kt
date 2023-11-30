@@ -4,8 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.oxymium.realestatemanager.databinding.ItemEstateBinding
-import com.oxymium.realestatemanager.model.Estate
-import com.oxymium.realestatemanager.utils.EstateListener
+import com.oxymium.realestatemanager.model.databaseitems.Estate
 
 // ------------------------------
 // EstateViewHolder (RecyclerView)
@@ -23,8 +22,6 @@ class EstateViewHolder(val binding: ItemEstateBinding):
         binding.estate = estate
         binding.estateClickListener = estateListener
 
-        binding.itemEstateEnergy.text = estate.energyScore.toString()
-
     }
 
     companion object {
@@ -35,8 +32,6 @@ class EstateViewHolder(val binding: ItemEstateBinding):
             return EstateViewHolder(binding)
 
         }
-
     }
-
 }
 

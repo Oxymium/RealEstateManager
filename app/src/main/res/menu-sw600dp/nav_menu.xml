@@ -3,17 +3,17 @@
     <item
         android:id="@+id/createEstateFragment"
         android:title="@string/bottom_nav_category_2"
-        android:icon="@drawable/baseline_add_white_24"/>
+        android:icon="@drawable/estate_plus"/>
     <item
         android:id="@+id/estatesDetailsFragment"
         android:title="@string/bottom_nav_category_3"
-        android:icon="@drawable/baseline_holiday_village_white_24"/>
+        android:icon="@drawable/estates"/>
     <item
         android:id="@+id/toolsFragment"
         android:title="@string/bottom_nav_category_4"
-        android:icon="@drawable/baseline_insights_white_24"/>
+        android:icon="@drawable/tools"/>
     <item
         android:id="@+id/mapSelectedFragment"
         android:title="@string/bottom_nav_category_5"
-        android:icon="@drawable/baseline_map_white_24"/>
+        android:icon="@drawable/map"/>
 </menu>

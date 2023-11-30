@@ -30,30 +30,22 @@ class Binders {
         // Convert time in millis to proper date to display, format like DD/MM/YYYY
         @JvmStatic
         @BindingAdapter("app:convertTimeInMillisToDate")
-        fun loadSecondaryPictureUri(textView: TextView, timeInMillis: Long) {
-            if (timeInMillis != 0L) {
-                val calendar: Calendar = getInstance()
-                calendar.timeInMillis = timeInMillis
-                val year = calendar.get(YEAR)
-                // Month starts at index 0 (January = 0)
-                val month = calendar.get(MONTH) + 1
-                val day = calendar.get(DAY_OF_MONTH)
-
-                // Reformat numbers <10 and add 0 in front, to display 0D/0M/YYYY instead of D/M/YYYY
-                val convertedMonth = if (month < 10) {
-                    "0$month"
-                } else {
-                    month.toString()
+        fun loadSecondaryPictureUri(textView: TextView, timeInMillis: Long?) {
+            when (timeInMillis){
+                null -> textView.text = "Pick date"
+                else -> {
+                    val calendar: Calendar = getInstance()
+                    calendar.timeInMillis = timeInMillis
+                    val year = calendar.get(YEAR)
+                    // Month starts at index 0 (January = 0)
+                    val month = calendar.get(MONTH) + 1
+                    val day = calendar.get(DAY_OF_MONTH)
+                    // Reformat numbers <10 and add 0 in front, to display 0D/0M/YYYY instead of D/M/YYYY
+                    val convertedMonth = if (month < 10) "0$month" else "$month"
+                    val convertedDay = if (day < 10) "0$day" else "$day"
+                    val dateToDisplay = "$convertedDay/$convertedMonth/$year"
+                    textView.text = dateToDisplay
                 }
-                val convertedDay = if (day < 10) {
-                    "0$day"
-                } else {
-                    day.toString()
-                }
-
-                val dateToDisplay = "$convertedDay/$convertedMonth/$year"
-
-                textView.text = dateToDisplay
             }
         }
 
@@ -96,14 +88,11 @@ class Binders {
             }
         }
 
-        // Sold Visibility
+        // Date sold Visibility
         @JvmStatic
-        @BindingAdapter("app:soldVisibility")
-        fun changeSoldVisibility(textView: TextView, wasSold: Boolean) {
-            when (wasSold) {
-                true -> textView.visibility = VISIBLE
-                false -> textView.visibility = GONE
-            }
+        @BindingAdapter("app:dateSoldVisibility")
+        fun toggleDateSoldVisibility(view: View, wasSold: Boolean) {
+            view.visibility = if (wasSold) VISIBLE else GONE
         }
 
     }

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="estateViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.EstateViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@color/space_cadet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <!-- DESCRIPTION -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_description_part"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+            android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+            android:padding="@dimen/create_padding"
+            android:background="@drawable/circular_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <ImageView
+                android:id="@+id/details_description_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/description"
+                app:tint="@color/icons_details_color"
+                android:contentDescription="@string/icon_description"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+            <TextView
+                android:id="@+id/details_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{estateViewModel.queriedEstate.description}'
+                android:textSize="@dimen/details_font_medium"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/hint_description"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_description_icon"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- NEARBY PLACES -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_nearby_places_part"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+            android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+            android:padding="@dimen/create_padding"
+            android:background="@drawable/circular_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_description_part"
+            >
+
+            <ImageView
+                android:id="@+id/details_nearby_places_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/nearby_places"
+                app:tint="@color/icons_details_color"
+                android:contentDescription="@string/icon_nearby_places"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/details_nearby_places"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{estateViewModel.queriedEstate.nearbyPlaces}'
+                android:textSize="@dimen/details_font_medium"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/hint_nearby_places"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_nearby_places_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- ADDRESS -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_address_part"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+            android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+            android:padding="@dimen/create_padding"
+            android:background="@drawable/circular_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_nearby_places_part"
+            >
+
+            <ImageView
+                android:id="@+id/details_address_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/zipcode"
+                app:tint="@color/icons_details_color"
+                android:contentDescription="@string/icon_zipcode"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+            <TextView
+                android:id="@+id/details_street"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{estateViewModel.queriedEstate.street}'
+                android:textSize="@dimen/details_font_medium"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/hint_street"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_address_icon"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+            <TextView
+                android:id="@+id/details_zipCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{String.valueOf(estateViewModel.queriedEstate.zipCode)}'
+                android:textSize="@dimen/details_font_medium"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/hint_zipCode"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_street"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- AGENT -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/details_agent_part"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+            android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+            android:padding="@dimen/create_padding"
+            android:background="@drawable/circular_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/details_address_part"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <ImageView
+                android:id="@+id/details_agent_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/agent"
+                app:tint="@color/icons_details_color"
+                android:contentDescription="@string/icon_agent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+            <TextView
+                android:id="@+id/details_agent_firstname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{ estateViewModel.agent.firstName }"
+                android:textSize="@dimen/details_font_medium"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/item_agent_firstname"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_agent_icon"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+            <TextView
+                android:id="@+id/details_agent_lastname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{ estateViewModel.agent.lastName }"
+                android:textSize="@dimen/details_font_medium"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/item_agent_lastname"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_agent_firstname"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+            <TextView
+                android:id="@+id/details_agent_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{ estateViewModel.agent.phoneNumber }"
+                android:textSize="@dimen/details_font_medium"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/item_agent_phone"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_agent_lastname"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+            <TextView
+                android:id="@+id/details_agent_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{ estateViewModel.agent.mail }"
+                android:textSize="@dimen/details_font_medium"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/item_agent_mail"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_agent_phone"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+            <TextView
+                android:id="@+id/details_agent_agency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{ estateViewModel.agent.agency }"
+                android:textSize="@dimen/details_font_medium"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/item_agent_agency"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/details_agent_mail"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+

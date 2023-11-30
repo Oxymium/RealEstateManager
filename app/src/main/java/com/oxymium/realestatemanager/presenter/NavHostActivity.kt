@@ -31,9 +31,13 @@ import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.ActivityNavHostBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.model.EstateField
-import com.oxymium.realestatemanager.model.Picture
+import com.oxymium.realestatemanager.model.databaseitems.Picture
 import com.oxymium.realestatemanager.utils.Notifications
 import com.oxymium.realestatemanager.viewmodel.*
+import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
+import com.oxymium.realestatemanager.viewmodel.factories.DevViewModelFactory
+import com.oxymium.realestatemanager.viewmodel.factories.EstateViewModelFactory
+import com.oxymium.realestatemanager.viewmodel.factories.MapSelectedViewModelFactory
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -65,19 +69,27 @@ class NavHostActivity : AppCompatActivity() {
 
     // ViewModels
     private val estateViewModel: EstateViewModel by viewModels {
-        EstateViewModelFactory((application as EstatesApplication).repository3, (application as EstatesApplication).repository, ((application as EstatesApplication).repository2))
+        EstateViewModelFactory(
+            (application as EstatesApplication).agentRepository,
+            (application as EstatesApplication).estateRepository,
+            ((application as EstatesApplication).pictureRepository))
     }
 
     private val createViewModel: CreateViewModel by viewModels {
-        CreateViewModelFactory((application as EstatesApplication).repository3, (application as EstatesApplication).repository, ((application as EstatesApplication).repository2))
+        CreateViewModelFactory(
+            (application as EstatesApplication).agentRepository,
+            (application as EstatesApplication).estateRepository,
+            ((application as EstatesApplication).pictureRepository))
     }
 
     private val devViewModel: DevViewModel by viewModels {
-        DevViewModelFactory((application as EstatesApplication).repository, ((application as EstatesApplication).repository2))
+        DevViewModelFactory(
+            (application as EstatesApplication).estateRepository,
+            ((application as EstatesApplication).pictureRepository))
     }
 
     private val mapSelectedViewModel: MapSelectedViewModel by viewModels {
-        MapSelectedViewModelFactory((application as EstatesApplication).repository)
+        MapSelectedViewModelFactory((application as EstatesApplication).estateRepository)
     }
 
     private val toolsViewModel: ToolsViewModel by viewModels()

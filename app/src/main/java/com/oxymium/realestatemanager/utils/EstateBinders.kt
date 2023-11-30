@@ -10,12 +10,12 @@ class EstateBinders {
     companion object {
 
         @JvmStatic
-        @BindingAdapter("app:itemEstateSoldTint")
-        fun changeItemEstateItemTint(imageView: ImageView, wasSold: Boolean) {
+        @BindingAdapter("app:itemEstateIconTint")
+        fun setItemEstateIconTint(imageView: ImageView, boolean: Boolean) {
             val context = imageView.context
-            when (wasSold) {
-                true -> imageView.setColorFilter(provideCompatColor(context, R.color.red_25))
-                false -> imageView.clearColorFilter()
+            when (boolean) {
+                true -> imageView.setColorFilter(provideCompatColor(context, R.color.green_500))
+                false -> imageView.setColorFilter(provideCompatColor(context, R.color.red_500))
             }
         }
 

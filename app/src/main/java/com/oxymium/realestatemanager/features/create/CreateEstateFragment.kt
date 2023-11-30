@@ -26,10 +26,9 @@ import com.oxymium.realestatemanager.features.create.step_values_energy_score.St
 import com.oxymium.realestatemanager.features.create.steps.RecyclerViewScrollListener
 import com.oxymium.realestatemanager.features.create.steps.StepListener
 import com.oxymium.realestatemanager.features.create.steps.StepsAdapter
-import com.oxymium.realestatemanager.features.estates.CreateEstatePlaceholderFragment
 import com.oxymium.realestatemanager.generateRandomEstate
 import com.oxymium.realestatemanager.model.ReachedSide
-import com.oxymium.realestatemanager.viewmodel.CreateViewModelFactory
+import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
 
 // ---------------
 // StepOneFragment
@@ -48,9 +47,9 @@ class CreateEstateFragment: Fragment() {
 
     private val createViewModel: CreateViewModel by activityViewModels {
         CreateViewModelFactory(
-            (activity?.application as EstatesApplication).repository3,
-            (activity?.application as EstatesApplication).repository,
-            (activity?.application as EstatesApplication).repository2
+            (activity?.application as EstatesApplication).agentRepository,
+            (activity?.application as EstatesApplication).estateRepository,
+            (activity?.application as EstatesApplication).pictureRepository
         )
     }
 

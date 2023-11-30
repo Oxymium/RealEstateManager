@@ -3,8 +3,7 @@ package com.oxymium.realestatemanager.features.estates
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.oxymium.realestatemanager.model.Estate
-import com.oxymium.realestatemanager.utils.EstateListener
+import com.oxymium.realestatemanager.model.databaseitems.Estate
 
 // ----------------------------
 // EstateAdapter (RecyclerView)
@@ -32,5 +31,13 @@ class EstateAdapter(private val estateListener: EstateListener): ListAdapter<Est
             return oldItem == newItem
         }
     }
-
 }
+
+// --------------
+// EstateListener
+// --------------
+
+class EstateListener(val estateClickListener: (estate: Estate) -> Unit) {
+    fun onClickEstate(estate: Estate) = estateClickListener(estate)
+}
+

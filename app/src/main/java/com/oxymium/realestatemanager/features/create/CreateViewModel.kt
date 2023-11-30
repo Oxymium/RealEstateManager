@@ -10,23 +10,23 @@ import com.oxymium.realestatemanager.ESTATE_TYPES
 import com.oxymium.realestatemanager.NEARBY_PLACES
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.SECONDARY_PICTURES_AMOUNT_LIMIT
-import com.oxymium.realestatemanager.database.AgentRepository
-import com.oxymium.realestatemanager.database.EstateRepository
-import com.oxymium.realestatemanager.database.PictureRepository
-import com.oxymium.realestatemanager.model.Agent
-import com.oxymium.realestatemanager.model.Estate
+import com.oxymium.realestatemanager.database.agent.AgentRepository
+import com.oxymium.realestatemanager.database.estate.EstateRepository
+import com.oxymium.realestatemanager.database.picture.PictureRepository
 import com.oxymium.realestatemanager.model.EstateField
 import com.oxymium.realestatemanager.model.Label
-import com.oxymium.realestatemanager.model.Picture
 import com.oxymium.realestatemanager.model.ReachedSide
 import com.oxymium.realestatemanager.model.Step
+import com.oxymium.realestatemanager.model.databaseitems.Agent
+import com.oxymium.realestatemanager.model.databaseitems.Estate
+import com.oxymium.realestatemanager.model.databaseitems.Picture
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
 // ---------------
 // CreateViewModel
 // ---------------
-class CreateViewModel(private val agentRepository: AgentRepository, private val estateRepository: EstateRepository, private val pictureRepository: PictureRepository): ViewModel() {
+class CreateViewModel(agentRepository: AgentRepository, private val estateRepository: EstateRepository, private val pictureRepository: PictureRepository): ViewModel() {
 
     // ------
     // ESTATE
@@ -55,14 +55,14 @@ class CreateViewModel(private val agentRepository: AgentRepository, private val 
             // STEP 1 - AGENT ID / TYPE
             is EstateField.AgentId -> currentEstate.agent_id = field.agentId
             is EstateField.Type -> currentEstate.type = field.type
-            // STEP 2 - VALUES / ENERGY SCORE
+            // STEP 2 - VALUES / ENERGY SCORE & RATING
             is EstateField.Price -> currentEstate.price = field.price
             is EstateField.Surface -> currentEstate.surface = field.surface
             is EstateField.Rooms -> currentEstate.rooms = field.rooms
             is EstateField.Bedrooms -> currentEstate.bedrooms = field.bedrooms
             is EstateField.Bathrooms -> currentEstate.bathrooms = field.bathrooms
             is EstateField.EnergyScore -> currentEstate.energyScore = field.energyScore
-            is EstateField.EnergyClassLetter -> currentEstate.energyClassLetter = field.energyClassLetter
+            is EstateField.EnergyRating -> currentEstate.energyRating = field.energyRating
             // STEP 3 - MAIN PICTURE
             is EstateField.MainPicturePath -> currentEstate.mainPicturePath = field.mainPicturePath
             // STEP 5 - DESCRIPTION / MISCELLANEOUS
@@ -79,15 +79,7 @@ class CreateViewModel(private val agentRepository: AgentRepository, private val 
             is EstateField.Longitude -> currentEstate.longitude = field.longitude
             is EstateField.NearbyPlaces -> currentEstate.nearbyPlaces = field.nearbyPlaces
         }
-
         updateEstate(currentEstate)
-    }
-
-    // 「UPDATE」Prelaod all values into the fields
-    fun preloadAllFieldsWithEstateToEditValues(estate: Estate){
-        with(estate){
-            //updateSelectedNearbyPlaces(nearbyPlaces.toLabelListTest())
-        }
     }
 
     // -------------------
@@ -188,22 +180,15 @@ class CreateViewModel(private val agentRepository: AgentRepository, private val 
         _agents.value = agents
     }
 
+    // ------
+    // STEP 2
+    // ------
+
     // TYPES
     val types: LiveData<List<Label>> get() = _types
     private val _types = MutableLiveData(ESTATE_TYPES)
     fun updateTypes(types: List<Label>?) {
         _types.value = types
-    }
-
-    // ------
-    // STEP 3
-    // ------
-
-    // Ready checker
-    val isStepValueAndEnergyScoreReady: LiveData<Boolean?> get() = _isStepValueAndEnergyScoreReady
-    private val _isStepValueAndEnergyScoreReady = MutableLiveData(false)
-    fun updateStepValueAndEnergyScoreReady(boolean: Boolean){
-        _isStepValueAndEnergyScoreReady.value = boolean
     }
 
     // ---------------------------
@@ -365,7 +350,7 @@ class CreateViewModel(private val agentRepository: AgentRepository, private val 
     // -----------
     val missingElementsAsStrings: LiveData<String?> get() = _missingElementsAsStrings
     private val _missingElementsAsStrings = MutableLiveData<String?>()
-    fun updateMissingElementsAsString(elements: String?){
+   private fun updateMissingElementsAsString(elements: String?){
         _missingElementsAsStrings.value = elements
     }
 
@@ -429,10 +414,12 @@ class CreateViewModel(private val agentRepository: AgentRepository, private val 
         val secondaryPictures = mutableListOf<Picture>()
         val comments = listOf("Room", "Kitchen", "Garden", "Room 2", "Room 3", "Room 4", "Bathroom", "Living Room")
         for (picture in 1.. randomAmountOfPictures){
-            secondaryPictures.add(Picture(
+            secondaryPictures.add(
+                Picture(
                 "",
                 comments.random()
-            ))
+            )
+            )
         }
         updateSecondaryPictures(secondaryPictures)
     }
@@ -446,7 +433,7 @@ class CreateViewModel(private val agentRepository: AgentRepository, private val 
             updateEstateField(EstateField.Bedrooms(bedrooms))
             updateEstateField(EstateField.Bathrooms(bathrooms))
             updateEstateField(EstateField.EnergyScore(energyScore))
-            updateEstateField(EstateField.EnergyClassLetter(energyClassLetter))
+            updateEstateField(EstateField.EnergyRating(energyRating))
             updateEstateField(EstateField.MainPicturePath(mainPicturePath))
             updateEstateField(EstateField.Description(description))
             updateEstateField(EstateField.HighSpeedInternet(highSpeedInternet))
@@ -459,6 +446,5 @@ class CreateViewModel(private val agentRepository: AgentRepository, private val 
             updateEstateField(EstateField.NearbyPlaces(nearbyPlaces))
         }
         updateSecondaryPictures(listOf(Picture("", "Room", 0, 0)))
-
     }
 }

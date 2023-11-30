@@ -4,15 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.oxymium.realestatemanager.RANDOM_PICTURES
 import com.oxymium.realestatemanager.SECONDARY_PICTURES_AMOUNT_LIMIT
-import com.oxymium.realestatemanager.database.EstateRepository
-import com.oxymium.realestatemanager.database.PictureRepository
+import com.oxymium.realestatemanager.database.estate.EstateRepository
+import com.oxymium.realestatemanager.database.picture.PictureRepository
 import com.oxymium.realestatemanager.demoSet1WithAddressAndLatLng
 import com.oxymium.realestatemanager.demoSet2WithAddressAndLatLng
 import com.oxymium.realestatemanager.demoSet3WithAddressAndLatLng
 import com.oxymium.realestatemanager.generateRandomEstate
-import com.oxymium.realestatemanager.model.Estate
+import com.oxymium.realestatemanager.misc.RANDOM_PICTURES
+import com.oxymium.realestatemanager.model.databaseitems.Estate
 import kotlinx.coroutines.launch
 
 // ------------

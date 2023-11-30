@@ -2,6 +2,7 @@ package com.oxymium.realestatemanager.model
 
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.clustering.ClusterItem
+import com.oxymium.realestatemanager.model.databaseitems.Estate
 
 class ClusteredEstate(val estate: Estate): ClusterItem {
 

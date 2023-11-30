@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="estateViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.EstateViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="#7F000000"
+        >
+
+        <!-- TOP PART -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_details_energy_top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layout_details_energy_bottom"
+            >
+
+            <!-- INTERNET PART -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_details_internet_part"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/layout_details_furnished_part"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <ImageView
+                    android:id="@+id/layout_details_internet_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/high_speed_internet"
+                    app:tint="@color/white"
+                    app:detailsIconColor="@{estateViewModel.queriedEstate.highSpeedInternet}"
+                    android:contentDescription="@string/icon_high_speed_internet"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- FURNISHED PART -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_details_furnished_part"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/layout_details_internet_part"
+                app:layout_constraintEnd_toStartOf="@id/layout_details_garden_part"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <ImageView
+                    android:id="@+id/layout_details_furnished_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/furnished"
+                    app:detailsIconColor="@{estateViewModel.queriedEstate.furnished}"
+                    app:tint="@color/white"
+                    android:contentDescription="@string/icon_furnished"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- GARDEN PART -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_details_garden_part"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/layout_details_furnished_part"
+                app:layout_constraintEnd_toStartOf="@id/layout_details_disabled_accessibility_part"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <ImageView
+                    android:id="@+id/layout_details_garden_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/garden"
+                    app:detailsIconColor="@{estateViewModel.queriedEstate.garden}"
+                    app:tint="@color/white"
+                    android:contentDescription="@string/icon_garden"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- DISABLED ACCESSIBILITY PART -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_details_disabled_accessibility_part"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/layout_details_garden_part"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <ImageView
+                    android:id="@+id/layout_details_disabled_accessibility_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/disabled_accessibility"
+                    app:detailsIconColor="@{estateViewModel.queriedEstate.disabledAccessibility}"
+                    app:tint="@color/white"
+                    android:contentDescription="@string/icon_disabled_accessibility"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!-- BOTTOM PART -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_details_energy_bottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:layout_marginVertical="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_details_energy_top"
+            app:layout_constraintBottom_toTopOf="@id/layout_details_energy_line"
+            >
+
+            <ImageView
+                android:id="@+id/layout_details_energy_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/energy"
+                app:tint="@color/white"
+                android:contentDescription="@string/icon_energy"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/layout_details_energy_rating"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/layout_details_energy_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:detailsEnergyClassIcon="@{estateViewModel.queriedEstate.energyScore}"
+                app:detailsEnergyClassColor="@{estateViewModel.queriedEstate.energyScore}"
+                android:src="@drawable/energy_rating_a"
+                app:tint="@color/white"
+                android:contentDescription="@string/icon_energy_rating_a"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/layout_details_energy_score"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:detailsEnergyScoreText="@{estateViewModel.queriedEstate.energyScore}"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:hint="@string/details_energy_hint"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toEndOf="@id/layout_details_energy_rating"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/layout_details_energy_rating"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- WHITE LINE SEPARATOR -->
+        <View
+            android:id="@+id/layout_details_energy_line"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/white"
+            app:detailsEnergyClassLineColor="@{estateViewModel.queriedEstate.energyScore}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_details_energy_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.20"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

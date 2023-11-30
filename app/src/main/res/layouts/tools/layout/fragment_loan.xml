@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="loanViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.LoanViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/loan_padding"
+        android:paddingEnd="@dimen/loan_padding"
+        android:paddingTop="@dimen/loan_padding"
+        tools:context=".LoanFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/loan_holder_values"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/currency_padding"
+            android:paddingEnd="@dimen/currency_padding"
+            android:paddingTop="@dimen/currency_padding"
+            android:background="@color/space_cadet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".LoanFragment">
+
+            <!-- BORROW -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loan_borrow_holder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/loan_deposit_holder"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/loan_borrow_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/loan_borrow"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:startIconDrawable="@drawable/bank"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        android:paddingStart="@dimen/loan_textInput_padding"
+                        android:paddingEnd="@dimen/loan_textInput_padding"
+                        android:paddingTop="@dimen/loan_textInput_padding"
+                        android:paddingBottom="@dimen/loan_textInput_padding"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/loan_borrow_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/fragment_loan_hint_borrowedAmount"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/green_500"
+                            android:textColorHint="@color/white"
+                            android:inputType="numberDecimal"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="25" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/loan_color_borrow"
+                        android:layout_width="0dp"
+                        android:layout_height="3dp"
+                        android:background="@color/pie_chart_1"
+                        app:layout_constraintStart_toStartOf="@id/loan_borrow"
+                        app:layout_constraintEnd_toEndOf="@id/loan_borrow"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- DEPOSIT -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loan_deposit_holder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toEndOf="@id/loan_borrow_holder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/loan_deposit_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/loan_deposit"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:startIconDrawable="@drawable/piggy_bank"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        android:paddingStart="@dimen/loan_textInput_padding"
+                        android:paddingEnd="@dimen/loan_textInput_padding"
+                        android:paddingTop="@dimen/loan_textInput_padding"
+                        android:paddingBottom="@dimen/loan_textInput_padding"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/loan_deposit_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/fragment_loan_hint_deposit"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/green_500"
+                            android:textColorHint="@color/white"
+                            android:inputType="numberDecimal"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="25" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/loan_color_deposit"
+                        android:layout_width="0dp"
+                        android:layout_height="3dp"
+                        android:background="@color/pie_chart_2"
+                        app:layout_constraintStart_toStartOf="@id/loan_deposit"
+                        app:layout_constraintEnd_toEndOf="@id/loan_deposit"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- DURATION -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loan_duration_holder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/loan_rate_holder"
+                app:layout_constraintTop_toBottomOf="@id/loan_deposit_holder"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/loan_duration_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/loan_duration"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        android:paddingStart="@dimen/loan_textInput_padding"
+                        android:paddingEnd="@dimen/loan_textInput_padding"
+                        android:paddingTop="@dimen/loan_textInput_padding"
+                        android:paddingBottom="@dimen/loan_textInput_padding"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/loan_duration_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/fragment_loan_hint_duration"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/green_500"
+                            android:textColorHint="@color/white"
+                            android:inputType="numberDecimal"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="25" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/loan_color_duration"
+                        android:layout_width="0dp"
+                        android:layout_height="3dp"
+                        android:background="@color/pie_chart_3"
+                        app:layout_constraintStart_toStartOf="@id/loan_duration"
+                        app:layout_constraintEnd_toEndOf="@id/loan_duration"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- RATE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/loan_rate_holder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toEndOf="@id/loan_duration_holder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/loan_deposit_holder"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/loan_rate_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/loan_rate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:startIconDrawable="@drawable/percent"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        android:paddingStart="@dimen/loan_textInput_padding"
+                        android:paddingEnd="@dimen/loan_textInput_padding"
+                        android:paddingTop="@dimen/loan_textInput_padding"
+                        android:paddingBottom="@dimen/loan_textInput_padding"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/loan_rate_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="@string/fragment_loan_hint_interestRate"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/green_500"
+                            android:textColorHint="@color/white"
+                            android:inputType="numberDecimal"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="25" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/loan_color_rate"
+                        android:layout_width="0dp"
+                        android:layout_height="3dp"
+                        android:background="@color/pie_chart_4"
+                        app:layout_constraintStart_toStartOf="@id/loan_rate"
+                        app:layout_constraintEnd_toEndOf="@id/loan_rate"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- PIE CHART -->
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/loan_pie_chart"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/loan_holder_values"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

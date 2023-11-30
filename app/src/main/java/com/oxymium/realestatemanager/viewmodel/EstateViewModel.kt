@@ -6,21 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.oxymium.realestatemanager.ESTATE_TYPES
-import com.oxymium.realestatemanager.RANDOM_PICTURES
-import com.oxymium.realestatemanager.database.AgentRepository
-import com.oxymium.realestatemanager.database.EstateRepository
-import com.oxymium.realestatemanager.database.PictureRepository
-import com.oxymium.realestatemanager.model.Agent
-import com.oxymium.realestatemanager.model.Estate
-import com.oxymium.realestatemanager.model.Label
-import com.oxymium.realestatemanager.model.Picture
+import com.oxymium.realestatemanager.database.agent.AgentRepository
+import com.oxymium.realestatemanager.database.estate.EstateRepository
+import com.oxymium.realestatemanager.database.picture.PictureRepository
+import com.oxymium.realestatemanager.misc.RANDOM_PICTURES
 import com.oxymium.realestatemanager.model.Search
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.channels.ConflatedBroadcastChannel
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapLatest
+import com.oxymium.realestatemanager.model.databaseitems.Agent
+import com.oxymium.realestatemanager.model.databaseitems.Estate
+import com.oxymium.realestatemanager.model.databaseitems.Picture
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
@@ -47,14 +42,8 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
         _shouldStartDetailsFragment.value = toggle
     }
 
-    // Query state
-    var queryValue: MutableLiveData<String> = MutableLiveData("")
-
     // Get all estates from REPO
     val allEstates: LiveData<List<Estate>> = estateRepository.getAllEstates().asLiveData()
-
-    // Store estate list size
-    var estatesListSize: MutableLiveData<Int> = MutableLiveData(0)
 
     // ---------------
     // QUERIED ESTATE
@@ -121,45 +110,40 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
             }
         }
 
-
-
-    // -------------------------------------------
-    // TODO: REFACTOR DEPRECATED BROADCAST CHANNEL
+    // -----------
     // SEARCH QUERY
-    // ------------------------------------------
+    // ------------
 
-    val searchQuery: MutableLiveData<Search> = MutableLiveData(Search())
+    /// QUERY
+    val searchQuery: StateFlow<Search> get() = _searchQuery
+    private val _searchQuery = MutableStateFlow(Search())
+    fun updateSearchQuery(search: Search){
+        _searchQuery.value = search
+    }
 
-    // Query channels
-    @ExperimentalCoroutinesApi
-    private val searchChannel = ConflatedBroadcastChannel<SimpleSQLiteQuery>()
+    // QUERY DEBUG (TEST)
+    val searchQueryTest: StateFlow<String> get() = _searchQueryTest
+    private val _searchQueryTest = MutableStateFlow("")
+    fun updateSearchQueryTest(query: String){
+        _searchQueryTest.value = query
+    }
 
-    @ExperimentalCoroutinesApi
-    val estateListLiveData = searchChannel.asFlow()
-        .flatMapLatest { search ->
-            // We use flatMapLatest as we don't want flows of flows and we only want to query the latest searched string in case user types
-            // in a new query before the earlier one is finished processing.
-            estateRepository.getSearchedEstates(search) }
-        .catch { throwable -> println("Something went wrong with Estate search")
+    val estates: StateFlow<List<Estate>> get() = _estates
+    private val _estates = MutableStateFlow<List<Estate>>(emptyList())
+    private fun updateEstates(estates: List<Estate>){
+        _estates.value = estates
+    }
 
-        }.asLiveData()
-
-
-    @ExperimentalCoroutinesApi
-    fun setSearchQuery(search: String, from: Int) {
-        var searchValue: String? = null
-        // Quick search
-        if (from == 1){
-            searchValue = "SELECT * FROM estate WHERE location LIKE '%$search%' OR type LIKE '%$search%' OR price LIKE '%$search%' OR surface LIKE '%$search%' OR energyScore like '%$search%'"
-        }
-        // Pre-formatted search
-        if (from == 2){
-            searchValue = search
-        }
-        val simpleSQLiteQuery = searchValue?.let { SimpleSQLiteQuery(it) }
-        println("SEARCH $search")
-        if (simpleSQLiteQuery != null) {
-            searchChannel.trySend(simpleSQLiteQuery)
+    fun getEstatesWithQuery(simpleSQLiteQuery: SimpleSQLiteQuery) {
+        viewModelScope.launch {
+            // CHECK REQUIRED BECAUSE EMPTY SimpleSQLiteQuery WILL CRASH THE APP
+            if (simpleSQLiteQuery.sql.isNotEmpty()) {
+                estateRepository
+                    .getSearchedEstates(simpleSQLiteQuery)
+                    .collect { updateEstates(it) }
+            }else {
+                println("EMPTY QUERY")
+            }
         }
     }
 
@@ -172,14 +156,6 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
         if (toggleSearchButton.value == true) updateToggleSearchButton(false)
         else updateToggleSearchButton(true)
     }
-
-    // ------------------------
-    // QUERY ALL TYPES & AGENTS
-    // ------------------------
-    val types: LiveData<List<Label>> get() = _types
-    private val _types = MutableLiveData(ESTATE_TYPES)
-
-    val agents = agentRepository.getAllAgents().asLiveData()
 
     // -----------------
     // onClick Edit/Sell
@@ -216,32 +192,78 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
             currentEstate?.let { estateRepository.updateEstate(currentEstate) }
         }
 
+    // -------------------
+    // onClick: Refresh DB
+    // -------------------
+    val databaseRefreshed: LiveData<Boolean> get() = _databaseRefreshed
+    private val _databaseRefreshed = MutableLiveData(false)
+    fun onClickDatabaseRefreshButton(){
+        _databaseRefreshed.value = true
+    }
+
     // --------------------
-    // onClick Search dates
+    // onClick SEARCH DATE
     // --------------------
 
-    var startingAddedDate: MutableLiveData<Long> = MutableLiveData()
-    var endingAddedDate: MutableLiveData<Long> = MutableLiveData()
-    // 0 = default, 1 = StartingDate, 2 = EndingDate, 3 = StartingDateSold, 4 = EndingDateSold
-    var wasDateClicked: MutableLiveData<Int> = MutableLiveData(0)
-
-    fun onClickStartingDateButton(){
-        wasDateClicked.value = 1
+    // START ADDED DATE
+    val startAddedDate: LiveData<Long?> get() = _startAddedDate
+    private val _startAddedDate = MutableLiveData<Long?>(null)
+    fun updateStartAddedDate(dateInMillis: Long?){
+        _startAddedDate.value = dateInMillis
     }
 
-    fun onClickEndingDateButton(){
-        wasDateClicked.value = 2
+    // END ADDED DATE
+    val endAddedDate: LiveData<Long?> get() = _endAddedDate
+    private val _endAddedDate = MutableLiveData<Long?>(null)
+    fun updateEndAddedDate(dateInMillis: Long?){
+        _endAddedDate.value = dateInMillis
     }
 
-    var startingSoldDate: MutableLiveData<Long> = MutableLiveData()
-    var endingSoldDate: MutableLiveData<Long> = MutableLiveData()
-
-    fun onClickStartingDateSoldButton(){
-        wasDateClicked.value = 3
+    // START SOLD DATE
+    val startSoldDate: LiveData<Long?> get() = _startSoldDate
+    private val _startSoldDate = MutableLiveData<Long?>(null)
+    fun updateStartSoldDate(dateInMillis: Long?){
+        _startSoldDate.value = dateInMillis
     }
 
-    fun onClickEndingDateSoldButton(){
-        wasDateClicked.value = 4
+    // END SOLD DATE
+    val endSoldDate: LiveData<Long?> get() = _endSoldDate
+    private val _endSoldDate = MutableLiveData<Long?>(null)
+    fun updateEndSoldDate(dateInMillis: Long?){
+        _endSoldDate.value = dateInMillis
+    }
+
+    // IDENTIFY WHICH DATE WAS CLICKED
+    val dateType: LiveData<Int> get() = _dateType
+    private val _dateType = MutableLiveData<Int>()
+    private fun updateDateType(value: Int){
+        _dateType.value = value
+    }
+
+    // ON CLICK
+    fun onClickDateButton(value: Int){
+        updateDateType(value)
+    }
+
+    // TOGGLE SOLD DATE VISIBILITY
+    val soldDateVisibility: LiveData<Boolean> get() = _soldDateVisibility
+    private val _soldDateVisibility = MutableLiveData<Boolean>()
+    fun updateSoldDateVisibility(boolean: Boolean){
+        _soldDateVisibility.value = boolean
+    }
+
+    // RESET BUTTONS
+    fun resetDateValues(from: Int){
+        when (from){
+            1 -> {
+                updateStartAddedDate(null)
+                updateEndAddedDate(null)
+            }
+            2 -> {
+                updateStartSoldDate(null)
+                updateEndSoldDate(null)
+            }
+        }
     }
 
 }

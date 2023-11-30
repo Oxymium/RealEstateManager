@@ -16,11 +16,21 @@
     <color name="isabelline">#F2E9E4</color>
     <color name="blue_500">#2196F3</color>
     <color name="green_500">#4CAF50</color>
+    <color name="green_500_50_percent_opacity">#7F4CAF50</color>
     <color name="yellow_500">#FFEB3B</color>
     <color name="orange_500">#FF9800</color>
     <color name="red_500">#E91E63</color>
+    <color name="red_500_50_percent_opacity">#7FE91E63</color>
     <color name="red_25">#40E91E63</color>
     <color name="transparent">#00FFFFFF</color>
+
+    <color name="energy_rating_a">#4CAF50</color>
+    <color name="energy_rating_b">#8BC34A</color>
+    <color name="energy_rating_c">#CDDC39</color>
+    <color name="energy_rating_d">#FFEB3B</color>
+    <color name="energy_rating_e">#FFC107</color>
+    <color name="energy_rating_f">#FF9800</color>
+    <color name="energy_rating_g">#E91E63</color>
 
     <!-- PieChart colors -->
     <color name="pie_chart_1">#7091F5</color>

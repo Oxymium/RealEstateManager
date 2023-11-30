@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="createViewModel"
+            type="com.oxymium.realestatemanager.features.create.CreateViewModel"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/space_cadet"
+            >
+
+            <!-- INTERNET -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_misc_holder_internet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_misc_part_internet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <CheckBox
+                        android:id="@+id/step_misc_internet"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:checked="@{createViewModel.estate.highSpeedInternet}"
+                        android:background="@color/space_cadet"
+                        android:text="@string/hint_high_speed_internet"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/step_misc_icon_internet"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ImageView
+                        android:id="@+id/step_misc_icon_internet"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:src="@drawable/high_speed_internet"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_high_speed_internet"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- FURNISHED-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_misc_holder_furnished"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_misc_holder_internet"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_misc_part_furnished"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <CheckBox
+                        android:id="@+id/step_misc_furnished"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:checked="@{createViewModel.estate.furnished}"
+                        android:background="@color/space_cadet"
+                        android:text="@string/hint_furnished"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/step_misc_icon_furnished"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ImageView
+                        android:id="@+id/step_misc_icon_furnished"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/furnished"
+                        android:paddingHorizontal="10dp"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_furnished"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- GARDEN -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_misc_holder_garden"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_misc_holder_furnished"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_misc_part_garden"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <CheckBox
+                        android:id="@+id/step_misc_garden"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:checked="@{createViewModel.estate.garden}"
+                        android:background="@color/space_cadet"
+                        android:text="@string/hint_garden"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/step_misc_garden_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ImageView
+                        android:id="@+id/step_misc_garden_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:src="@drawable/garden"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_garden"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- DISABLED ACCESSIBILITY-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_misc_holder_disabled_accessibility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_misc_holder_garden"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_misc_part_disabled_accessibility"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <CheckBox
+                        android:id="@+id/step_misc_disabled_accessibility"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:checked="@{createViewModel.estate.disabledAccessibility}"
+                        android:background="@color/space_cadet"
+                        android:text="@string/hint_disabled_accessibility"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/step_misc_disabled_accessibility_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ImageView
+                        android:id="@+id/step_misc_disabled_accessibility_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:src="@drawable/disabled_accessibility"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_disabled_accessibility"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- DESCRIPTION -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_misc_holder_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_misc_holder_disabled_accessibility"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_misc_part_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/step_misc_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/independence"
+                        app:startIconDrawable="@drawable/description_edit"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/description_checker"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/description_checker"
+                        app:layout_constraintBottom_toBottomOf="@id/description_checker"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/step_misc_description_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{createViewModel.estate.description}"
+                            android:hint="@string/layout_create_description_input_hint"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textColorHint="@color/white"
+                            android:inputType="textMultiLine"
+                            android:textCursorDrawable="@null"
+                            android:minLines="5"
+                            android:maxLines="5"
+                            android:maxLength="400" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/description_checker"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        app:checkerColor="@{createViewModel.estate.description}"
+                        android:background="@color/red_500"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

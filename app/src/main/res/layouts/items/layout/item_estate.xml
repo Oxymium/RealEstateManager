@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="estate"
+            type="com.oxymium.realestatemanager.model.databaseitems.Estate"/>
+        <variable
+            name="estateClickListener"
+            type="com.oxymium.realestatemanager.features.estates.EstateListener"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/item_estate_bottom_cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> estateClickListener.onClickEstate(estate)}"
+        card_view:cardUseCompatPadding="true"
+        card_view:cardPreventCornerOverlap="false"
+        card_view:cardElevation="3dp"
+        card_view:cardMaxElevation="3dp"
+        card_view:cardCornerRadius="5dp"
+        card_view:layout_constraintStart_toStartOf="parent"
+        card_view:layout_constraintEnd_toEndOf="parent"
+        card_view:layout_constraintTop_toTopOf="parent"
+        card_view:layout_constraintBottom_toBottomOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/space_cadet"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <!-- LEFT SIDE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/item_estate_left_part"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <!-- ENERGY RATING -->
+                <ImageView
+                    android:id="@+id/item_estate_energy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="2dp"
+                    android:src="@drawable/energy"
+                    app:tint="@color/yellow_500"
+                    app:detailsEnergyClassIcon="@{estate.energyScore}"
+                    app:detailsEnergyClassColor="@{estate.energyScore}"
+                    android:contentDescription="@string/icon_energy"
+                    app:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintBottom_toTopOf="@id/item_estate_internet"
+                    />
+
+                <!-- INTERNET -->
+                <ImageView
+                    android:id="@+id/item_estate_internet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="2dp"
+                    android:src="@drawable/high_speed_internet"
+                    app:tint="@color/yellow_500"
+                    app:itemEstateIconTint="@{estate.highSpeedInternet}"
+                    android:contentDescription="@string/icon_high_speed_internet"
+                    app:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/item_estate_energy"
+                    card_view:layout_constraintBottom_toTopOf="@id/item_estate_furnished"
+                    />
+
+                <!-- FURNISHED -->
+                <ImageView
+                    android:id="@+id/item_estate_furnished"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="2dp"
+                    android:src="@drawable/furnished"
+                    app:tint="@color/yellow_500"
+                    app:itemEstateIconTint="@{estate.furnished}"
+                    android:contentDescription="@string/icon_furnished"
+                    app:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/item_estate_internet"
+                    card_view:layout_constraintBottom_toTopOf="@id/item_estate_garden"
+                    />
+
+                <!-- GARDEN -->
+                <ImageView
+                    android:id="@+id/item_estate_garden"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="2dp"
+                    android:src="@drawable/garden"
+                    app:tint="@color/yellow_500"
+                    app:itemEstateIconTint="@{estate.garden}"
+                    android:contentDescription="@string/icon_garden"
+                    card_view:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/item_estate_furnished"
+                    card_view:layout_constraintBottom_toTopOf="@id/item_estate_disabled_accessibility"
+                    />
+
+                <!-- DISABLED ACCESSIBILITY -->
+                <ImageView
+                    android:id="@+id/item_estate_disabled_accessibility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="2dp"
+                    android:src="@drawable/disabled_accessibility"
+                    app:tint="@color/yellow_500"
+                    app:itemEstateIconTint="@{estate.disabledAccessibility}"
+                    android:contentDescription="@string/icon_disabled_accessibility"
+                    app:layout_constraintStart_toStartOf="parent"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/item_estate_garden"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- TOP SIDE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/item_estate_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                >
+
+                <!-- ESTATE ID -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{'#' + String.valueOf(estate.id)}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/item_estate_font_small"
+                    android:textAlignment="viewEnd"
+                    android:hint="#XXX"
+                    android:textColorHint="@color/white"
+                    card_view:layout_constraintEnd_toStartOf="@id/item_estate_availability"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <!-- AVAILABILITY -->
+                <ImageView
+                    android:id="@+id/item_estate_availability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:itemEstateIconTint="@{!estate.wasSold}"
+                    android:src="@drawable/circle_medium"
+                    app:tint="@color/green_500"
+                    android:contentDescription="@string/icon_circle_medium"
+                    card_view:layout_constraintEnd_toEndOf="parent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/item_estate_picture"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/item_estate_description_picture"
+                android:src="@{estate.mainPicturePath}"
+                android:background="@color/independence"
+                card_view:layout_constraintDimensionRatio="H,1:1"
+                card_view:layout_constraintStart_toEndOf="@id/item_estate_left_part"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@id/item_estate_header" />
+
+            <!-- Middle part -->
+            <View
+                android:id="@+id/item_estate_part_middle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#7F22223B"
+                app:layout_constraintStart_toStartOf="@id/item_estate_picture"
+                app:layout_constraintEnd_toEndOf="@id/item_estate_picture"
+                app:layout_constraintTop_toTopOf="@id/item_estate_picture"
+                card_view:layout_constraintBottom_toBottomOf="@id/item_estate_picture"
+                card_view:layout_constraintHeight_percent="0.25"
+                card_view:layout_constraintVertical_bias="1"
+                />
+
+            <TextView
+                android:id="@+id/item_estate_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text='@{"$" + String.format("%,d", estate.price).replace(",", ".")}'
+                android:textSize="@dimen/item_estate_font_big"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textAlignment="viewEnd"
+                android:hint="@string/item_estate_hint_price"
+                android:textColorHint="@color/white"
+                card_view:layout_constraintEnd_toEndOf="@id/item_estate_part_middle"
+                card_view:layout_constraintTop_toTopOf="@id/item_estate_part_middle"
+                card_view:layout_constraintBottom_toBottomOf="@id/item_estate_part_middle"
+                />
+
+            <!-- Bottom part -->
+            <View
+                android:id="@+id/item_estate_part_bottom"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/independence"
+                card_view:layout_constraintStart_toEndOf="@id/item_estate_left_part"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@id/item_estate_picture"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintHeight_percent="0.35"
+                card_view:layout_constraintVertical_bias="1"
+                />
+
+            <TextView
+                android:id="@+id/item_estate_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="@{estate.type}"
+                android:textSize="@dimen/item_estate_font_small"
+                android:textColor="@color/blue_500"
+                android:textStyle="italic|bold"
+                android:textAlignment="viewEnd"
+                android:hint="@string/item_estate_hint_type"
+                android:textColorHint="@color/blue_500"
+                card_view:layout_constraintEnd_toEndOf="@id/item_estate_part_bottom"
+                card_view:layout_constraintTop_toTopOf="@id/item_estate_part_bottom"
+                card_view:layout_constraintBottom_toTopOf="@id/item_estate_location"
+                />
+
+            <TextView
+                android:id="@+id/item_estate_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="@{estate.location}"
+                android:textSize="@dimen/item_estate_font_small"
+                android:textColor="@color/isabelline"
+                android:textAlignment="viewEnd"
+                android:hint="@string/item_estate_hint_location"
+                android:textColorHint="@color/white"
+                card_view:layout_constraintEnd_toEndOf="@id/item_estate_part_bottom"
+                card_view:layout_constraintTop_toBottomOf="@id/item_estate_type"
+                card_view:layout_constraintBottom_toTopOf="@id/item_estate_surface"
+                />
+
+            <!-- SURFACE -->
+            <TextView
+                android:id="@+id/item_estate_surface"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="@{String.valueOf(estate.surface + `m²`)}"
+                android:textSize="@dimen/item_estate_font_small"
+                android:textColor="@color/isabelline"
+                android:textAlignment="viewEnd"
+                android:hint="@string/item_estate_hint_surface"
+                android:textColorHint="@color/white"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@id/item_estate_location"
+                card_view:layout_constraintBottom_toTopOf="@id/item_estate_rooms"
+                />
+
+            <!-- ROOMS -->
+            <TextView
+                android:id="@+id/item_estate_rooms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="4dp"
+                android:text="@{String.valueOf(estate.rooms) + `R`}"
+                android:textSize="@dimen/item_estate_font_small"
+                android:textColor="@color/isabelline"
+                android:textAlignment="viewEnd"
+                android:hint="@string/item_estate_hint_rooms"
+                android:textColorHint="@color/white"
+                card_view:layout_constraintEnd_toEndOf="parent"
+                card_view:layout_constraintTop_toBottomOf="@id/item_estate_surface"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

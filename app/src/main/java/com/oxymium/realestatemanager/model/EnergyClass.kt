@@ -4,31 +4,31 @@ sealed class EnergyClass(val letter: String){
 
     abstract val scoreRange: IntRange
 
-    object A : EnergyClass("A"){
+    data object A : EnergyClass("A"){
         override val scoreRange: IntRange = 0..70
     }
 
-    object B : EnergyClass("B"){
+    data object B : EnergyClass("B"){
         override val scoreRange: IntRange = 71..110
     }
 
-    object C : EnergyClass("C"){
+    data object C : EnergyClass("C"){
         override val scoreRange: IntRange = 111..180
     }
 
-    object D : EnergyClass("D"){
+    data object D : EnergyClass("D"){
         override val scoreRange: IntRange = 181..250
     }
 
-    object E : EnergyClass("E"){
+    data object E : EnergyClass("E"){
         override val scoreRange: IntRange = 251..330
     }
 
-    object F : EnergyClass("F"){
+    data object F : EnergyClass("F"){
         override val scoreRange: IntRange = 331..420
     }
 
-    object G : EnergyClass("G"){
+    data object G : EnergyClass("G"){
         override val scoreRange: IntRange = 421..Int.MAX_VALUE
     }
 

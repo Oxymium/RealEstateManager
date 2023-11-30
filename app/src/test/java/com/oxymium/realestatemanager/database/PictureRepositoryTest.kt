@@ -1,6 +1,8 @@
 package com.oxymium.realestatemanager.database
 
-import com.oxymium.realestatemanager.model.Picture
+import com.oxymium.realestatemanager.database.picture.PictureDao
+import com.oxymium.realestatemanager.database.picture.PictureRepository
+import com.oxymium.realestatemanager.model.databaseitems.Picture
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every

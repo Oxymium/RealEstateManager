@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="agent"
+            type="com.oxymium.realestatemanager.model.databaseitems.Agent"/>
+        <variable
+            name="agentListener"
+            type="com.oxymium.realestatemanager.features.create.step_agent.AgentListener"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:onClick="@{ () -> agentListener.onClickAgent(agent) }"
+        app:agentSelector="@{agent.selected}"
+        android:background="@drawable/circular_border"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        >
+
+        <TextView
+            android:id="@+id/item_agent_firstname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{agent.firstName}"
+            android:textSize="@dimen/item_estate_font_small"
+            app:agentTextColor="@{agent.selected}"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            android:hint="firstname"
+            android:textColorHint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/item_agent_lastname"
+            />
+
+        <TextView
+            android:id="@+id/item_agent_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{agent.lastName}"
+            android:textSize="@dimen/item_estate_font_small"
+            app:agentTextColor="@{agent.selected}"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            android:hint="lastname"
+            android:textColorHint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_agent_firstname"
+            />
+
+        <TextView
+            android:id="@+id/item_agent_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{agent.phoneNumber}"
+            android:textSize="@dimen/item_estate_font_small"
+            app:agentTextColor="@{agent.selected}"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:hint="phone"
+            android:textColorHint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_agent_lastname"
+            />
+
+        <TextView
+            android:id="@+id/item_agent_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{agent.mail}"
+            android:textSize="@dimen/item_estate_font_small"
+            app:agentTextColor="@{agent.selected}"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            android:hint="mail"
+            android:textColorHint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_agent_phone"
+            />
+
+        <TextView
+            android:id="@+id/item_agent_agency"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{agent.agency}"
+            android:textSize="@dimen/item_estate_font_small"
+            app:agentTextColor="@{agent.selected}"
+            android:textStyle="bold"
+            android:textAlignment="viewStart"
+            android:hint="agency"
+            android:textColorHint="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_agent_mail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="createViewModel"
+            type="com.oxymium.realestatemanager.features.create.CreateViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/create_padding_extra"
+        android:paddingEnd="@dimen/create_padding_extra"
+        android:paddingTop="@dimen/create_padding_extra"
+        android:paddingBottom="@dimen/create_padding_extra"
+        android:background="@color/space_cadet"
+        tools:context=".CreateFragment">
+
+        <ImageButton
+            android:id="@+id/details_navigator_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{ () -> createViewModel.onClickSaveEstateButton() }"
+            android:src="@drawable/database_save"
+            app:tint="@color/white"
+            android:backgroundTint="@color/space_cadet"
+            android:contentDescription="@string/icon_database_save"
+            app:layout_constraintStart_toEndOf="@id/layout_create_numerics"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/layout_create_numerics"
+            app:layout_constraintBottom_toBottomOf="@id/layout_create_numerics"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_create_numerics"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="1dp"
+            android:paddingEnd="1dp"
+            android:paddingTop="1dp"
+            android:paddingBottom="1dp"
+            android:background="@drawable/circular_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/details_navigator_save_button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layout_create_numerics_bottom_space"
+            >
+
+            <ImageButton
+                android:id="@+id/details_navigator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:src="@drawable/garden"
+                app:tint="@color/isabelline"
+                android:contentDescription="@null"
+                android:backgroundTint="@color/space_cadet"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Space
+            android:id="@+id/layout_create_numerics_bottom_space"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_create_numerics"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            app:navigatorTitle="@{createViewModel.editedEstate}"
+            android:text="Create"
+            android:textColor="@color/white"
+            android:textStyle="italic|bold"
+            android:textAlignment="center"
+            android:background="@color/space_cadet"
+            app:layout_constraintStart_toStartOf="@id/layout_create_numerics"
+            app:layout_constraintEnd_toEndOf="@id/layout_create_numerics"
+            app:layout_constraintTop_toBottomOf="@id/layout_create_numerics"
+            app:layout_constraintBottom_toTopOf="@id/layout_create_numerics_bottom_space"
+            app:layout_constraintHorizontal_bias="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

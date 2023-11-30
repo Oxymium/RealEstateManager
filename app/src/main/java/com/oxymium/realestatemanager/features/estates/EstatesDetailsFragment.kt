@@ -12,7 +12,7 @@ import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentEstatesDetailsBinding
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
-import com.oxymium.realestatemanager.viewmodel.EstateViewModelFactory
+import com.oxymium.realestatemanager.viewmodel.factories.EstateViewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
@@ -30,8 +30,10 @@ class EstatesDetailsFragment: Fragment() {
 
     // EstateViewModel
     private val estateViewModel: EstateViewModel by activityViewModels {
-        EstateViewModelFactory((activity?.application as EstatesApplication).repository3, (activity?.application as EstatesApplication).repository,
-            (activity?.application as EstatesApplication).repository2)
+        EstateViewModelFactory(
+            (activity?.application as EstatesApplication).agentRepository,
+            (activity?.application as EstatesApplication).estateRepository,
+            (activity?.application as EstatesApplication).pictureRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,18 +61,18 @@ class EstatesDetailsFragment: Fragment() {
         estateViewModel.selectedEstateId.observe(viewLifecycleOwner) {
 
             // Provide placeholder screen if no Estate is selected
-            if (it == null || estateViewModel.estateListLiveData.value?.isEmpty() == true) {
-                childFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_estates_details_right, DetailsPlaceholderFragment())
-                    .commit()
+            //if (it == null || estateViewModel.estates.value?.isEmpty() == true) {
+                //childFragmentManager.beginTransaction()
+                    //.replace(R.id.fragment_estates_details_right, DetailsPlaceholderFragment())
+                    //.commit()
             }
             // Otherwise, load DetailsFragment
-            else {
-                childFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_estates_details_right, DetailsFragment())
-                    .commit()
-            }
-        }
+            //else {
+                //childFragmentManager.beginTransaction()
+                    //.replace(R.id.fragment_estates_details_right, DetailsFragment())
+                    //.commit()
+            //}
+        //}
 
         // Return view
         return binding.root

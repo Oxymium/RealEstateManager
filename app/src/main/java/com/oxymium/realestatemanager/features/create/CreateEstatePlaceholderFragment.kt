@@ -1,4 +1,4 @@
-package com.oxymium.realestatemanager.features.estates
+package com.oxymium.realestatemanager.features.create
 
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +11,7 @@ import androidx.fragment.app.activityViewModels
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentCreateEstatePlaceholderBinding
-import com.oxymium.realestatemanager.features.create.CreateViewModel
-import com.oxymium.realestatemanager.viewmodel.CreateViewModelFactory
+import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 
@@ -30,9 +29,9 @@ class CreateEstatePlaceholderFragment: Fragment() {
 
     private val createEstateViewModel: CreateViewModel by activityViewModels {
         CreateViewModelFactory(
-            (activity?.application as EstatesApplication).repository3,
-            (activity?.application as EstatesApplication).repository,
-            (activity?.application as EstatesApplication).repository2
+            (activity?.application as EstatesApplication).agentRepository,
+            (activity?.application as EstatesApplication).estateRepository,
+            (activity?.application as EstatesApplication).pictureRepository
         )
     }
 

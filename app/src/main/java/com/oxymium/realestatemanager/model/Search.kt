@@ -4,13 +4,14 @@ package com.oxymium.realestatemanager.model
 // Search
 // ------
 data class Search(
-    var startingDate: String? = null,
-    var endingDate: String? = null,
+    var startAddedDate: String? = null,
+    var endAddedDate: String? = null,
     var type: String? = null,
     var energy: String? = null,
+    var energyRating: String? = null,
     var available: String? = null,
-    var startingDateSold: String? = null,
-    var endingDateSold: String? = null,
+    var startSoldDate: String? = null,
+    var endSoldDate: String? = null,
     var minPrice: String? = null,
     var maxPrice: String? = null,
     var minSurface: String? = null,
@@ -30,8 +31,7 @@ data class Search(
 ){
 
     // Base string query
-    val baseQuery = "SELECT *, estate.id, COUNT(picture.id) AS nbPics FROM estate LEFT JOIN picture ON estate.id = picture.estate_id GROUP BY estate.id HAVING nbPics >="
-    val fullQuery = generateFullSearchQuery()
+    private val baseQuery = "SELECT *, estate.id, COUNT(picture.id) AS nbPics FROM estate LEFT JOIN picture ON estate.id = picture.estate_id GROUP BY estate.id HAVING nbPics >="
     // Generate corresponding SQL argument
 
     private fun generateMinPicQuery(): String {
@@ -43,16 +43,16 @@ data class Search(
         return string
     }
 
-    private fun generateStartingDateQuery(): String?{
+    private fun generateStartAddedDateQuery(): String?{
         var string: String? = null
-        if (!startingDate.isNullOrEmpty()){
-            string = " addedDate >= $startingDate"}
+        if (!startAddedDate.isNullOrEmpty()){
+            string = " addedDate >= $startAddedDate"}
         return string
     }
-    private fun generateEndingDateQuery(): String?{
+    private fun generateEndAddedDateQuery(): String?{
         var string: String? = null
-        if (!endingDate.isNullOrEmpty()){
-            string = " addedDate <= $endingDate"}
+        if (!endAddedDate.isNullOrEmpty()){
+            string = " addedDate <= $endAddedDate"}
         return string
     }
 
@@ -70,6 +70,13 @@ data class Search(
         return string
     }
 
+    private fun generateEnergyRatingQuery(): String?{
+        var string: String? = null
+        if (!energyRating.isNullOrEmpty()){
+            string = " energyRating LIKE '$energyRating'"}
+        return string
+    }
+
     private fun generateAvailableQuery(): String?{
         var string: String? = null
         if (!available.isNullOrEmpty()){
@@ -77,17 +84,17 @@ data class Search(
         return string
     }
 
-    private fun generateStartingDateSoldQuery(): String?{
+    private fun generateStartSoldDateQuery(): String?{
         var string: String? = null
-        if (!startingDateSold.isNullOrEmpty()){
-            string = " soldDate >= $startingDateSold"}
+        if (!startSoldDate.isNullOrEmpty()){
+            string = " soldDate >= $startSoldDate"}
         return string
     }
 
-    private fun generateEndingDateSoldQuery(): String?{
+    private fun generateEndSoldDateQuery(): String?{
         var string: String? = null
-        if (!endingDateSold.isNullOrEmpty()){
-            string = " soldDate <= $endingDateSold"}
+        if (!endSoldDate.isNullOrEmpty()){
+            string = " soldDate <= $endSoldDate"}
         return string
     }
 
@@ -182,46 +189,58 @@ data class Search(
         return string
     }
 
-    fun generateFullSearchQuery(): String{
-        // Reset
-        var generatedQuery = ""
-        // Add base query to the full query
-        generatedQuery += baseQuery
-        // Add pictures amount to the query, by default always 0
-        val minPicAmount = generateMinPicQuery()
-        generatedQuery += minPicAmount
-        // Add all remaining query arguments to a List
-        val queryArguments = listOf(
-            generateStartingDateQuery(),
-            generateStartingDateQuery(),
-            generateEndingDateQuery(),
-            generateTypeQuery(),
-            generateEnergyQuery(),
-            generateAvailableQuery(),
-            generateStartingDateSoldQuery(),
-            generateEndingDateSoldQuery(),
-            generateMinPriceQuery(),
-            generateMaxPriceQuery(),
-            generateMinSurfaceQuery(),
-            generateMaxSurfaceQuery(),
-            generateMinRoomsQuery(),
-            generateMinBedroomsQuery(),
-            generateMinBathroomsQuery(),
-            generateLocationQuery(),
-            generateNearbyQuery(),
-            generateInternetQuery(),
-            generateFurnishedQuery(),
-            generateDisabledAccessibilityQuery(),
-            generateGardenQuery()
-        )
-        // Remove all NULL elements from said list
-        val nonNullList = queryArguments.filterNotNull()
-        // Iterate through elements and add AND between parameters
-        for (i in nonNullList) generatedQuery += " AND$i"
+    fun generateFullSearchQuery(quickSearch: String?): String{
 
-        println("SEARCH OBJECT$queryArguments")
+        val simpleSQLiteQuery: String?
 
-        return generatedQuery
+        if (quickSearch != null){
+            val queryString = "SELECT * FROM estate WHERE location LIKE '%$quickSearch%' " +
+                    "OR type LIKE '%$quickSearch%' " +
+                    "OR price LIKE '%$quickSearch%' " +
+                    "OR surface LIKE '%$quickSearch%' " +
+                    "OR energyRating like '%$quickSearch%' " +
+                    "OR nearbyPlaces LIKE '%$quickSearch%' " +
+                    "OR id like '%$quickSearch%'"
+            simpleSQLiteQuery = queryString
+        }else {
+            // Reset
+            var generatedQuery = ""
+            // Add base query to the full query
+            generatedQuery += baseQuery
+            // Add pictures amount to the query, by default always 0
+            val minPicAmount = generateMinPicQuery()
+            generatedQuery += minPicAmount
+            // Add all remaining query arguments to a List
+            val queryArguments = listOf(
+                generateStartAddedDateQuery(),
+                generateEndAddedDateQuery(),
+                generateTypeQuery(),
+                generateEnergyQuery(),
+                generateEnergyRatingQuery(),
+                generateAvailableQuery(),
+                generateStartSoldDateQuery(),
+                generateEndSoldDateQuery(),
+                generateMinPriceQuery(),
+                generateMaxPriceQuery(),
+                generateMinSurfaceQuery(),
+                generateMaxSurfaceQuery(),
+                generateMinRoomsQuery(),
+                generateMinBedroomsQuery(),
+                generateMinBathroomsQuery(),
+                generateLocationQuery(),
+                generateNearbyQuery(),
+                generateInternetQuery(),
+                generateFurnishedQuery(),
+                generateDisabledAccessibilityQuery(),
+                generateGardenQuery()
+            )
+            // Remove all NULL elements from said list
+            val nonNullList = queryArguments.filterNotNull()
+            // Iterate through elements and add AND between parameters
+            for (i in nonNullList) generatedQuery += " AND$i"
+            simpleSQLiteQuery = generatedQuery
+        }
+
+        return simpleSQLiteQuery
     }
-
 }

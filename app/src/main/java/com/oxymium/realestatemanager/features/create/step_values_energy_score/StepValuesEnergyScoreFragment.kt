@@ -15,7 +15,7 @@ import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentStepValuesEnergyScoreBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.model.EstateField
-import com.oxymium.realestatemanager.viewmodel.CreateViewModelFactory
+import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
 
 class StepValuesEnergyScoreFragment: Fragment() {
 
@@ -27,9 +27,9 @@ class StepValuesEnergyScoreFragment: Fragment() {
 
     private val createViewModel: CreateViewModel by activityViewModels {
         CreateViewModelFactory(
-            (activity?.application as EstatesApplication).repository3,
-            (activity?.application as EstatesApplication).repository,
-            (activity?.application as EstatesApplication).repository2
+            (activity?.application as EstatesApplication).agentRepository,
+            (activity?.application as EstatesApplication).estateRepository,
+            (activity?.application as EstatesApplication).pictureRepository
         )
     }
 

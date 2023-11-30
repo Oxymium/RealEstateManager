@@ -4,7 +4,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.oxymium.realestatemanager.model.Label
-import com.oxymium.realestatemanager.utils.LabelListener
 
 // ------------
 // LabelAdapter
@@ -33,5 +32,9 @@ class LabelAdapter(private val labelListener: LabelListener): ListAdapter<Label,
             return oldItem.id != newItem.id
         }
     }
+}
+
+class LabelListener(val labelClickListener: (label: Label) -> Unit) {
+    fun onClickLabel(label: Label) = labelClickListener(label)
 
 }

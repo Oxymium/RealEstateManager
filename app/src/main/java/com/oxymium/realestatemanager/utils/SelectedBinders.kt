@@ -6,7 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentContainerView
 import com.oxymium.realestatemanager.model.CategoryHelper
-import com.oxymium.realestatemanager.model.Estate
+import com.oxymium.realestatemanager.model.databaseitems.Estate
 
 class SelectedBinders {
 

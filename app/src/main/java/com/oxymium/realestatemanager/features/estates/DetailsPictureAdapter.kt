@@ -3,8 +3,7 @@ package com.oxymium.realestatemanager.features.estates
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.oxymium.realestatemanager.model.Picture
-import com.oxymium.realestatemanager.utils.PictureListener
+import com.oxymium.realestatemanager.model.databaseitems.Picture
 
 // ---------------------
 // DetailsPictureAdapter

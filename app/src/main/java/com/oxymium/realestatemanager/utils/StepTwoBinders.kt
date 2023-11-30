@@ -18,15 +18,15 @@ class StepTwoBinders {
         fun changeEnergyScoreIcon(textInputLayout: TextInputLayout, value: Int?) {
             val context = textInputLayout.context
             textInputLayout.startIconDrawable = when (value) {
-                null, 0 -> provideCompatDrawable(context, R.drawable.home_lightning_bolt_outline)
-                in 1..50 -> provideCompatDrawable(context, R.drawable.alpha_a_box)
-                in 51..90 -> provideCompatDrawable(context, R.drawable.alpha_b_box)
-                in 91..150 -> provideCompatDrawable(context, R.drawable.alpha_c_box)
-                in 151..230 -> provideCompatDrawable(context, R.drawable.alpha_d_box)
-                in 231..330 -> provideCompatDrawable(context, R.drawable.alpha_e_box)
-                in 331..450 -> provideCompatDrawable(context, R.drawable.alpha_f_box)
-                in (451..Int.MAX_VALUE) -> provideCompatDrawable(context, R.drawable.alpha_g_box)
-                else -> provideCompatDrawable(context, R.drawable.home_lightning_bolt_outline)
+                null, 0 -> provideCompatDrawable(context, R.drawable.energy)
+                in 1..50 -> provideCompatDrawable(context, R.drawable.energy_rating_a)
+                in 51..90 -> provideCompatDrawable(context, R.drawable.energy_rating_b)
+                in 91..150 -> provideCompatDrawable(context, R.drawable.energy_rating_c)
+                in 151..230 -> provideCompatDrawable(context, R.drawable.energy_rating_d)
+                in 231..330 -> provideCompatDrawable(context, R.drawable.energy_rating_e)
+                in 331..450 -> provideCompatDrawable(context, R.drawable.energy_rating_f)
+                in (451..Int.MAX_VALUE) -> provideCompatDrawable(context, R.drawable.energy_rating_g)
+                else -> provideCompatDrawable(context, R.drawable.energy)
             }
         }
 
@@ -57,8 +57,8 @@ class StepTwoBinders {
             val context = textInputLayout.context
             textInputLayout.hint = when (energyScore) {
                 null, 0 -> context.getString(R.string.energy_hint)
-                in 1..50 -> provideSpannableStringBuilder(context, R.color.green_500, R.string.energy_hint, R.string.energy_class_a)
-                in 51..90 -> provideSpannableStringBuilder(context, R.color.green_500, R.string.energy_hint, R.string.energy_class_b)
+                in 1..50 -> provideSpannableStringBuilder(context, R.color.green_500, R.string.energy_hint, R.string.energy_rating_a)
+                in 51..90 -> provideSpannableStringBuilder(context, R.color.green_500, R.string.energy_hint, R.string.energy_rating_b)
                 in 91..150 -> provideSpannableStringBuilder(context, R.color.orange_500, R.string.energy_hint, R.string.energy_class_c)
                 in 151..230 -> provideSpannableStringBuilder(context, R.color.orange_500, R.string.energy_hint, R.string.energy_class_d)
                 in 231..330 -> provideSpannableStringBuilder(context, R.color.orange_500, R.string.energy_hint, R.string.energy_class_e)

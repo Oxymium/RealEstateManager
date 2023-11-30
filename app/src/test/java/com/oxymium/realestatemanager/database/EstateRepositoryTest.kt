@@ -1,7 +1,9 @@
 package com.oxymium.realestatemanager.database
 
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.oxymium.realestatemanager.model.Estate
+import com.oxymium.realestatemanager.database.estate.EstateDao
+import com.oxymium.realestatemanager.database.estate.EstateRepository
+import com.oxymium.realestatemanager.model.databaseitems.Estate
 import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.coVerify

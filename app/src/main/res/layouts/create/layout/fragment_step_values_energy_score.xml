@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="createViewModel"
+            type="com.oxymium.realestatemanager.features.create.CreateViewModel"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/space_cadet"
+            >
+
+            <!-- PRICE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_two_price_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_two_price_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/step_two_price"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/independence"
+                        app:startIconDrawable="@drawable/currency"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/price_checker"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/price_checker"
+                        app:layout_constraintBottom_toBottomOf="@id/price_checker"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/step_two_price_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text='@{createViewModel.estate.price != null ? createViewModel.estate.price.toString() : ""}'
+                            android:hint="@string/price_input_hint"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/green_500"
+                            android:textStyle="bold"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="8" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/price_checker"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        app:checkerColor="@{createViewModel.estate.price}"
+                        android:background="@color/red_500"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SURFACE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_two_surface_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_two_price_holder"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_two_surface_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/step_two_surface"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/independence"
+                        app:startIconDrawable="@drawable/surface"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/surface_checker"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/surface_checker"
+                        app:layout_constraintBottom_toBottomOf="@id/surface_checker"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/step_two_surface_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text='@{createViewModel.estate.surface != null ? createViewModel.estate.surface.toString() : ""}'
+                            android:hint="@string/surface_input_hint"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/green_500"
+                            android:textStyle="bold"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="4" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/surface_checker"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        app:checkerColor="@{createViewModel.estate.surface}"
+                        android:background="@color/red_500"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ROOMS -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_two_rooms_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_two_surface_holder"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_two_rooms_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/step_two_rooms"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/independence"
+                        app:startIconDrawable="@drawable/room"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/rooms_checker"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/rooms_checker"
+                        app:layout_constraintBottom_toBottomOf="@id/rooms_checker"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/step_two_rooms_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text='@{createViewModel.estate.rooms != null ? createViewModel.estate.rooms.toString() : ""}'
+                            android:hint="@string/rooms_input_hint"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/green_500"
+                            android:textStyle="bold"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="2" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/rooms_checker"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        app:checkerColor="@{createViewModel.estate.rooms}"
+                        android:background="@color/red_500"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- BEDROOMS -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_two_bedrooms_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_two_rooms_holder"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_two_bedrooms_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/step_two_bedrooms"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/independence"
+                        app:startIconDrawable="@drawable/bedroom"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/bedrooms_checker"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/bedrooms_checker"
+                        app:layout_constraintBottom_toBottomOf="@id/bedrooms_checker"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/step_two_bedrooms_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text='@{createViewModel.estate.bedrooms != null ? createViewModel.estate.bedrooms.toString() : ""}'
+                            android:hint="@string/bedrooms_input_hint"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/green_500"
+                            android:textStyle="bold"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="2" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/bedrooms_checker"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        app:checkerColor="@{createViewModel.estate.bedrooms}"
+                        android:background="@color/red_500"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- BATHROOMS -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_two_bathrooms_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_two_bedrooms_holder"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_two_bathrooms_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/step_two_bathrooms"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/independence"
+                        app:startIconDrawable="@drawable/bathroom"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/bathrooms_checker"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/bathrooms_checker"
+                        app:layout_constraintBottom_toBottomOf="@id/bathrooms_checker"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/step_two_bathrooms_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text='@{createViewModel.estate.bathrooms != null ? createViewModel.estate.bathrooms.toString() : ""}'
+                            android:hint="@string/bathrooms_input_hint"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/green_500"
+                            android:textStyle="bold"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="2" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/bathrooms_checker"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        app:checkerColor="@{createViewModel.estate.bathrooms}"
+                        android:background="@color/red_500"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- ENERGY SCORE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_two_energy_score_holder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/step_two_bathrooms_holder"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_two_energy_score_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/step_two_energy_score"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@color/independence"
+                        app:startIconDrawable="@drawable/energy"
+                        app:stepTwoEnergyScoreIcon="@{createViewModel.estate.energyScore}"
+                        app:stepTwoEnergyScoreIconColor="@{createViewModel.estate.energyScore}"
+                        app:stepTwoEnergyScoreTextHint="@{createViewModel.estate.energyScore}"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/energy_checker"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/step_two_energy_score_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text='@{createViewModel.estate.energyScore != null ? createViewModel.estate.energyScore.toString() : ""}'
+                            android:hint="@string/energy_hint"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/green_500"
+                            android:textStyle="bold"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="4" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/energy_checker"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        app:checkerColor="@{createViewModel.estate.energyScore}"
+                        android:background="@color/red_500"
+                        android:contentDescription="icon_energy"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

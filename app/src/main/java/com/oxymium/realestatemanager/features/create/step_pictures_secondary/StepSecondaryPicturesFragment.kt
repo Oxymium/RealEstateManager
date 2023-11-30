@@ -22,11 +22,11 @@ import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentStepSecondaryPicturesBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.features.estates.CreatePictureAdapter
-import com.oxymium.realestatemanager.model.Picture
-import com.oxymium.realestatemanager.utils.PictureCommentListener
-import com.oxymium.realestatemanager.utils.PictureDeleteListener
-import com.oxymium.realestatemanager.utils.PictureListener
-import com.oxymium.realestatemanager.viewmodel.CreateViewModelFactory
+import com.oxymium.realestatemanager.features.estates.PictureCommentListener
+import com.oxymium.realestatemanager.features.estates.PictureDeleteListener
+import com.oxymium.realestatemanager.features.estates.PictureListener
+import com.oxymium.realestatemanager.model.databaseitems.Picture
+import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
 
 // ----------------
 // StepFourFragment
@@ -44,9 +44,9 @@ class StepSecondaryPicturesFragment: Fragment() {
 
     private val createViewModel: CreateViewModel by activityViewModels {
         CreateViewModelFactory(
-            (activity?.application as EstatesApplication).repository3,
-            (activity?.application as EstatesApplication).repository,
-            (activity?.application as EstatesApplication).repository2
+            (activity?.application as EstatesApplication).agentRepository,
+            (activity?.application as EstatesApplication).estateRepository,
+            (activity?.application as EstatesApplication).pictureRepository
         )
     }
 

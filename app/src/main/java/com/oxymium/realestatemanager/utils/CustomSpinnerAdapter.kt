@@ -13,7 +13,7 @@ class CustomSpinnerAdapter(context: Context, resLayout: Int, private val values:
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         // Use the custom dropdown item layout for all dropdown items
         val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.spinner_dropdown_item, parent, false)
+        val view = inflater.inflate(R.layout.spinner_search_dropdown_item, parent, false)
         val textView = view.findViewById<TextView>(R.id.text_dropdown)
         textView.text = values[position]
         return view

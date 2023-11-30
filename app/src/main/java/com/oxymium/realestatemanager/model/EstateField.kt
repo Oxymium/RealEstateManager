@@ -12,7 +12,7 @@ sealed class EstateField {
     data class Bedrooms(val bedrooms: Int?): EstateField()
     data class Bathrooms(val bathrooms: Int?): EstateField()
     data class EnergyScore(val energyScore: Int?): EstateField()
-    data class EnergyClassLetter(val energyClassLetter: String?): EstateField()
+    data class EnergyRating(val energyRating: String?): EstateField()
 
     data class MainPicturePath(val mainPicturePath: String?): EstateField()
 

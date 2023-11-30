@@ -1,6 +1,8 @@
 package com.oxymium.realestatemanager.database
 
-import com.oxymium.realestatemanager.model.Agent
+import com.oxymium.realestatemanager.database.agent.AgentDao
+import com.oxymium.realestatemanager.database.agent.AgentRepository
+import com.oxymium.realestatemanager.model.databaseitems.Agent
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -19,8 +21,8 @@ class AgentRepositoryTest {
         // Given
         val agentDao = mockk<AgentDao>()
         val expectedAgents = listOf(
-            Agent("Tested", "Agent", "06.00.00.00.00"),
-            Agent("Tested2", "Agent2", "06.00.00.00.00")
+            Agent("firstName_1", "lastName_1", "06.00.00.00.00", "proton@mock.com", "agency_1"),
+            Agent("firstName_2", "lastName_2", "06.00.00.00.00", "proton@mock.com", "agency_2")
         )
         val agentRepository = AgentRepository(agentDao)
 
@@ -39,7 +41,7 @@ class AgentRepositoryTest {
         // Given
         val agentDao = mockk<AgentDao>()
         val agentRepository = AgentRepository(agentDao)
-        val expectedAgent = Agent(false, "Tested", "Tested", "06.00.00.00.00", 10L)
+        val expectedAgent = Agent(false,"firstName", "lastName", "06.00.00.00.00", "proton@mock.com", "agency_1", id = 10L)
         val givenAgentId = 10L
 
         every { agentDao.getAgentById(givenAgentId) } returns flowOf(expectedAgent)

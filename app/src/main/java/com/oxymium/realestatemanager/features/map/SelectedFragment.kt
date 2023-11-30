@@ -56,8 +56,8 @@ class SelectedFragment: Fragment() {
                 Glide
                     .with(this@SelectedFragment)
                     .load(it.mainPicturePath)
-                    .error(R.drawable.dot_grid_repeating)
-                    .placeholder(R.drawable.dot_grid_repeating)
+                    .error(R.drawable.grid_dots_repeating)
+                    .placeholder(R.drawable.grid_dots_repeating)
                     .transition(DrawableTransitionOptions.withCrossFade(1500))
                     .into(fragmentSelectedBinding.fragmentSelectedPicture)
             }

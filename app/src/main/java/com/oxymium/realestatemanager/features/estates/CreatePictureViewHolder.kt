@@ -4,10 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.oxymium.realestatemanager.databinding.ItemPictureBinding
-import com.oxymium.realestatemanager.model.Picture
-import com.oxymium.realestatemanager.utils.PictureCommentListener
-import com.oxymium.realestatemanager.utils.PictureDeleteListener
-import com.oxymium.realestatemanager.utils.PictureListener
+import com.oxymium.realestatemanager.model.databaseitems.Picture
 
 // -------------------------------
 // PictureViewHolder (RecyclerView)

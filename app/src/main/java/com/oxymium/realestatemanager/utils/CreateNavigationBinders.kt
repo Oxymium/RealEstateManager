@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.model.Estate
+import com.oxymium.realestatemanager.model.databaseitems.Estate
 import java.util.*
 
 class CreateNavigationBinders {
@@ -59,9 +59,9 @@ class CreateNavigationBinders {
         @BindingAdapter("app:overviewStepColor")
         fun changeOverviewStepColor(imageView: ImageView, boolean: Boolean?){
             imageView.setBackgroundResource( when(boolean){
-                true -> R.drawable.rounded_squares_green
-                false -> R.drawable.rounded_squares_red
-                null -> R.drawable.rounded_squares_red
+                true -> R.drawable.overview_squares_green
+                false -> R.drawable.overview_squares_red
+                null -> R.drawable.overview_squares_red
             })
         }
 

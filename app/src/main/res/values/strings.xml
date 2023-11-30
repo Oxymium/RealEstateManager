@@ -1,9 +1,11 @@
 <resources>
+
     <!-- GENERAL -->
     <string name="app_name">Real Estate Manager</string>
 
-    <!-- DEFENCE -->
-    <string name="defence_string">The first registered estate is worth\u0020</string>
+    <!-- PROMPT VALUES -->
+    <string name="prompt_neutral">OK</string>
+    <string name="prompt_negative">Cancel</string>
 
     <!-- BOTTOM NAV. TITLES -->
     <string name="bottom_nav_category_1">Search</string>
@@ -12,8 +14,84 @@
     <string name="bottom_nav_category_4">Tools</string>
     <string name="bottom_nav_category_5">Map</string>
 
+    <!-- ENERGY RATING MESSAGES -->
+    <string name="energy_class_awaiting">Awaiting input…</string>
+    <string name="energy_rating_a">Excellent energy performance</string>
+    <string name="energy_rating_b">Very good energy performance</string>
+    <string name="energy_class_c">Good energy performance</string>
+    <string name="energy_class_d">Fair energy performance</string>
+    <string name="energy_class_e">Average energy performance</string>
+    <string name="energy_class_f">Below average performance</string>
+    <string name="energy_class_g">Poor energy performance</string>
+
+    <!-- ICON DESCRIPTIONS -->
+    <string name="icon_add_picture">Add picture icon</string>
+    <string name="icon_agent">Agent icon</string>
+    <string name="icon_bank">Bank icon</string>
+    <string name="icon_bathroom">Bathroom icon</string>
+    <string name="icon_bedroom">Bedroom icon</string>
+    <string name="icon_calendar">Calendar icon</string>
+    <string name="icon_chart_pie">Chart pie icon</string>
+    <string name="icon_chevron_double_down">Chevron double down icon</string>
+    <string name="icon_chevron_double_left">Chevron double left icon</string>
+    <string name="icon_chevron_double_right">Chevron double right icon</string>
+    <string name="icon_chevron_double_up">Chevron double up icon</string>
+    <string name="icon_chevron_down_box">Chevron down box icon</string>
+    <string name="icon_circle_medium">Circle medium icon</string>
+    <string name="icon_currency">Currency icon</string>
+    <string name="icon_database_refresh">Database refresh icon</string>
+    <string name="icon_database_save">Database save icon</string>
+    <string name="icon_delete">Delete icon</string>
+    <string name="icon_description_edit">Description edit icon</string>
+    <string name="icon_description">Description icon</string>
+    <string name="icon_dev">Dev icon</string>
+    <string name="icon_disabled_accessibility">Disabled accessibility icon</string>
+    <string name="icon_energy_rating_a">Energy rating A icon</string>
+    <string name="icon_energy_rating_b">Energy rating B icon</string>
+    <string name="icon_energy_rating_c">Energy rating C icon</string>
+    <string name="icon_energy_rating_d">Energy rating D icon</string>
+    <string name="icon_energy_rating_e">Energy rating E icon</string>
+    <string name="icon_energy_rating_f">Energy rating F icon</string>
+    <string name="icon_energy_rating_g">Energy rating G icon</string>
+    <string name="icon_energy">Energy icon</string>
+    <string name="icon_equal">Equal icon</string>
+    <string name="icon_estate_edit">Estate edit icon</string>
+    <string name="icon_estate_plus">Estate plus icon</string>
+    <string name="icon_estate_search">Estate search icon</string>
+    <string name="icon_estates">Estates icon</string>
+    <string name="icon_furnished">Furnished icon</string>
+    <string name="icon_garden">Garden icon</string>
+    <string name="icon_help">Help icon</string>
+    <string name="icon_high_speed_internet">High-speed internet icon</string>
+    <string name="icon_labels">Labels icon</string>
+    <string name="icon_latitude">Latitude icon</string>
+    <string name="icon_longitude">Longitude icon</string>
+    <string name="icon_map_marker_multiple">Map marker multiple icon</string>
+    <string name="icon_map_marker">Map marker icon</string>
+    <string name="icon_map">Map icon</string>
+    <string name="icon_miscellaneous">Miscellaneous icon</string>
+    <string name="icon_names.txt">Names icon</string>
+    <string name="icon_nearby_places">Nearby places icon</string>
+    <string name="icon_overview">Overview icon</string>
+    <string name="icon_percent">Percent icon</string>
+    <string name="icon_picture_multiple">Picture multiple icon</string>
+    <string name="icon_picture">Picture icon</string>
+    <string name="icon_piggy_bank">Piggy bank icon</string>
+    <string name="icon_quick_search">Quick search icon</string>
+    <string name="icon_remove_picture">Remove picture icon</string>
+    <string name="icon_room">Room icon</string>
+    <string name="icon_sold">Sold icon</string>
+    <string name="icon_surface">Surface icon</string>
+    <string name="icon_tools">Tools icon</string>
+    <string name="icon_type">Type icon</string>
+    <string name="icon_values">Values icon</string>
+    <string name="icon_zipcode">Zipcode icon</string>
+
+    <!-- DEFENCE -->
+    <string name="defence_string">The first registered estate is worth\u0020</string>
+
     <!-- ESTATES FRAG. -->
-    <string name="quick_search_hint">Quick Search</string>
+    <string name="quick_search_hint">Quick search</string>
     <string name="results_hint_0">0 Estates found</string>
     <string name="results_hint_1">1 Estate found</string>
     <string name="results_hint">Estates found:</string>
@@ -114,20 +192,6 @@
         <item>Villa</item>
     </string-array>
 
-    <string-array name="array_energy_score">
-        <item>A+</item>
-        <item>A</item>
-        <item>B</item>
-        <item>C</item>
-        <item>D</item>
-    </string-array>
-
-    <string-array name="array_agent_name">
-        <item>Agent X</item>
-        <item>Agent Y</item>
-        <item>Agent Z</item>
-    </string-array>
-
     <string-array name="array_search_estate_type">
         <item><font fgcolor='#000000'>Any</font></item>
         <item><font fgcolor='#000000'>Bungalow</font></item>
@@ -167,21 +231,6 @@
     </string-array>
 
     <!-- ICONS. -->
-    <string name="icon_agent">Agent icon</string>
-    <string name="icon_type">Type icon</string>
-    <string name="icon_values">Values icon</string>
-    <string name="icon_energy">Energy score icon</string>
-    <string name="icon_main_picture">Main picture icon</string>
-    <string name="main_picture">Main picture</string>
-    <string name="button_main_picture_add">Add main picture button</string>
-    <string name="button_main_picture_delete">Delete main picture button</string>
-    <string name="button_secondary_pictures_add">Add secondary pictures button</string>
-    <string name="icon_description">Description icon</string>
-    <string name="icon_misc">Misc icon</string>
-    <string name="icon_address">Address icon</string>
-    <string name="icon_nearby_places">Nearby places icon</string>
-    <string name="icon_tool">Tool icon</string>
-    <string name="icon_date">Date icon</string>
 
     <!-- HINT VALUES -->
     <string name="hint_agent">Agent</string>
@@ -283,16 +332,6 @@
     <string name="fragment_loan_hint_deposit">Deposit</string>
     <string name="fragment_loan_hint_duration">Duration</string>
     <string name="fragment_loan_hint_interestRate">Rate</string>
-
-    <!-- ENERGY CLASS MESSAGES -->
-    <string name="energy_class_awaiting">Awaiting input…</string>
-    <string name="energy_class_a">Excellent energy performance</string>
-    <string name="energy_class_b">Very good energy performance</string>
-    <string name="energy_class_c">Good energy performance</string>
-    <string name="energy_class_d">Good energy performance</string>
-    <string name="energy_class_e">Average energy performance</string>
-    <string name="energy_class_f">Weak energy performance</string>
-    <string name="energy_class_g">Bad energy performance</string>
 
     <!-- PLACEHOLDER VALUES -->
     <string name="placeholder_create">「Create」</string>

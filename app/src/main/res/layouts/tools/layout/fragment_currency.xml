@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="currencyViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.CurrencyViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/currency_padding"
+        android:paddingEnd="@dimen/currency_padding"
+        android:paddingTop="@dimen/currency_padding"
+        android:background="@color/space_cadet"
+        tools:context=".CurrencyFragment">
+
+        <!-- EXCHANGE RATE -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/convert_rate_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+            android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+            android:background="@drawable/circular_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/convert_rate_part"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                android:paddingVertical="@dimen/create_padding_vertical_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/convert_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/percent"
+                    app:startIconTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    android:paddingStart="@dimen/currency_textInput_padding"
+                    android:paddingEnd="@dimen/currency_textInput_padding"
+                    android:paddingTop="@dimen/currency_textInput_padding"
+                    android:paddingBottom="@dimen/currency_textInput_padding"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/convert_rate_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/fragment_currency_hint_exchangeRate"
+                        android:text="@{String.valueOf(currencyViewModel.currencyConversion.exchangeRate)}"
+                        android:background="@color/space_cadet"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textColorHint="@color/white"
+                        android:inputType="numberDecimal"
+                        android:textCursorDrawable="@null"
+                        android:maxLines="1"
+                        android:maxLength="25" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/convert_rate_checker"
+                    android:layout_width="5dp"
+                    android:layout_height="0dp"
+                    app:checkerColor="@{currencyViewModel.currencyConversion.exchangeRate}"
+                    android:background="@color/red_500"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- CURRENCY -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/convert_currency_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+            android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+            android:background="@drawable/circular_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/convert_rate_holder"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/convert_currency_part"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                android:paddingVertical="@dimen/create_padding_vertical_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/convert_currency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/currency"
+                    app:startIconTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    android:paddingStart="@dimen/currency_textInput_padding"
+                    android:paddingEnd="@dimen/currency_textInput_padding"
+                    android:paddingTop="@dimen/currency_textInput_padding"
+                    android:paddingBottom="@dimen/currency_textInput_padding"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/convert_currency_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/fragment_currency_hint_firstCurrency"
+                        android:text="@{String.valueOf(currencyViewModel.currencyConversion.input)}"
+                        android:background="@color/space_cadet"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textColorHint="@color/white"
+                        android:inputType="numberDecimal"
+                        android:textCursorDrawable="@null"
+                        android:maxLines="1"
+                        android:maxLength="25" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/convert_currency_checker"
+                    android:layout_width="5dp"
+                    android:layout_height="0dp"
+                    app:checkerColor="@{currencyViewModel.currencyConversion.input }"
+                    android:background="@color/red_500"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- RESULT -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/convert_holder_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+            android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+            android:background="@drawable/circular_border"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/convert_currency_holder"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/convert_part_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                android:paddingVertical="@dimen/create_padding_vertical_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                >
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/convert_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:startIconDrawable="@drawable/equal"
+                    app:startIconTint="@color/white"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    app:hintTextColor="@color/white"
+                    android:paddingStart="@dimen/currency_textInput_padding"
+                    android:paddingEnd="@dimen/currency_textInput_padding"
+                    android:paddingTop="@dimen/currency_textInput_padding"
+                    android:paddingBottom="@dimen/currency_textInput_padding"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/convert_result_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/fragment_currency_hint_result"
+                        android:text="@{String.valueOf(currencyViewModel.currencyConversion.result)}"
+                        android:background="@color/space_cadet"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:textColorHint="@color/white"
+                        android:focusable="false"
+                        android:inputType="numberDecimal"
+                        android:textCursorDrawable="@null"
+                        android:maxLines="1"
+                        android:maxLength="25" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:id="@+id/convert_result_checker"
+                    android:layout_width="5dp"
+                    android:layout_height="0dp"
+                    app:checkerColor="@{currencyViewModel.currencyConversion.result }"
+                    android:background="@color/red_500"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

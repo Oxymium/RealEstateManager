@@ -1,0 +1,1535 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="estateViewModel"
+            type="com.oxymium.realestatemanager.viewmodel.EstateViewModel"/>
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search_rounded_background"
+            >
+
+            <!-- PANEL TITLE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_search_holder_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <ImageView
+                    android:id="@+id/layout_search_title_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/estate_search"
+                    app:tint="@color/white"
+                    android:contentDescription="@string/icon_estate_search"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/layout_search_title"
+                    />
+
+                <TextView
+                    android:id="@+id/layout_search_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search settings"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/layout_search_title_icon"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: TYPE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_search_holder_title"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <Spinner
+                        android:id="@+id/layout_search_spinner_type"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@color/white"
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/array_search_estate_type"
+                        android:background="@drawable/spinner_background"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_type_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ImageView
+                        android:id="@+id/layout_search_type_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/type"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_type"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_type_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_spinner_type"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_type_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_type_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: ENERGY RATING -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_energy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_type"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_energy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <Spinner
+                        android:id="@+id/layout_search_spinner_energy"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@color/white"
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/array_search_estate_type"
+                        android:background="@drawable/spinner_background"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_energy_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ImageView
+                        android:id="@+id/layout_search_energy_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/energy"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_energy"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_energy_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_spinner_energy"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_energy_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_energy_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: INTERNET -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_internet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_energy"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_internet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <Spinner
+                        android:id="@+id/layout_search_spinner_internet"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@color/white"
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/array_search_estate_type"
+                        android:background="@drawable/spinner_background"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_internet_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ImageView
+                        android:id="@+id/layout_search_internet_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/high_speed_internet"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_high_speed_internet"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_internet_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_spinner_internet"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_internet_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_internet_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: FURNISHED -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_furnished"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_internet"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_furnished"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <Spinner
+                        android:id="@+id/layout_search_spinner_furnished"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@color/white"
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/array_search_estate_type"
+                        android:background="@drawable/spinner_background"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_furnished_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ImageView
+                        android:id="@+id/layout_search_furnished_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/furnished"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_furnished"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_furnished_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_spinner_furnished"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_furnished_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_furnished_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: GARDEN -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_garden"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_furnished"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_garden"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <Spinner
+                        android:id="@+id/layout_search_spinner_garden"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@color/white"
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/array_search_estate_type"
+                        android:background="@drawable/spinner_background"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_garden_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ImageView
+                        android:id="@+id/layout_search_garden_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/garden"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_garden"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_garden_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_spinner_garden"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_garden_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_garden_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: DISABLED ACCESSIBILITY -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_disabled_accessibility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_garden"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_disabled_accessibility"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <Spinner
+                        android:id="@+id/layout_search_spinner_disabled_accessibility"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@color/white"
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/array_search_estate_type"
+                        android:background="@drawable/spinner_background"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_disabled_accessibility_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ImageView
+                        android:id="@+id/layout_search_disabled_accessibility_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/disabled_accessibility"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_disabled_accessibility"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_disabled_accessibility_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_spinner_disabled_accessibility"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_disabled_accessibility_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_disabled_accessibility_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: ADDED DATE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_added_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_disabled_accessibility"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_added_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <!-- MIN RANGE -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/search_added_min_holder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_calendar_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        >
+
+                        <View
+                            android:id="@+id/layout_search_added_date_min_decorator"
+                            android:layout_width="0dp"
+                            android:layout_height="5dp"
+                            android:background="@color/independence"
+                            app:layout_constraintStart_toStartOf="@id/layout_search_added_date_min"
+                            app:layout_constraintEnd_toEndOf="@id/layout_search_added_date_min"
+                            app:layout_constraintTop_toBottomOf="@id/layout_search_added_date_min"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                        <TextView
+                            android:id="@+id/layout_search_added_date_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{ () -> estateViewModel.onClickDateButton(1) }"
+                            app:convertTimeInMillisToDate="@{estateViewModel.startAddedDate}"
+                            android:textColor="@color/white"
+                            android:hint="min added DATE"
+                            android:textColorHint="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- ICON -->
+                    <ImageView
+                        android:id="@+id/layout_search_calendar_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> estateViewModel.resetDateValues(1) }"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/calendar_refresh"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_sold"
+                        app:layout_constraintStart_toEndOf="@id/search_added_min_holder"
+                        app:layout_constraintEnd_toStartOf="@id/search_added_max_holder"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <!-- MAX RANGE -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/search_added_max_holder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_calendar_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        >
+
+                        <View
+                            android:id="@+id/layout_search_added_date_max_decorator"
+                            android:layout_width="0dp"
+                            android:layout_height="5dp"
+                            android:background="@color/independence"
+                            app:layout_constraintStart_toStartOf="@id/layout_search_added_date_max"
+                            app:layout_constraintEnd_toEndOf="@id/layout_search_added_date_max"
+                            app:layout_constraintTop_toBottomOf="@id/layout_search_added_date_max"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                        <TextView
+                            android:id="@+id/layout_search_added_date_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{ () -> estateViewModel.onClickDateButton(2) }"
+                            app:convertTimeInMillisToDate="@{estateViewModel.endAddedDate}"
+                            android:textColor="@color/white"
+                            android:hint="max added DATE"
+                            android:textColorHint="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: SOLD -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_sold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_added_date"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_sold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <Spinner
+                        android:id="@+id/layout_search_spinner_sold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="@color/white"
+                        android:spinnerMode="dropdown"
+                        android:entries="@array/array_search_estate_type"
+                        android:background="@drawable/spinner_background"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_sold_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <ImageView
+                        android:id="@+id/layout_search_sold_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/sold"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_sold"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_sold_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_spinner_sold"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_sold_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_sold_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: SOLD DATE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_sold_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dateSoldVisibility="@{estateViewModel.soldDateVisibility}"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_sold"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_sold_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <!-- MIN RANGE -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/search_sold_min_holder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_sold_calendar_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        >
+
+                        <View
+                            android:id="@+id/layout_search_sold_date_min_decorator"
+                            android:layout_width="0dp"
+                            android:layout_height="5dp"
+                            android:background="@color/independence"
+                            app:layout_constraintStart_toStartOf="@id/layout_search_sold_date_min"
+                            app:layout_constraintEnd_toEndOf="@id/layout_search_sold_date_min"
+                            app:layout_constraintTop_toBottomOf="@id/layout_search_sold_date_min"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                        <TextView
+                            android:id="@+id/layout_search_sold_date_min"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{ () -> estateViewModel.onClickDateButton(3) }"
+                            app:convertTimeInMillisToDate="@{estateViewModel.startSoldDate}"
+                            android:textColor="@color/white"
+                            android:hint="min sold DATE"
+                            android:textColorHint="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- ICON -->
+                    <ImageView
+                        android:id="@+id/layout_search_sold_calendar_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:onClick="@{() -> estateViewModel.resetDateValues(2) }"
+                        android:layout_margin="8dp"
+                        android:src="@drawable/calendar_refresh"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_calendar"
+                        app:layout_constraintStart_toEndOf="@id/search_sold_min_holder"
+                        app:layout_constraintEnd_toStartOf="@id/search_sold_max_holder"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <!-- MAX RANGE -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/search_sold_max_holder"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_sold_calendar_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        >
+
+
+                        <TextView
+                            android:id="@+id/layout_search_sold_date_max"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{ () -> estateViewModel.onClickDateButton(4) }"
+                            app:convertTimeInMillisToDate="@{estateViewModel.endSoldDate}"
+                            android:textColor="@color/white"
+                            android:hint="max sold DATE"
+                            android:textColorHint="@color/white"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                        <View
+                            android:id="@+id/layout_search_sold_date_max_decorator"
+                            android:layout_width="0dp"
+                            android:layout_height="5dp"
+                            android:background="@color/independence"
+                            app:layout_constraintStart_toStartOf="@id/layout_search_sold_date_max"
+                            app:layout_constraintEnd_toEndOf="@id/layout_search_sold_date_max"
+                            app:layout_constraintTop_toBottomOf="@id/layout_search_sold_date_max"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: PRICE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_sold_date"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <!-- MIN PRICE -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_search_price_min"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_price_icon"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_price_max"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/layout_search_price_min_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="min. Price"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:inputType="numberDecimal"
+                            android:digits="0123456789.,"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="8" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- MAX PRICE -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_search_price_max"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_price_min"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/layout_search_price_min"
+                        app:layout_constraintBottom_toBottomOf="@id/layout_search_price_min"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/layout_search_price_max_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="max. Price"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="8" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/layout_search_price_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:src="@drawable/currency"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_currency"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_price_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_price_min"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_price_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_price_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: SURFACE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_surface"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_price"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_surface"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <!-- MIN PRICE -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_search_surface_min"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_surface_icon"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_surface_max"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/layout_search_surface_min_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="min. Surface"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:inputType="numberDecimal"
+                            android:digits="0123456789.,"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="8" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- MAX PRICE -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_search_surface_max"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_surface_min"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/layout_search_surface_min"
+                        app:layout_constraintBottom_toBottomOf="@id/layout_search_surface_min"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/layout_search_surface_max_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="max. Price"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="8" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/layout_search_surface_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:src="@drawable/surface"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_surface"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_surface_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_surface_min"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_surface_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_surface_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: ROOMS -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_rooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_surface"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_rooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <!-- MIN ROOMS -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_search_mini_rooms_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginTop="1dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_rooms_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/layout_search_mini_rooms_amount_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="min. Rooms"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="8" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/layout_search_rooms_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:src="@drawable/room"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_room"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_rooms_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_mini_rooms_amount"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_rooms_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_rooms_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: BEDROOMS -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_bedrooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_rooms"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_bedrooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <!-- MIN BEDROOMS -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_search_mini_bedrooms_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginTop="1dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_bedrooms_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/layout_search_mini_bedrooms_amount_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="min. Bedrooms"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="8" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/layout_search_bedrooms_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:src="@drawable/bedroom"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_bedroom"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_bedrooms_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_mini_bedrooms_amount"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_bedrooms_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_bedrooms_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: BATHROOMS -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_bathrooms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_bedrooms"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_bathrooms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <!-- MIN BATHROOMS -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_search_mini_bathrooms_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginTop="1dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_bathrooms_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/layout_search_mini_bathrooms_amount_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="min. Bathrooms"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="8" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/layout_search_bathrooms_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:src="@drawable/bathroom"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_bathroom"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_bathrooms_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_mini_bathrooms_amount"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_bathrooms_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_bathrooms_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: MIN PICTURE -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_pictures"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_bathrooms"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_pictures"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <!-- MIN PICTURES-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_search_mini_pictures_amount"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginTop="1dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_pictures_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/layout_search_mini_pictures_amount_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="min. Pictures"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="8" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/layout_search_pictures_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:src="@drawable/picture_multiple"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_picture_multiple"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_pictures_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_mini_pictures_amount"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_pictures_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_pictures_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: LOCATION -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_pictures"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <!-- MIN PICTURES-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_search_location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginTop="1dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_location_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/layout_search_location_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Location"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="8" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/layout_search_location_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:src="@drawable/zipcode"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_zipcode"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_location_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_location"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_location_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_location_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <!-- SEARCH: NEARBY PLACES -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_holder_nearby_places"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/search_holder_location"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/search_part_nearby_places"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+
+                    <!-- NEARBY PLACES-->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/layout_search_nearby_places"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginTop="1dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_nearby_places_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintHorizontal_bias="0"
+                        >
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/layout_search_nearby_places_input"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:hint="Nearby places"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/white"
+                            android:textColorHint="@color/white"
+                            android:inputType="number"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="8" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <ImageView
+                        android:id="@+id/layout_search_nearby_places_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="8dp"
+                        android:src="@drawable/nearby_places"
+                        app:tint="@color/white"
+                        android:contentDescription="@string/icon_nearby_places"
+                        app:layout_constraintStart_toEndOf="@id/layout_search_nearby_places_decorator"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_nearby_places"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                    <View
+                        android:id="@+id/layout_search_nearby_places_decorator"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/independence"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/layout_search_nearby_places_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

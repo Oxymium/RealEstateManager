@@ -1,10 +1,10 @@
 package com.oxymium.realestatemanager
 
-import com.oxymium.realestatemanager.model.Agent
-import com.oxymium.realestatemanager.model.Estate
+import com.oxymium.realestatemanager.misc.PLACEHOLDER_PATH
 import com.oxymium.realestatemanager.model.Label
-import com.oxymium.realestatemanager.model.Picture
 import com.oxymium.realestatemanager.model.Step
+import com.oxymium.realestatemanager.model.databaseitems.Agent
+import com.oxymium.realestatemanager.model.databaseitems.Estate
 import java.util.Random
 
 // Turn on/off the static map
@@ -15,22 +15,22 @@ const val SECONDARY_PICTURES_AMOUNT_LIMIT = 9
 
 // Provide Steps for Create/Edit
 val CREATE_STEPS = listOf(
-    Step(0, 0, R.drawable.view_grid),
-    Step(1, 1, R.drawable.account_tie),
-    Step(2, 2, R.drawable.home_city),
-    Step(3, 3, R.drawable.numeric),
-    Step(4, 4, R.drawable.image_outline),
-    Step(5, 5, R.drawable.image_multiple_outline),
-    Step(6, 6, R.drawable.comment_edit),
-    Step(7, 7, R.drawable.baseline_map_24),
-    Step(8, 8, R.drawable.tag_multiple),
+    Step(0, 0, R.drawable.overview),
+    Step(1, 1, R.drawable.agent),
+    Step(2, 2, R.drawable.type),
+    Step(3, 3, R.drawable.values),
+    Step(4, 4, R.drawable.picture),
+    Step(5, 5, R.drawable.picture_multiple),
+    Step(6, 6, R.drawable.miscellaneous),
+    Step(7, 7, R.drawable.map),
+    Step(8, 8, R.drawable.labels),
     )
 
 // Provide Steps for Tools
 val TOOLS_STEPS = listOf(
-    Step(1, 1, R.drawable.cash_multiple),
+    Step(1, 1, R.drawable.currency),
     Step( 2, 2, R.drawable.chart_pie),
-    Step(3, 3, R.drawable.dev_to)
+    Step(3, 3, R.drawable.dev)
 )
 
 // Provide random phone number on compile
@@ -82,6 +82,9 @@ val NEARBY_PLACES = listOf(
     Label("Swimming Pool"), Label("Theatre"), Label("Train Station"), Label("Vineyard"), Label("Zoo")
 )
 
+// Provide Energy Ratings
+val ENERGY_RATINGS = listOf("A", "B", "C", "D", "E", "F", "G")
+
 fun List<Label>.generateRandomLabelString(): String {
     val random = Random()
     val labelStrings = mutableListOf<String>()
@@ -122,18 +125,6 @@ fun generateRandomNearbyPlacesString(): String?{
     }
     return test
 }
-
-const val PLACEHOLDER_PATH = "android.resource://com.oxymium.realestatemanager/drawable/estate_placeholder"
-val RANDOM_PICTURES = listOf(
-    Picture("${PLACEHOLDER_PATH}2", "Room"),
-    Picture("${PLACEHOLDER_PATH}3", "Kitchen"),
-    Picture("${PLACEHOLDER_PATH}4", "Bathroom"),
-    Picture("${PLACEHOLDER_PATH}5", "Room 2"),
-    Picture("${PLACEHOLDER_PATH}6", "Garden"),
-    Picture("${PLACEHOLDER_PATH}7", "Pool"),
-    Picture("${PLACEHOLDER_PATH}8", "Gym"),
-    Picture("${PLACEHOLDER_PATH}9", "Bathroom")
-)
 
 // Random for testing purposes
 fun generateRandomEstate(): Estate {
@@ -178,7 +169,18 @@ fun generateRandomEstate(): Estate {
         "${PLACEHOLDER_PATH}7",
         "${PLACEHOLDER_PATH}8",
         "${PLACEHOLDER_PATH}9",
-    ).random()
+        "${PLACEHOLDER_PATH}10",
+        "${PLACEHOLDER_PATH}11",
+        "${PLACEHOLDER_PATH}12",
+        "${PLACEHOLDER_PATH}13",
+        "${PLACEHOLDER_PATH}14",
+        "${PLACEHOLDER_PATH}15",
+        "${PLACEHOLDER_PATH}16",
+        "${PLACEHOLDER_PATH}17",
+        "${PLACEHOLDER_PATH}18",
+        "${PLACEHOLDER_PATH}19",
+        "${PLACEHOLDER_PATH}20",
+        ).random()
 
     // TODO random agent for mock
     val randomAgentId = (1L..6L).random()

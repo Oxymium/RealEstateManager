@@ -110,9 +110,12 @@ class LoanFragment: Fragment() {
         val totalInterests = totalPayments - loan.borrowedAmount
 
         val entries = listOf(
-            PieEntry(loan.borrowedAmount, null, ContextCompat.getDrawable(requireActivity(), R.drawable.ic_bank_transfer_out_white_24dp), null),
-            PieEntry(loan.deposit, null, ContextCompat.getDrawable(requireActivity(), R.drawable.ic_piggy_bank_white_24dp), null),
-            PieEntry(totalInterests, null, ContextCompat.getDrawable(requireActivity(), R.drawable.ic_percent_white_24dp), null)
+            // Entry: Borrowed Amount
+            PieEntry(loan.borrowedAmount, null, ContextCompat.getDrawable(requireActivity(), R.drawable.bank), null),
+            // Entry: Deposit
+            PieEntry(loan.deposit, null, ContextCompat.getDrawable(requireActivity(), R.drawable.piggy_bank), null),
+            // Entry: Interests
+            PieEntry(totalInterests, null, ContextCompat.getDrawable(requireActivity(), R.drawable.percent), null)
         )
 
         // Ready set & data

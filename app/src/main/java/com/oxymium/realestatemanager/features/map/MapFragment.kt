@@ -29,11 +29,11 @@ import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentMapBinding
 import com.oxymium.realestatemanager.model.ClusteredEstate
-import com.oxymium.realestatemanager.model.Estate
 import com.oxymium.realestatemanager.model.LatLngZoom
+import com.oxymium.realestatemanager.model.databaseitems.Estate
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
-import com.oxymium.realestatemanager.viewmodel.EstateViewModelFactory
 import com.oxymium.realestatemanager.viewmodel.MapSelectedViewModel
+import com.oxymium.realestatemanager.viewmodel.factories.EstateViewModelFactory
 
 // -----------
 // MapFragment
@@ -73,9 +73,9 @@ class MapFragment : Fragment(), OnMapReadyCallback{
     // EstateViewModel
     private val estateViewModel: EstateViewModel by activityViewModels{
         EstateViewModelFactory(
-            (activity?.application as EstatesApplication).repository3,
-            (activity?.application as EstatesApplication).repository,
-            (activity?.application as EstatesApplication).repository2
+            (activity?.application as EstatesApplication).agentRepository,
+            (activity?.application as EstatesApplication).estateRepository,
+            (activity?.application as EstatesApplication).pictureRepository
         )
     }
 

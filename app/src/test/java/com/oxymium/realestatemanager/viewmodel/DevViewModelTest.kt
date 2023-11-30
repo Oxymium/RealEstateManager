@@ -1,8 +1,8 @@
 package com.oxymium.realestatemanager.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.oxymium.realestatemanager.database.EstateRepository
-import com.oxymium.realestatemanager.database.PictureRepository
+import com.oxymium.realestatemanager.database.estate.EstateRepository
+import com.oxymium.realestatemanager.database.picture.PictureRepository
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -5,21 +5,20 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.model.Estate
 import com.oxymium.realestatemanager.model.ReachedSide
+import com.oxymium.realestatemanager.model.databaseitems.Estate
 
 class CreateBinders {
 
     companion object {
-        // TODO CLEAN COMMENTS
         // Steps buttons underline color
         @JvmStatic
         @BindingAdapter("app:createPlaceHolderToggleIcon")
         fun changeCreatePlaceHolderIcon(imageView: ImageView, estate: Estate?) {
             val context = imageView.context
             imageView.setImageDrawable( when (estate){
-                null -> provideCompatDrawable(context, R.drawable.home_plus_outline)
-                else -> provideCompatDrawable(context, R.drawable.home_edit_outline)
+                null -> provideCompatDrawable(context, R.drawable.estate_plus)
+                else -> provideCompatDrawable(context, R.drawable.estate_edit)
             })
 
         }
@@ -74,15 +73,15 @@ class CreateBinders {
         fun displayNavigatorHeaderText(imageView: ImageView, step: Int?){
             val context = imageView.context
             imageView.setImageDrawable( when(step){
-                1 -> provideCompatDrawable(context, R.drawable.handshake)
-                2 -> provideCompatDrawable(context, R.drawable.home_city)
-                3 -> provideCompatDrawable(context, R.drawable.numeric)
-                4 -> provideCompatDrawable(context, R.drawable.image_outline)
-                5 -> provideCompatDrawable(context, R.drawable.image_multiple_outline)
-                6 -> provideCompatDrawable(context, R.drawable.image_multiple_outline)
-                7 -> provideCompatDrawable(context, R.drawable.map_marker)
-                8 -> provideCompatDrawable(context, R.drawable.handshake)
-                else -> provideCompatDrawable(context, R.drawable.handshake)
+                1 -> provideCompatDrawable(context, R.drawable.agent)
+                2 -> provideCompatDrawable(context, R.drawable.type)
+                3 -> provideCompatDrawable(context, R.drawable.values)
+                4 -> provideCompatDrawable(context, R.drawable.picture)
+                5 -> provideCompatDrawable(context, R.drawable.picture_multiple)
+                6 -> provideCompatDrawable(context, R.drawable.miscellaneous)
+                7 -> provideCompatDrawable(context, R.drawable.zipcode)
+                8 -> provideCompatDrawable(context, R.drawable.map)
+                else -> provideCompatDrawable(context, R.drawable.miscellaneous)
             })
         }
         @JvmStatic
