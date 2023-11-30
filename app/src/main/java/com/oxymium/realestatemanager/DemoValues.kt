@@ -1,6 +1,7 @@
 package com.oxymium.realestatemanager
 
 import com.google.android.gms.maps.model.LatLng
+import com.oxymium.realestatemanager.model.mock.generateOneRandomEstate
 
 
 // -----------
@@ -35,7 +36,7 @@ val latLngDemo1 = listOf(
     LatLng(49.49268294434247, 0.11454545204320525),
     LatLng(49.50247190649094, 0.1203798920180229))
 
-val demoSet1 = List(10) { generateRandomEstate() }
+val demoSet1 = List(10) { generateOneRandomEstate() }
 
 val demoSet1WithAddressAndLatLng = demoSet1
     .zip(addressesDemo1)
@@ -83,7 +84,7 @@ val latLngDemo2 = listOf(
     LatLng(49.44232514302433, 1.1240222676494624))
 
 
-val demoSet2 = List(10) { generateRandomEstate() }
+val demoSet2 = List(10) { generateOneRandomEstate() }
 
 val demoSet2WithAddressAndLatLng = demoSet2
     .zip(addressesDemo2)
@@ -131,7 +132,7 @@ val latLngDemo3 = listOf(
     LatLng(45.90752273323763, 6.130841404909132))
 
 
-val demoSet3 = List(10) { generateRandomEstate() }
+val demoSet3 = List(10) { generateOneRandomEstate() }
 
 val demoSet3WithAddressAndLatLng = demoSet3
     .zip(addressesDemo3)

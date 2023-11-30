@@ -9,11 +9,11 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.oxymium.realestatemanager.database.agent.AgentRepository
 import com.oxymium.realestatemanager.database.estate.EstateRepository
 import com.oxymium.realestatemanager.database.picture.PictureRepository
-import com.oxymium.realestatemanager.misc.RANDOM_PICTURES
 import com.oxymium.realestatemanager.model.Search
 import com.oxymium.realestatemanager.model.databaseitems.Agent
 import com.oxymium.realestatemanager.model.databaseitems.Estate
 import com.oxymium.realestatemanager.model.databaseitems.Picture
+import com.oxymium.realestatemanager.model.mock.provideRandomListPicture
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -75,7 +75,7 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
 
     // SECONDARY PICTURES
     val secondaryPicturesForCurrentEstate: LiveData<List<Picture>> get() = _secondaryPicturesForCurrentEstate
-    private val _secondaryPicturesForCurrentEstate = MutableLiveData(RANDOM_PICTURES)
+    private val _secondaryPicturesForCurrentEstate = MutableLiveData(provideRandomListPicture(5))
     private fun updateSecondaryPicturesForCurrentEstate(secondaryPictures: List<Picture>){
         _secondaryPicturesForCurrentEstate.value = secondaryPictures
     }

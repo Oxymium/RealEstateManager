@@ -53,7 +53,7 @@ class ToolsFragment: Fragment() {
         binding.toolsViewModel = toolsViewModel
         binding.navigatorBar.toolsViewModel = toolsViewModel
 
-        toolsViewModel.updateCurrentTool(0)
+        // toolsViewModel.updateCurrentTool()
         observeToolsSteps()
 
         // RecyclerView setup
@@ -70,14 +70,14 @@ class ToolsFragment: Fragment() {
         stepsAdapter = StepsAdapter(
             // StepListener
             StepListener {
-                toolsViewModel.updateCurrentTool(it.number)
+                toolsViewModel.updateCurrentTool(it)
             }
         )
 
         toolsViewModel.currentTool.observe(viewLifecycleOwner) { step ->
             step?.let {
                 toolsViewModel.updateToolSteps(toolsViewModel.toolSteps.value?.map { toolSteps ->
-                    toolSteps.copy(isSelected = step == toolSteps.number)
+                    toolSteps.copy(isSelected = step.number == toolSteps.number)
                 })
             }
 
@@ -99,7 +99,7 @@ class ToolsFragment: Fragment() {
     // Navigation handler for Tools
     private fun observeToolsSteps(){
         toolsViewModel.currentTool.observe(viewLifecycleOwner) {
-            this.replaceFragment(when (it) {
+            this.replaceFragment( when (it.number) {
                 null -> ToolsPlaceholderFragment()
                 0 -> ToolsPlaceholderFragment()
                 1 -> CurrencyFragment()
@@ -107,7 +107,7 @@ class ToolsFragment: Fragment() {
                 3 -> DevFragment()
                 else -> ToolsPlaceholderFragment()
             })
-            toolsViewModel.updateSelectedTool(it)
+            toolsViewModel.updateSelectedTool(it.number)
         }
     }
 }

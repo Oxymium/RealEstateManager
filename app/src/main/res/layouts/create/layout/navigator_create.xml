@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            app:navigatorTextView="@{createViewModel.currentStep}"
+            app:navigatorMenuTitle="@{createViewModel.currentStep}"
             android:textColor="@color/isabelline"
             android:textStyle="italic|bold"
             android:textAlignment="center"

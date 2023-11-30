@@ -28,25 +28,7 @@ class SelectedBinders {
         }
 
         @JvmStatic
-        @BindingAdapter("app:toggleSelectedViewVisbility")
-        fun toggleViewVisibility(view: View, estate: Estate?) {
-            view.visibility = when (estate){
-                null -> View.GONE
-                else -> View.VISIBLE
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("app:toggleSelectedHelperVisbility")
-        fun toggleHelperVisibility(view: View, categoryHelper: CategoryHelper?) {
-            view.visibility = when (categoryHelper){
-                null -> View.GONE
-                else -> View.VISIBLE
-            }
-        }
-
-        @JvmStatic
-        @BindingAdapter("app:toggleSelectedHelperVisbility")
+        @BindingAdapter("app:toggleSelectedHelperVisibility")
         fun toggleHelperVisibility(textView: TextView, categoryHelper: CategoryHelper?) {
             when (categoryHelper){
                 null -> {

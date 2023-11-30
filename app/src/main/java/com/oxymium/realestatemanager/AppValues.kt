@@ -1,89 +1,37 @@
 package com.oxymium.realestatemanager
 
-import com.oxymium.realestatemanager.misc.PLACEHOLDER_PATH
 import com.oxymium.realestatemanager.model.Label
 import com.oxymium.realestatemanager.model.Step
-import com.oxymium.realestatemanager.model.databaseitems.Agent
-import com.oxymium.realestatemanager.model.databaseitems.Estate
 import java.util.Random
 
 // Turn on/off the static map
-const val ENABLE_STATIC_MAP = false
+var ENABLE_STATIC_MAP = false
 
 // Amount of secondary pictures limit
 const val SECONDARY_PICTURES_AMOUNT_LIMIT = 9
 
+// Amount of Agents pre-inserted into the DB
+const val PRE_INSERTED_AGENT_AMOUNT = 14
+
 // Provide Steps for Create/Edit
 val CREATE_STEPS = listOf(
-    Step(0, 0, R.drawable.overview),
-    Step(1, 1, R.drawable.agent),
-    Step(2, 2, R.drawable.type),
-    Step(3, 3, R.drawable.values),
-    Step(4, 4, R.drawable.picture),
-    Step(5, 5, R.drawable.picture_multiple),
-    Step(6, 6, R.drawable.miscellaneous),
-    Step(7, 7, R.drawable.map),
-    Step(8, 8, R.drawable.labels),
+    Step(0, 0, "Overview", R.drawable.overview),
+    Step(1, 1, "Agent", R.drawable.agent),
+    Step(2, 2, "Type", R.drawable.type),
+    Step(3, 3, "Values", R.drawable.values),
+    Step(4, 4, "Main picture", R.drawable.picture),
+    Step(5, 5, "Secondary pictures", R.drawable.picture_multiple),
+    Step(6, 6, "Miscellaneous", R.drawable.miscellaneous),
+    Step(7, 7, "Address", R.drawable.map),
+    Step(8, 8, "Nearby places", R.drawable.labels),
     )
 
 // Provide Steps for Tools
 val TOOLS_STEPS = listOf(
-    Step(1, 1, R.drawable.currency),
-    Step( 2, 2, R.drawable.chart_pie),
-    Step(3, 3, R.drawable.dev)
+    Step(1, 1, "Currency Converter", R.drawable.currency),
+    Step( 2, 2, "Loan Simulator", R.drawable.chart_pie),
+    Step(3, 3, "Dev tools", R.drawable.dev)
 )
-
-// Provide random phone number on compile
-fun generateRandomNumberAsString(): String{
-    val numberAsString = when (val number = (0..99).random()){
-        // Add 0 for numbers 0..9
-        in (0..9) -> "0$number"
-        else -> number.toString()
-    }
-    return numberAsString
-}
-
-fun generateRandomPhoneNumber(): String{
-    return "06.${generateRandomNumberAsString()}.${generateRandomNumberAsString()}.${generateRandomNumberAsString()}.${generateRandomNumberAsString()}"
-}
-
-// Provide random Agents (phone numbers generated at runtime to prevent privacy issues)
-val MOCK_FIRSTNAMES = listOf("Dawn", "Blake", "Mack", "Felicia", "Regina", "Jack", "Sabrina", "Alyce", "Marcelino", "Stacy", "Al", "Magnus", "Declan", "Liana", "Bella", "Clayton" )
-val MOCK_LASTNAMES = listOf("Walls", "Welch", "Stout", "Harrington", "Mckenzie", "Campbell", "Padilla", "Rowe", "Hansen", "Stein", "Hines", "Leblanc", "Bird", "Garner", "Wong", "Wood")
-val MOCK_MAILS = listOf("mock@gmailing.com", "mock@protonmailing.com")
-val MOCK_AGENCIES = listOf("Paris", "Le Havre", "Annecy")
-fun provideRandomAgents(quantity: Int): List<Agent>{
-    val agents = mutableListOf<Agent>()
-    repeat(quantity) {
-        agents.add(
-            Agent(MOCK_FIRSTNAMES.random(), MOCK_LASTNAMES.random(), generateRandomPhoneNumber(), MOCK_MAILS.random(), MOCK_AGENCIES.random())
-        )
-    }
-    return agents
-}
-
-// Provide random estate types
-val ESTATE_TYPES = listOf(
-    Label("Apartment"), Label("Bungalow"), Label("Castle"), Label("Cooperative"), Label("Cottage"),
-    Label("Condominium"), Label("Duplex"), Label("Farm"), Label("Houseboat"), Label("Igloo"),
-    Label("Loft"), Label("Mansion"), Label("Manor"), Label("Penthouse"), Label("Ranch"),
-    Label("Single-Family Home"), Label("Studio"), Label("Townhouse"), Label("Treehouse"), Label("Villa")
-)
-
-// Provide random estate types
-val NEARBY_PLACES = listOf(
-    Label("Airport"), Label("Amusement Park"), Label("Aquarium"), Label("Art Studio"), Label("Bar"),
-    Label("Beach"), Label("Botanical Garden"), Label("Brewery"), Label("Bus Station"), Label("Cafe"),
-    Label("Cathedral"), Label("Church"), Label("Cinema"), Label("Concert Hall"), Label("Distillery"),
-    Label("Factory"), Label("Farmers Market"), Label("Food Market"), Label("Gallery"), Label("Gym"),
-    Label("Harbor"), Label("Historic Site"), Label("Hotel"), Label("Library"), Label("Mosque"),
-    Label("Museum"), Label("Nature Reserve"), Label("Park"), Label("Planetarium"), Label("Restaurant"),
-    Label("School"), Label("Shopping Mall"), Label("Spa"), Label("Stadium"), Label("Synagogue"),
-    Label("Swimming Pool"), Label("Theatre"), Label("Train Station"), Label("Vineyard"), Label("Zoo")
-)
-
-// Provide Energy Ratings
-val ENERGY_RATINGS = listOf("A", "B", "C", "D", "E", "F", "G")
 
 fun List<Label>.generateRandomLabelString(): String {
     val random = Random()
@@ -118,99 +66,12 @@ fun String.toLabelListTest(): List<String> {
     return split(" ")
 }
 
-fun generateRandomNearbyPlacesString(): String?{
-    var test: String? = null
-    for (i in 1..NEARBY_PLACES.size){
-        test += NEARBY_PLACES.toConcatenatedString()
-    }
-    return test
-}
-
-// Random for testing purposes
-fun generateRandomEstate(): Estate {
-
-    val randomSoldStatus = arrayOf(true, false).random()
-    val randomType = ESTATE_TYPES.random().label
-    val randomPrice = arrayOf(100000, 150000, 550200, 660500, 1000000, 2000000, 2500000).random()
-    val randomSurface = (0..200).random()
-    val randomRooms = (1..20).random()
-    val randomBedrooms = (1..15).random()
-    val randomBathrooms = (1..10).random()
-    val randomEnergyScore = (1..701).random()
-    val randomEnergyType = when (randomEnergyScore){
-        in 1..50 -> "A"
-        in 51..90 -> "B"
-        in 91..150 -> "C"
-        in 151..230 -> "D"
-        in 231..330 -> "E"
-        in 331..450 -> "F"
-        in (451..Int.MAX_VALUE) -> "G"
-        else -> "G"
-    }
-
-    val randomStreets = arrayOf("21 rue de la Paix", "19 rue des Tulipes", "07 avenue des bois fleuris").random()
-    val randomZipCodes = arrayOf("00001", "00002", "00003", "00004", "00005").random()
-    val randomLocations = arrayOf("New-York", "Paris", "Tokyo", "Singapore", "Moscow", "Seoul", "Sidney").random()
-
-    val randomHighSpeedInternet = arrayOf(true, false).random()
-    val randomGarden = arrayOf(true, false).random()
-    val randomDisabledAccessibility = arrayOf(true, false).random()
-    val randomFurnished = arrayOf(true, false).random()
-
-    val randomNearbyPlaces = NEARBY_PLACES.generateRandomLabelString()
-    val randomDescription = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-
-    val randomMainPictures = arrayOf(
-        "${PLACEHOLDER_PATH}2",
-        "${PLACEHOLDER_PATH}3",
-        "${PLACEHOLDER_PATH}4",
-        "${PLACEHOLDER_PATH}5",
-        "${PLACEHOLDER_PATH}6",
-        "${PLACEHOLDER_PATH}7",
-        "${PLACEHOLDER_PATH}8",
-        "${PLACEHOLDER_PATH}9",
-        "${PLACEHOLDER_PATH}10",
-        "${PLACEHOLDER_PATH}11",
-        "${PLACEHOLDER_PATH}12",
-        "${PLACEHOLDER_PATH}13",
-        "${PLACEHOLDER_PATH}14",
-        "${PLACEHOLDER_PATH}15",
-        "${PLACEHOLDER_PATH}16",
-        "${PLACEHOLDER_PATH}17",
-        "${PLACEHOLDER_PATH}18",
-        "${PLACEHOLDER_PATH}19",
-        "${PLACEHOLDER_PATH}20",
-        ).random()
-
-    // TODO random agent for mock
-    val randomAgentId = (1L..6L).random()
-
-    return Estate(
-        1631085363547,
-        randomSoldStatus,
-        1631085363547,
-        randomType,
-        randomPrice,
-        randomEnergyScore,
-        randomEnergyType,
-        randomSurface,
-        randomRooms,
-        randomBedrooms,
-        randomBathrooms,
-        randomStreets,
-        randomZipCodes,
-        randomLocations,
-        0.0,
-        0.0,
-        randomHighSpeedInternet,
-        randomGarden,
-        randomDisabledAccessibility,
-        randomFurnished,
-        randomNearbyPlaces,
-        randomDescription,
-        randomMainPictures,
-        randomAgentId
-    )
-
-}
+//fun generateRandomNearbyPlacesString(): String?{
+//    //var test: String? = null
+//    //for (i in 1..NEARBY_PLACES.size){
+//        //test += NEARBY_PLACES.toConcatenatedString()
+//    //}
+//    //return test
+//}
+//
 

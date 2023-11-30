@@ -17,7 +17,7 @@ class StepsViewHolder(val binding: ItemStepBinding): RecyclerView.ViewHolder(bin
         binding.step = step
 
         // Picture
-        binding.createNavigatorButtonStep.setImageResource(step.picture)
+        binding.createNavigatorButtonStep.setImageResource(step.icon)
 
         // Bind onClickListener
         binding.stepListener = listener

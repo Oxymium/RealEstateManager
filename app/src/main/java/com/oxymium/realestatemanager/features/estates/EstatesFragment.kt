@@ -18,12 +18,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.sqlite.db.SimpleSQLiteQuery
-import com.oxymium.realestatemanager.ENERGY_RATINGS
-import com.oxymium.realestatemanager.ESTATE_TYPES
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentEstatesBinding
 import com.oxymium.realestatemanager.model.Search
+import com.oxymium.realestatemanager.model.mock.ENERGY_RATINGS
+import com.oxymium.realestatemanager.model.mock.ESTATE_TYPES
 import com.oxymium.realestatemanager.utils.CustomSpinnerAdapter
 import com.oxymium.realestatemanager.utils.DateUtils
 import com.oxymium.realestatemanager.utils.OnSwipeTouchListener

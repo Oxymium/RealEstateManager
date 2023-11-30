@@ -26,8 +26,8 @@ import com.oxymium.realestatemanager.features.create.step_values_energy_score.St
 import com.oxymium.realestatemanager.features.create.steps.RecyclerViewScrollListener
 import com.oxymium.realestatemanager.features.create.steps.StepListener
 import com.oxymium.realestatemanager.features.create.steps.StepsAdapter
-import com.oxymium.realestatemanager.generateRandomEstate
 import com.oxymium.realestatemanager.model.ReachedSide
+import com.oxymium.realestatemanager.model.mock.generateOneRandomEstate
 import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
 
 // ---------------
@@ -72,7 +72,8 @@ class CreateEstateFragment: Fragment() {
         fragmentCreateEstateBinding.navigatorHeader.createViewModel = createViewModel
         fragmentCreateEstateBinding.navigatorBar.createViewModel = createViewModel
 
-        createViewModel.updateCurrentStep(0)
+        createViewModel.currentStep.value?.copy(number = 0)
+            ?.let { createViewModel.updateCurrentStep(it) }
 
         observeEditedEstate()
 
@@ -93,14 +94,14 @@ class CreateEstateFragment: Fragment() {
         stepsAdapter = StepsAdapter(
             // StepListener
             StepListener {
-                createViewModel.updateCurrentStep(it.number)
+                createViewModel.updateCurrentStep(it)
             }
         )
 
         createViewModel.currentStep.observe(viewLifecycleOwner) { step ->
             step?.let {
                 createViewModel.updateCreateStep(createViewModel.createSteps.value?.map { createSteps ->
-                    createSteps.copy(isSelected = step == createSteps.number)
+                    createSteps.copy(isSelected = step.number == createSteps.number)
                 })
             }
 
@@ -147,8 +148,8 @@ class CreateEstateFragment: Fragment() {
     private fun observeCreationSteps(){
         val selectedStep = createViewModel.selectedStep.value
         createViewModel.currentStep.observe(viewLifecycleOwner) {
-            if (it == selectedStep) return@observe
-            this.replaceFragment(when (it) {
+            if (it.number == selectedStep) return@observe
+            this.replaceFragment(when (it.number) {
                 null -> CreateEstatePlaceholderFragment()
                 0 -> StepOverviewFragment()
                 1 -> StepAgentFragment()
@@ -161,7 +162,7 @@ class CreateEstateFragment: Fragment() {
                 8 -> StepNearbyPlacesFragment()
                 else -> CreateEstatePlaceholderFragment()
             })
-            createViewModel.updateSelectedStep(it)
+            createViewModel.updateSelectedStep(it.number)
         }
     }
 
@@ -187,7 +188,7 @@ class CreateEstateFragment: Fragment() {
             this?.setNeutralButton(R.string.alert_neutral) { _, _ -> }
             // Testing purposes
             this?.setNegativeButton(R.string.alert_random_debug) { _, _ ->
-                createViewModel.fillEstateFields(generateRandomEstate())
+                createViewModel.fillEstateFields(generateOneRandomEstate())
                 createViewModel.fillSecondaryPictures() }
         }
         val dialog: AlertDialog? = builder?.create()

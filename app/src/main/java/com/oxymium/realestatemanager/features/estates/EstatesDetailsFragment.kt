@@ -61,18 +61,18 @@ class EstatesDetailsFragment: Fragment() {
         estateViewModel.selectedEstateId.observe(viewLifecycleOwner) {
 
             // Provide placeholder screen if no Estate is selected
-            //if (it == null || estateViewModel.estates.value?.isEmpty() == true) {
-                //childFragmentManager.beginTransaction()
-                    //.replace(R.id.fragment_estates_details_right, DetailsPlaceholderFragment())
-                    //.commit()
+            if (it == null || estateViewModel.estates.value.isEmpty()) {
+                childFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_estates_details_right, DetailsPlaceholderFragment())
+                    .commit()
             }
             // Otherwise, load DetailsFragment
-            //else {
-                //childFragmentManager.beginTransaction()
-                    //.replace(R.id.fragment_estates_details_right, DetailsFragment())
-                    //.commit()
-            //}
-        //}
+            else {
+                childFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_estates_details_right, DetailsFragment())
+                    .commit()
+            }
+        }
 
         // Return view
         return binding.root

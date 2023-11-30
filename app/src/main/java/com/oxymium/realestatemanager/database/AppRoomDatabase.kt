@@ -4,13 +4,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.oxymium.realestatemanager.PRE_INSERTED_AGENT_AMOUNT
 import com.oxymium.realestatemanager.database.agent.AgentDao
 import com.oxymium.realestatemanager.database.estate.EstateDao
 import com.oxymium.realestatemanager.database.picture.PictureDao
 import com.oxymium.realestatemanager.model.databaseitems.Agent
 import com.oxymium.realestatemanager.model.databaseitems.Estate
 import com.oxymium.realestatemanager.model.databaseitems.Picture
-import com.oxymium.realestatemanager.provideRandomAgents
+import com.oxymium.realestatemanager.model.mock.provideRandomAgentList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -97,7 +98,7 @@ abstract class AppRoomDatabase : RoomDatabase() {
         suspend fun populateDatabase(pictureDao: PictureDao) {}
 
         suspend fun populateDatabase(agentDao: AgentDao){
-            for (agent in provideRandomAgents(15)) agentDao.insert(agent)
+            for (agent in provideRandomAgentList(PRE_INSERTED_AGENT_AMOUNT)) agentDao.insert(agent)
         }
     }
 }

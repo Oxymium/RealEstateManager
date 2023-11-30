@@ -24,14 +24,6 @@
     <color name="red_25">#40E91E63</color>
     <color name="transparent">#00FFFFFF</color>
 
-    <color name="energy_rating_a">#4CAF50</color>
-    <color name="energy_rating_b">#8BC34A</color>
-    <color name="energy_rating_c">#CDDC39</color>
-    <color name="energy_rating_d">#FFEB3B</color>
-    <color name="energy_rating_e">#FFC107</color>
-    <color name="energy_rating_f">#FF9800</color>
-    <color name="energy_rating_g">#E91E63</color>
-
     <!-- PieChart colors -->
     <color name="pie_chart_1">#7091F5</color>
     <color name="pie_chart_2">#ED7B7B</color>

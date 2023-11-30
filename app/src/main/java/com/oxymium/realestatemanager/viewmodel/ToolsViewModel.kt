@@ -27,10 +27,10 @@ class ToolsViewModel: ViewModel() {
         }
     }
 
-    val currentTool: LiveData<Int> get() = _currentTool
-    private val _currentTool = MutableLiveData<Int>()
-    fun updateCurrentTool(value: Int){
-        _currentTool.value = value
+    val currentTool: LiveData<Step> get() = _currentTool
+    private val _currentTool = MutableLiveData<Step>()
+    fun updateCurrentTool(step: Step){
+        _currentTool.value = step
     }
 
     val toolSteps: LiveData<List<Step>?> get() = _toolSteps

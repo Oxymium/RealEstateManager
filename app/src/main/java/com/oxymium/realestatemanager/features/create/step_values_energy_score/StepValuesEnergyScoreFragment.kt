@@ -15,6 +15,7 @@ import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentStepValuesEnergyScoreBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.model.EstateField
+import com.oxymium.realestatemanager.model.getEnergyRating
 import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
 
 class StepValuesEnergyScoreFragment: Fragment() {
@@ -124,8 +125,14 @@ class StepValuesEnergyScoreFragment: Fragment() {
         stepValuesEnergyScoreBinding.stepTwoEnergyScoreInput.addTextChangedListener(
             object : TextWatcher {
                 override fun afterTextChanged(s: Editable) {
-                    if (s.isNotEmpty()) createViewModel.updateEstateField(EstateField.EnergyScore(s.toString().toInt()))
-                    else createViewModel.updateEstateField(EstateField.EnergyScore(null))
+                    if (s.isNotEmpty()) {
+                        createViewModel.updateEstateField(EstateField.EnergyScore(s.toString().toInt()))
+                        createViewModel.updateEstateField(EstateField.EnergyRating(getEnergyRating(s.toString().toInt())))
+                    }
+                    else {
+                        createViewModel.updateEstateField(EstateField.EnergyScore(null))
+                        createViewModel.updateEstateField(EstateField.EnergyRating(null))
+                    }
                 }
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {

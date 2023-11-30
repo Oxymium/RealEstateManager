@@ -658,7 +658,7 @@
                 android:id="@+id/search_holder_sold_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:dateSoldVisibility="@{estateViewModel.soldDateVisibility}"
+                app:toggleViewVisibility="@{estateViewModel.soldDateVisibility}"
                 android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
                 android:layout_marginVertical="@dimen/create_padding_vertical_margin"
                 android:background="@drawable/circular_border"

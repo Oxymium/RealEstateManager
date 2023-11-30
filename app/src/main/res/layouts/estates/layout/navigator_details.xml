@@ -67,7 +67,7 @@
                 android:id="@+id/details_navigator_sell_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:toggleSellButtonVisibility="@{estateViewModel.queriedEstate.wasSold}"
+                app:toggleViewVisibility="@{estateViewModel.queriedEstate.wasSold}"
                 android:onClick="@{() -> estateViewModel.onClickSellButton()}"
                 android:src="@drawable/sold"
                 app:tint="@color/isabelline"

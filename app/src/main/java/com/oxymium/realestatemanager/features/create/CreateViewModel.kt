@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.oxymium.realestatemanager.CREATE_STEPS
-import com.oxymium.realestatemanager.ESTATE_TYPES
-import com.oxymium.realestatemanager.NEARBY_PLACES
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.SECONDARY_PICTURES_AMOUNT_LIMIT
 import com.oxymium.realestatemanager.database.agent.AgentRepository
@@ -20,6 +18,9 @@ import com.oxymium.realestatemanager.model.Step
 import com.oxymium.realestatemanager.model.databaseitems.Agent
 import com.oxymium.realestatemanager.model.databaseitems.Estate
 import com.oxymium.realestatemanager.model.databaseitems.Picture
+import com.oxymium.realestatemanager.model.mock.ESTATE_TYPES
+import com.oxymium.realestatemanager.model.mock.NEARBY_PLACES
+import com.oxymium.realestatemanager.model.mock.generateOneRandomPicture
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
@@ -103,9 +104,9 @@ class CreateViewModel(agentRepository: AgentRepository, private val estateReposi
         }
     }
 
-    val currentStep: LiveData<Int> get() = _currentStep
-    private val _currentStep = MutableLiveData<Int>()
-    fun updateCurrentStep(value: Int){
+    val currentStep: LiveData<Step> get() = _currentStep
+    private val _currentStep = MutableLiveData<Step>()
+    fun updateCurrentStep(value: Step){
         _currentStep.value = value
     }
 
@@ -407,21 +408,13 @@ class CreateViewModel(agentRepository: AgentRepository, private val estateReposi
     // -----
     // DEBUG
     // -----
-
-    // TODO replace with a more generic random method
     fun fillSecondaryPictures(){
         val randomAmountOfPictures = (1..SECONDARY_PICTURES_AMOUNT_LIMIT).random()
-        val secondaryPictures = mutableListOf<Picture>()
-        val comments = listOf("Room", "Kitchen", "Garden", "Room 2", "Room 3", "Room 4", "Bathroom", "Living Room")
-        for (picture in 1.. randomAmountOfPictures){
-            secondaryPictures.add(
-                Picture(
-                "",
-                comments.random()
-            )
-            )
+        val randomSecondaryPictures = mutableListOf<Picture>()
+        repeat(randomAmountOfPictures) {
+            randomSecondaryPictures.add(generateOneRandomPicture())
         }
-        updateSecondaryPictures(secondaryPictures)
+        updateSecondaryPictures(randomSecondaryPictures)
     }
     fun fillEstateFields(estate: Estate){
         with(estate){

@@ -10,9 +10,9 @@ import com.oxymium.realestatemanager.database.picture.PictureRepository
 import com.oxymium.realestatemanager.demoSet1WithAddressAndLatLng
 import com.oxymium.realestatemanager.demoSet2WithAddressAndLatLng
 import com.oxymium.realestatemanager.demoSet3WithAddressAndLatLng
-import com.oxymium.realestatemanager.generateRandomEstate
-import com.oxymium.realestatemanager.misc.RANDOM_PICTURES
 import com.oxymium.realestatemanager.model.databaseitems.Estate
+import com.oxymium.realestatemanager.model.mock.generateOneRandomEstate
+import com.oxymium.realestatemanager.model.mock.generateOneRandomPicture
 import kotlinx.coroutines.launch
 
 // ------------
@@ -43,7 +43,7 @@ class DevViewModel(private val estateRepository: EstateRepository, private val p
     // Generate any given number of mocked Estate
     fun onClickAddButton(number: Int) {
         for (i in 1..number) {
-            insertRandomEstate(generateRandomEstate())
+            insertRandomEstate(generateOneRandomEstate())
         }
     }
 
@@ -54,7 +54,7 @@ class DevViewModel(private val estateRepository: EstateRepository, private val p
             updateNotificationId(insertedId)
             val randomAmountOfPictures = (1..SECONDARY_PICTURES_AMOUNT_LIMIT).random()
             for (i in 1 .. randomAmountOfPictures){
-                val picture = RANDOM_PICTURES.random()
+                val picture = generateOneRandomPicture()
                 picture.estate_id = insertedId
                 pictureRepository.insert(picture)
             }
