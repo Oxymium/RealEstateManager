@@ -7,14 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentStepMainPictureBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
-import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class StepMainPictureFragment: Fragment() {
 
@@ -24,13 +22,7 @@ class StepMainPictureFragment: Fragment() {
     private lateinit var stepMainPictureBinding: FragmentStepMainPictureBinding
     private val binding get() = stepMainPictureBinding
 
-    private val createViewModel: CreateViewModel by activityViewModels {
-        CreateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository
-        )
-    }
+    private val createViewModel: CreateViewModel by activityViewModel<CreateViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +42,11 @@ class StepMainPictureFragment: Fragment() {
         stepMainPictureBinding.createViewModel = createViewModel
 
         // Observe Main Picture and load into ImageView with Glide library
-        createViewModel.estate.observe(viewLifecycleOwner) {
+        createViewModel.estateState.observe(viewLifecycleOwner) {
             it?.let {
                 Glide
                     .with(this@StepMainPictureFragment)
-                    .load(it.mainPicturePath)
+                    .load(it.estate?.mainPicturePath)
                     .error(R.color.space_cadet)
                     .placeholder(R.color.space_cadet)
                     .transition(DrawableTransitionOptions.withCrossFade(500))

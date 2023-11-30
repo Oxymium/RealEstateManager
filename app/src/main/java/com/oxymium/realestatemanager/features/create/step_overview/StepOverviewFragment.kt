@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentStepOverviewBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
-import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class StepOverviewFragment: Fragment() {
 
@@ -22,13 +20,7 @@ class StepOverviewFragment: Fragment() {
     private lateinit var stepOverviewBinding: FragmentStepOverviewBinding
     private val binding get() = stepOverviewBinding
 
-    private val createViewModel: CreateViewModel by activityViewModels {
-        CreateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository
-        )
-    }
+    private val createViewModel: CreateViewModel by activityViewModel<CreateViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

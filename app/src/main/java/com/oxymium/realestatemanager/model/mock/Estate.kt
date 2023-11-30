@@ -5,6 +5,7 @@ import com.oxymium.realestatemanager.PRE_INSERTED_AGENT_AMOUNT
 import com.oxymium.realestatemanager.model.ENERGIES
 import com.oxymium.realestatemanager.model.Label
 import com.oxymium.realestatemanager.model.databaseitems.Estate
+import com.oxymium.realestatemanager.model.toConcatenatedString
 import java.util.Calendar
 import kotlin.random.Random
 
@@ -15,6 +16,7 @@ fun generateOneRandomEstate(): Estate {
     val randomSoldDate = if (randomWasSold) (randomAddedDate + 1 ..NOW).random() else null // +1 for strictly superior (unlikely but possible scenario)
     val randomLoremIpsum = LoremIpsum((0..50).random()).toString()
     val randomEnergy = ENERGIES.random()
+    val randomNearbyPlaces = NEARBY_PLACES.shuffled().take((1..NEARBY_PLACES.size).random()).toConcatenatedString()
 
     return Estate(
         randomAddedDate,
@@ -37,7 +39,7 @@ fun generateOneRandomEstate(): Estate {
         Random.nextBoolean(),
         Random.nextBoolean(),
         Random.nextBoolean(),
-        "",
+        randomNearbyPlaces,
         randomLoremIpsum,
         provideRandomPicturePath(),
         (0..PRE_INSERTED_AGENT_AMOUNT).random().toLong() // Match number of agent inserted inside the DB

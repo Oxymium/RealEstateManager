@@ -16,7 +16,6 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -27,17 +26,14 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.ActivityNavHostBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.model.EstateField
+import com.oxymium.realestatemanager.model.EstateState
 import com.oxymium.realestatemanager.model.databaseitems.Picture
 import com.oxymium.realestatemanager.utils.Notifications
 import com.oxymium.realestatemanager.viewmodel.*
-import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
-import com.oxymium.realestatemanager.viewmodel.factories.DevViewModelFactory
-import com.oxymium.realestatemanager.viewmodel.factories.EstateViewModelFactory
-import com.oxymium.realestatemanager.viewmodel.factories.MapSelectedViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -68,31 +64,15 @@ class NavHostActivity : AppCompatActivity() {
 
 
     // ViewModels
-    private val estateViewModel: EstateViewModel by viewModels {
-        EstateViewModelFactory(
-            (application as EstatesApplication).agentRepository,
-            (application as EstatesApplication).estateRepository,
-            ((application as EstatesApplication).pictureRepository))
-    }
+    private val estateViewModel: EstateViewModel by viewModel()
 
-    private val createViewModel: CreateViewModel by viewModels {
-        CreateViewModelFactory(
-            (application as EstatesApplication).agentRepository,
-            (application as EstatesApplication).estateRepository,
-            ((application as EstatesApplication).pictureRepository))
-    }
+    private val createViewModel: CreateViewModel by viewModel()
 
-    private val devViewModel: DevViewModel by viewModels {
-        DevViewModelFactory(
-            (application as EstatesApplication).estateRepository,
-            ((application as EstatesApplication).pictureRepository))
-    }
+    private val devViewModel: DevViewModel by viewModel()
 
-    private val mapSelectedViewModel: MapSelectedViewModel by viewModels {
-        MapSelectedViewModelFactory((application as EstatesApplication).estateRepository)
-    }
+    private val mapSelectedViewModel: MapSelectedViewModel by viewModel()
 
-    private val toolsViewModel: ToolsViewModel by viewModels()
+    private val toolsViewModel: ToolsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -262,7 +242,7 @@ class NavHostActivity : AppCompatActivity() {
                 if (isTablet) navController.navigate(R.id.action_estatesDetailsFragment_to_createEstateFragment)
                 else navController.navigate(R.id.action_detailsFragment_to_createEstateFragment)
                 // Provide an instance of the Estate to Edit
-                createViewModel.updateEditedEstate(it)
+                createViewModel.updateEstateState(EstateState(it, true))
             }
         }
     }
@@ -276,7 +256,7 @@ class NavHostActivity : AppCompatActivity() {
                     if (isTablet) navController.navigate(R.id.action_createEstateFragment_to_estatesDetailsFragment)
                     else navController.navigate(R.id.action_createEstateFragment_to_estatesFragment)
                     // Nullify edited Estate back to null
-                    createViewModel.updateEditedEstate(null)
+                    createViewModel.updateEstateState(null)
                     estateViewModel.updateEstateToEdit(null)
                 }
             }
@@ -336,7 +316,7 @@ class NavHostActivity : AppCompatActivity() {
     }
     // Same as observeNotification() except for DevMode
     private fun observeTestingNotification(){
-        devViewModel.notificationId.observe(this){
+        devViewModel.notificationId.observe(this) {
             Notifications(this, NOTIFICATION_CHANNEL).createNotification(it)
         }
     }

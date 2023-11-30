@@ -8,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentCreateEstateBinding
 import com.oxymium.realestatemanager.features.create.step_address.StepAddressFragment
 import com.oxymium.realestatemanager.features.create.step_agent.StepAgentFragment
@@ -28,7 +26,7 @@ import com.oxymium.realestatemanager.features.create.steps.StepListener
 import com.oxymium.realestatemanager.features.create.steps.StepsAdapter
 import com.oxymium.realestatemanager.model.ReachedSide
 import com.oxymium.realestatemanager.model.mock.generateOneRandomEstate
-import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 // ---------------
 // StepOneFragment
@@ -45,13 +43,7 @@ class CreateEstateFragment: Fragment() {
     // RecyclerView
     private lateinit var stepsAdapter: StepsAdapter
 
-    private val createViewModel: CreateViewModel by activityViewModels {
-        CreateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository
-        )
-    }
+    private val createViewModel: CreateViewModel by activityViewModel<CreateViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,13 +118,11 @@ class CreateEstateFragment: Fragment() {
     }
 
     private fun observeEditedEstate(){
-        createViewModel.editedEstate.observe(viewLifecycleOwner){
+        createViewModel.estateState.observe(viewLifecycleOwner){
             // If there's an instance of an Estate to edit, pre-load all values into the fields
-            it?.let {
+            it?.isEdit.let {
                 // LOAD ESTATE
-                createViewModel.updateEstate(it)
                 // LOAD SECONDARY PICTURES
-                createViewModel.getPicturesForGivenEstateId(it.id)
             }
         }
     }
@@ -192,7 +182,7 @@ class CreateEstateFragment: Fragment() {
                 createViewModel.fillSecondaryPictures() }
         }
         val dialog: AlertDialog? = builder?.create()
-        dialog!!.show()
+        dialog?.show()
     }
 
     // Save prompt
@@ -205,11 +195,11 @@ class CreateEstateFragment: Fragment() {
             this?.setMessage(R.string.alert_create_message)
         }.apply {
             this?.setPositiveButton(R.string.alert_positive) { _, _ ->
-                when(createViewModel.editedEstate.value){
-                    // IF NO ESTATE TO EDIT = INSERT (CREATE NEW ONE)
-                    null -> createViewModel.insertEstateAndPicturesIntoDatabase()
-                    // OTHERWISE, EDIT EXISTING ESTATE
-                    else -> createViewModel.updateEstateIntoDatabase()
+                when (createViewModel.estateState.value?.isEdit) {
+                    // IsEdit = Update
+                    true -> createViewModel.updateEstateIntoDatabase()
+                    // Is not Edit = Insert
+                    else -> createViewModel.insertEstateAndPicturesIntoDatabase()
                 }
 
             }
@@ -217,7 +207,7 @@ class CreateEstateFragment: Fragment() {
             }
         }
         val dialog: AlertDialog? = builder?.create()
-        dialog!!.show()
+        dialog?.show()
     }
 
 }

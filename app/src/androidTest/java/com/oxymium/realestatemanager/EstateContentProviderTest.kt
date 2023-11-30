@@ -6,7 +6,7 @@ import android.content.ContentValues
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.oxymium.realestatemanager.database.AppRoomDatabase
+import com.oxymium.realestatemanager.database.AppDatabase
 import com.oxymium.realestatemanager.database.EstateContentProvider
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
@@ -24,7 +24,7 @@ class ItemContentProviderTest {
     fun setUp() {
         Room.inMemoryDatabaseBuilder(
             InstrumentationRegistry.getInstrumentation().targetContext,
-        AppRoomDatabase::class.java)
+        AppDatabase::class.java)
             .allowMainThreadQueries()
             .build()
         mContentResolver = InstrumentationRegistry.getInstrumentation().targetContext.contentResolver}

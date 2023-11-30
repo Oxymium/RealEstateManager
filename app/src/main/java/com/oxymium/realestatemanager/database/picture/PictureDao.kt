@@ -16,7 +16,7 @@ interface PictureDao {
 
     // CREATE
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(picture: Picture)
+    suspend fun insertPicture(picture: Picture)
 
     // DELETE
     @Query("DELETE FROM picture")

@@ -1,7 +1,7 @@
 package com.oxymium.realestatemanager.database
 
 import com.oxymium.realestatemanager.database.agent.AgentDao
-import com.oxymium.realestatemanager.database.agent.AgentRepository
+import com.oxymium.realestatemanager.database.agent.AgentRepositorytemp
 import com.oxymium.realestatemanager.model.databaseitems.Agent
 import io.mockk.every
 import io.mockk.mockk
@@ -24,7 +24,7 @@ class AgentRepositoryTest {
             Agent("firstName_1", "lastName_1", "06.00.00.00.00", "proton@mock.com", "agency_1"),
             Agent("firstName_2", "lastName_2", "06.00.00.00.00", "proton@mock.com", "agency_2")
         )
-        val agentRepository = AgentRepository(agentDao)
+        val agentRepository = AgentRepositorytemp(agentDao)
 
         every { agentDao.getAllAgents() } returns flowOf(expectedAgents)
 
@@ -40,7 +40,7 @@ class AgentRepositoryTest {
     fun getAgentByIdTest() = runTest {
         // Given
         val agentDao = mockk<AgentDao>()
-        val agentRepository = AgentRepository(agentDao)
+        val agentRepository = AgentRepositorytemp(agentDao)
         val expectedAgent = Agent(false,"firstName", "lastName", "06.00.00.00.00", "proton@mock.com", "agency_1", id = 10L)
         val givenAgentId = 10L
 

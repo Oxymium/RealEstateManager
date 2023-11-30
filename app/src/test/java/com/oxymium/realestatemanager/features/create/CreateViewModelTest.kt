@@ -1,9 +1,9 @@
 package com.oxymium.realestatemanager.features.create
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.oxymium.realestatemanager.database.agent.AgentRepository
+import com.oxymium.realestatemanager.database.agent.AgentRepositorytemp
 import com.oxymium.realestatemanager.database.estate.EstateRepository
-import com.oxymium.realestatemanager.database.picture.PictureRepository
+import com.oxymium.realestatemanager.database.picture.PictureRepositorytemp
 import com.oxymium.realestatemanager.model.databaseitems.Estate
 import io.mockk.mockk
 import junit.framework.TestCase
@@ -16,9 +16,9 @@ class CreateViewModelTest {
     val rule = InstantTaskExecutorRule()
 
     // Mock dependencies
-    private val agentRepository = mockk<AgentRepository>()
+    private val agentRepository = mockk<AgentRepositorytemp>()
     private val estateRepository = mockk<EstateRepository>()
-    private val pictureRepository = mockk<PictureRepository>()
+    private val pictureRepository = mockk<PictureRepositorytemp>()
 
     private val createViewModel = CreateViewModel(agentRepository, estateRepository, pictureRepository)
 

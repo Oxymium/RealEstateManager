@@ -50,26 +50,26 @@ class DevViewModel(private val estateRepository: EstateRepository, private val p
     // Insert Estate in DB, returns Estate ID
     private fun insertRandomEstate(estate: Estate) =
         viewModelScope.launch {
-            val insertedId: Long = estateRepository.insert(estate)
+            val insertedId: Long = estateRepository.insertEstate(estate)
             updateNotificationId(insertedId)
             val randomAmountOfPictures = (1..SECONDARY_PICTURES_AMOUNT_LIMIT).random()
             for (i in 1 .. randomAmountOfPictures){
                 val picture = generateOneRandomPicture()
                 picture.estate_id = insertedId
-                pictureRepository.insert(picture)
+                pictureRepository.insertPicture(picture)
             }
         }
 
     // Delete all
-    fun onClickDeleteAllButton(){ viewModelScope.launch { estateRepository.deleteAll() }}
+    fun onClickDeleteAllButton(){ viewModelScope.launch { estateRepository.deleteAllEstates() }}
 
     // Demo set
     fun onClickDemoSetButton() {
         viewModelScope.launch {
             // INSERT DEMO SETS IN DB
-            demoSet1WithAddressAndLatLng.forEach{ estateRepository.insert(it) }
-            demoSet2WithAddressAndLatLng.forEach{ estateRepository.insert(it) }
-            demoSet3WithAddressAndLatLng.forEach { estateRepository.insert(it) }
+            demoSet1WithAddressAndLatLng.forEach{ estateRepository.insertEstate(it) }
+            demoSet2WithAddressAndLatLng.forEach{ estateRepository.insertEstate(it) }
+            demoSet3WithAddressAndLatLng.forEach { estateRepository.insertEstate(it) }
         }
     }
 }

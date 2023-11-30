@@ -9,19 +9,17 @@ import android.view.ViewGroup
 import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.oxymium.realestatemanager.BuildConfig.MAPS_API_KEY
 import com.oxymium.realestatemanager.ENABLE_STATIC_MAP
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentDetailsBinding
 import com.oxymium.realestatemanager.utils.DateUtils
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
-import com.oxymium.realestatemanager.viewmodel.factories.EstateViewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.util.Calendar
 
 // ---------------
@@ -37,13 +35,7 @@ class DetailsFragment: Fragment() {
     private val binding get() = fragmentDetailsBinding
 
     // EstateViewModel
-    private val estateViewModel: EstateViewModel by activityViewModels {
-        EstateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository)
-    }
-
+    private val estateViewModel: EstateViewModel by activityViewModel<EstateViewModel>()
     // RecyclerView Adapter
     private lateinit var detailsPictureAdapter: DetailsPictureAdapter
 

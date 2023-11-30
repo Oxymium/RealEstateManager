@@ -1,7 +1,7 @@
 package com.oxymium.realestatemanager.database
 
 import com.oxymium.realestatemanager.database.picture.PictureDao
-import com.oxymium.realestatemanager.database.picture.PictureRepository
+import com.oxymium.realestatemanager.database.picture.PictureRepositorytemp
 import com.oxymium.realestatemanager.model.databaseitems.Picture
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -19,7 +19,7 @@ import org.junit.Test
 class PictureRepositoryTest {
 
     private val pictureDao = mockk<PictureDao>()
-    private val pictureRepository = PictureRepository(pictureDao)
+    private val pictureRepository = PictureRepositorytemp(pictureDao)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test

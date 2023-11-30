@@ -2,8 +2,8 @@ package com.oxymium.realestatemanager.utils.binders
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.oxymium.realestatemanager.model.EstateState
 import com.oxymium.realestatemanager.model.Step
-import com.oxymium.realestatemanager.model.databaseitems.Estate
 
 class NavigatorBinders {
 
@@ -12,10 +12,10 @@ class NavigatorBinders {
         // CREATE NAVIGATION - TITLE
         @JvmStatic
         @BindingAdapter("app:createHeaderTitle")
-        fun displayCreateHeaderTitle(textView: TextView, estate: Estate?){
-            textView.text = when (estate){
-                null -> "Create"
-                else -> "Edit Estate n°${estate.id}"
+        fun displayCreateHeaderTitle(textView: TextView, estateState: EstateState?){
+            textView.text = when (estateState?.isEdit){
+                true -> "Edit Estate n°${estateState.estate?.id}"
+                else -> "Create"
             }
         }
 

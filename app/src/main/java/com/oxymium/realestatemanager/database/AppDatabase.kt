@@ -20,8 +20,8 @@ import kotlinx.coroutines.launch
 // EstateRoomDatabase (ROOM)
 // -------------------------
 
-@Database(entities = [Estate::class, Picture::class, Agent::class], version = 4)
-abstract class AppRoomDatabase : RoomDatabase() {
+@Database(entities = [Estate::class, Picture::class, Agent::class], version = 1)
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun estateDao(): EstateDao
     abstract fun pictureDao(): PictureDao
@@ -29,49 +29,44 @@ abstract class AppRoomDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: AppRoomDatabase? = null
+        private var Instance: AppDatabase? = null
 
         fun getDatabase(
-            context: Context,
-            scope: CoroutineScope
-        ): AppRoomDatabase {
+            context: Context
+        ): AppDatabase {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
-            return INSTANCE ?: synchronized(this) {
+            return Instance ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    AppRoomDatabase::class.java,
+                    AppDatabase::class.java,
                     "estate_database"
                 )
-                    // Wipes and rebuilds instead of migrating if no Migration object.
-                    // Migration is not part of this codelab.
-                    .fallbackToDestructiveMigration()
-                    .addCallback(EstateDatabaseCallback(scope))
+                    .addCallback(EstateDatabaseCallback())
                     .build()
-                INSTANCE = instance
+                Instance = instance
                 // return instance
                 instance
             }
         }
 
         // --- INSTANCE ---
-        fun getInstance(context: Context): AppRoomDatabase? {
-            if (INSTANCE == null) {
-                synchronized(AppRoomDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(
+        fun getInstance(context: Context): AppDatabase? {
+            if (Instance == null) {
+                synchronized(AppDatabase::class.java) {
+                    if (Instance == null) {
+                        Instance = Room.databaseBuilder(
                             context.applicationContext,
-                            AppRoomDatabase::class.java, "MyDatabase.db"
+                            AppDatabase::class.java, "AppDatabse.db"
                         )
                             .build()
                     }
                 }
             }
-            return INSTANCE
+            return Instance
         }
 
         private class EstateDatabaseCallback(
-            private val scope: CoroutineScope
         ) : Callback() {
             /**
              * Override the onCreate method to populate the database.
@@ -80,8 +75,8 @@ abstract class AppRoomDatabase : RoomDatabase() {
                 super.onCreate(db)
                 // If you want to keep the data through app restarts,
                 // comment out the following line.
-                INSTANCE?.let { database ->
-                    scope.launch(Dispatchers.IO) {
+                Instance?.let { database ->
+                    CoroutineScope(Dispatchers.IO).launch {
                         populateDatabase(database.estateDao())
                         populateDatabase(database.agentDao())
                     }

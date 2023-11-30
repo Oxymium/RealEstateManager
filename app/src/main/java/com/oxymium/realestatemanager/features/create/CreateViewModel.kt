@@ -12,6 +12,7 @@ import com.oxymium.realestatemanager.database.agent.AgentRepository
 import com.oxymium.realestatemanager.database.estate.EstateRepository
 import com.oxymium.realestatemanager.database.picture.PictureRepository
 import com.oxymium.realestatemanager.model.EstateField
+import com.oxymium.realestatemanager.model.EstateState
 import com.oxymium.realestatemanager.model.Label
 import com.oxymium.realestatemanager.model.ReachedSide
 import com.oxymium.realestatemanager.model.Step
@@ -27,29 +28,20 @@ import java.util.Calendar
 // ---------------
 // CreateViewModel
 // ---------------
-class CreateViewModel(agentRepository: AgentRepository, private val estateRepository: EstateRepository, private val pictureRepository: PictureRepository): ViewModel() {
+class CreateViewModel(private val agentRepository: AgentRepository, private val estateRepository: EstateRepository, private val pictureRepository: PictureRepository): ViewModel() {
 
     // ------
     // ESTATE
     // ------
-
-    // CREATE
-    val estate: LiveData<Estate?> get() = _estate
-    private val _estate = MutableLiveData(Estate())
-    fun updateEstate(estate: Estate?){
-        _estate.value = estate
-    }
-
-    // EDIT
-    val editedEstate: LiveData<Estate?> get() = _editedEstate
-    private val _editedEstate = MutableLiveData<Estate?>(null)
-    fun updateEditedEstate(estate: Estate?){
-        _editedEstate.value = estate
+    val estateState: LiveData<EstateState?> get() = _estateState
+    private val _estateState = MutableLiveData(EstateState())
+    fun updateEstateState(estateState: EstateState?) {
+        _estateState.value = estateState
     }
 
     // UPDATE ESTATE FIELDS
-    fun updateEstateField(field: EstateField){
-        val currentEstate = _estate.value ?: Estate()
+    fun updateEstateField(field: EstateField) {
+        val currentEstate = estateState.value?.estate?.copy() ?: Estate()
         when (field){
             // STEP 0 - DATE
             is EstateField.Date -> currentEstate.addedDate = field.date
@@ -80,7 +72,7 @@ class CreateViewModel(agentRepository: AgentRepository, private val estateReposi
             is EstateField.Longitude -> currentEstate.longitude = field.longitude
             is EstateField.NearbyPlaces -> currentEstate.nearbyPlaces = field.nearbyPlaces
         }
-        updateEstate(currentEstate)
+        updateEstateState(EstateState(currentEstate))
     }
 
     // -------------------
@@ -249,26 +241,10 @@ class CreateViewModel(agentRepository: AgentRepository, private val estateReposi
         _enableReverseGeoCoding.value = boolean
     }
 
-    // SELECTED NEARBY PLACES
-    val selectedNearbyPlaces: LiveData<List<String?>> get() = _selectedNearbyPlaces
-    private val _selectedNearbyPlaces = MutableLiveData<List<String?>>(listOf())
-    fun updateSelectedNearbyPlaces(nearbyPlaces: List<String>){
-        val test = selectedNearbyPlaces.value?.toMutableList()
-        test?.addAll(nearbyPlaces)
-        _selectedNearbyPlaces.value = test?.toList()
-    }
-
-    fun updateSelectedNearbyPlaces(label: String?){
-        val nearbyPlaces = selectedNearbyPlaces.value?.toMutableList()
-        if (nearbyPlaces?.contains(label) == true) nearbyPlaces.remove(label)
-        else nearbyPlaces?.add(label)
-        _selectedNearbyPlaces.value = nearbyPlaces?.toList()
-    }
-
     // NEARBY PLACES
     val nearbyPlaces: LiveData<List<Label>> get() = _nearbyPlaces
     private val _nearbyPlaces = MutableLiveData(NEARBY_PLACES)
-    fun updateSelectedPlaces(nearbyPlaces: List<Label>){
+    fun updateNearbyPlaces(nearbyPlaces: List<Label>){
         _nearbyPlaces.value = nearbyPlaces
     }
 
@@ -322,13 +298,15 @@ class CreateViewModel(agentRepository: AgentRepository, private val estateReposi
             // Attach today's date to the Estate
             updateEstateField(EstateField.Date(Calendar.getInstance().timeInMillis))
             // Insert Estate into Room
-            val insertedId: Long? = estate.value?.let { estateRepository.insert(it) }
-            // Attach Estate ID to all pictures
-            secondaryPictures.value?.forEach { it.estate_id = insertedId }
-            // Insert every Picture into the Database
-            secondaryPictures.value?.forEach { pictureRepository.insert(it) }
-            // Update InsertedId to trigger a notification (insertion was complete)
-            if (insertedId != null) updateNotificationId(insertedId)
+            if (estateState.value?.isEdit == false) {
+                val insertedId: Long? = estateState.value?.estate?.let { estateRepository.insertEstate(it) }
+                // Attach Estate ID to all pictures
+                secondaryPictures.value?.forEach { it.estate_id = insertedId }
+                // Insert every Picture into the Database
+                secondaryPictures.value?.forEach { pictureRepository.insertPicture(it) }
+                // Update InsertedId to trigger a notification (insertion was complete)
+                if (insertedId != null) updateNotificationId(insertedId)
+            }
             // After all is done, clear the fields to reset the creation process
             clearEstateFields()
             // Notify Estate is done being created
@@ -339,7 +317,7 @@ class CreateViewModel(agentRepository: AgentRepository, private val estateReposi
     fun updateEstateIntoDatabase() =
         viewModelScope.launch {
             // Update Edited Estate into Room
-            editedEstate.value?.let{ estateRepository.updateEstate(it) }
+            if (estateState.value?.isEdit == true) estateState.value?.estate?.let { estateRepository.updateEstate(it) }
             // Clear fields
             clearEstateFields()
             // Notify Estate is done being created
@@ -357,39 +335,38 @@ class CreateViewModel(agentRepository: AgentRepository, private val estateReposi
 
     private fun verifyIfEstateCanBeSaved(){
         if (
-            estate.value?.agent_id == null ||
-            estate.value?.type == null ||
-            estate.value?.price == null ||
-            estate.value?.surface == null ||
-            estate.value?.rooms == null ||
-            estate.value?.bedrooms == null ||
-            estate.value?.bathrooms == null ||
-            estate.value?.energyScore == null ||
-            estate.value?.mainPicturePath == null ||
-            estate.value?.description == null ||
-            estate.value?.street == null ||
-            estate.value?.zipCode == null ||
-            estate.value?.location == null ||
-            estate.value?.latitude == null ||
-            estate.value?.longitude == null
+            estateState.value?.estate?.agent_id == null ||
+            estateState.value?.estate?.type == null ||
+            estateState.value?.estate?.price == null ||
+            estateState.value?.estate?.surface == null ||
+            estateState.value?.estate?.rooms == null ||
+            estateState.value?.estate?.bedrooms == null ||
+            estateState.value?.estate?.bathrooms == null ||
+            estateState.value?.estate?.energyScore == null ||
+            estateState.value?.estate?.mainPicturePath == null ||
+            estateState.value?.estate?.description == null ||
+            estateState.value?.estate?.street == null ||
+            estateState.value?.estate?.zipCode == null ||
+            estateState.value?.estate?.location == null ||
+            estateState.value?.estate?.latitude == null ||
+            estateState.value?.estate?.longitude == null
         ){
             val nullElements = mutableListOf<String?>()
-            when (estate.value?.agent_id) { null -> nullElements.add("Agent") }
-            when (estate.value?.type) { null -> nullElements.add("Type") }
-            when (estate.value?.price) { null -> nullElements.add("Price") }
-            when (estate.value?.surface) { null -> nullElements.add("Surface") }
-            when (estate.value?.rooms) { null -> nullElements.add("Rooms") }
-            when (estate.value?.bedrooms) { null -> nullElements.add("Bedrooms") }
-            when (estate.value?.bathrooms) { null -> nullElements.add("Bathrooms") }
-            when (estate.value?.energyScore) { null -> nullElements.add("Energy Score") }
-            when (estate.value?.mainPicturePath) { null -> nullElements.add("Main Picture") }
-            when (estate.value?.description) { null -> nullElements.add("Description") }
-            when (estate.value?.street) { null -> nullElements.add("Street") }
-            when (estate.value?.zipCode) { null -> nullElements.add("ZipCode") }
-            when (estate.value?.location) { null -> nullElements.add("Location") }
-            when (estate.value?.latitude) { null -> nullElements.add("Latitude") }
-            when (estate.value?.longitude) { null -> nullElements.add("Longitude") }
-
+            when (estateState.value?.estate?.agent_id) { null -> nullElements.add("Agent") }
+            when (estateState.value?.estate?.type) { null -> nullElements.add("Type") }
+            when (estateState.value?.estate?.price) { null -> nullElements.add("Price") }
+            when (estateState.value?.estate?.surface) { null -> nullElements.add("Surface") }
+            when (estateState.value?.estate?.rooms) { null -> nullElements.add("Rooms") }
+            when (estateState.value?.estate?.bedrooms) { null -> nullElements.add("Bedrooms") }
+            when (estateState.value?.estate?.bathrooms) { null -> nullElements.add("Bathrooms") }
+            when (estateState.value?.estate?.energyScore) { null -> nullElements.add("Energy Score") }
+            when (estateState.value?.estate?.mainPicturePath) { null -> nullElements.add("Main Picture") }
+            when (estateState.value?.estate?.description) { null -> nullElements.add("Description") }
+            when (estateState.value?.estate?.street) { null -> nullElements.add("Street") }
+            when (estateState.value?.estate?.zipCode) { null -> nullElements.add("ZipCode") }
+            when (estateState.value?.estate?.location) { null -> nullElements.add("Location") }
+            when (estateState.value?.estate?.latitude) { null -> nullElements.add("Latitude") }
+            when (estateState.value?.estate?.longitude) { null -> nullElements.add("Longitude") }
             updateMissingElementsAsString(nullElements.toString())
         }else{
             updateMissingElementsAsString(null)
@@ -402,7 +379,7 @@ class CreateViewModel(agentRepository: AgentRepository, private val estateReposi
 
     // Reset all values to null
     private fun clearEstateFields(){
-        updateEstate(null)
+        updateEstateState(EstateState(estate = null))
     }
 
     // -----

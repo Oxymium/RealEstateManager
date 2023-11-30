@@ -1,8 +1,6 @@
 package com.oxymium.realestatemanager
 
-import com.oxymium.realestatemanager.model.Label
 import com.oxymium.realestatemanager.model.Step
-import java.util.Random
 
 // Turn on/off the static map
 var ENABLE_STATIC_MAP = false
@@ -32,46 +30,4 @@ val TOOLS_STEPS = listOf(
     Step( 2, 2, "Loan Simulator", R.drawable.chart_pie),
     Step(3, 3, "Dev tools", R.drawable.dev)
 )
-
-fun List<Label>.generateRandomLabelString(): String {
-    val random = Random()
-    val labelStrings = mutableListOf<String>()
-    val maxLabels = size
-    val numLabels = random.nextInt(maxLabels) + 1
-
-    for (i in 1..numLabels) {
-        var labelString: String
-        do {
-            val labelIndex = random.nextInt(maxLabels)
-            labelString = get(labelIndex).label
-        } while (labelString in labelStrings)
-        labelStrings.add(labelString)
-    }
-
-    return labelStrings.joinToString(separator = " ")
-}
-
-// List of Labels -> to a single String
-fun List<Label>.toConcatenatedString(): String {
-    return joinToString(" ") { it.label }
-}
-
-// Single string -> to a List<Labels>
-fun String.toLabelList(): List<Label> {
-    return split(",").map { Label(label = it, isSelected = true, id = 0) }
-}
-
-// Single string -> to a List<Labels>
-fun String.toLabelListTest(): List<String> {
-    return split(" ")
-}
-
-//fun generateRandomNearbyPlacesString(): String?{
-//    //var test: String? = null
-//    //for (i in 1..NEARBY_PLACES.size){
-//        //test += NEARBY_PLACES.toConcatenatedString()
-//    //}
-//    //return test
-//}
-//
 

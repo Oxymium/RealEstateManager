@@ -4,36 +4,21 @@ import androidx.sqlite.db.SimpleSQLiteQuery
 import com.oxymium.realestatemanager.model.databaseitems.Estate
 import kotlinx.coroutines.flow.Flow
 
-// ----------------
-// EstateRepository
-// ----------------
+interface EstateRepository {
 
-class EstateRepository(private val estateDao: EstateDao) {
+    // GET
+    fun getAllEstates(): Flow<List<Estate>>
+    fun queryEstates(query: SimpleSQLiteQuery): Flow<List<Estate>>
 
-    // Get allEstates from the DB as Flow
-    fun getAllEstates(): Flow<List<Estate>> = estateDao.getLocalisedEstate()
+    fun getEstateWithId(estateId: Long): Flow<Estate>
 
-    fun getSearchedEstates(search: SimpleSQLiteQuery): Flow<List<Estate>> {
-        return estateDao.getSearchedEstates(search)
-    }
+    // INSERT
+    suspend fun insertEstate(estate: Estate): Long
 
-    fun getEstateWithId(id: Long): Flow<Estate> {
-        return estateDao.getEstateWithId(id)
-    }
+    // UPDATE
+    suspend fun updateEstate(estate: Estate)
 
-    // Insert Estate into DB
-    suspend fun insert(estate: Estate): Long {
-        return estateDao.insert(estate)
-    }
-
-    // Delete Estate from DB (mainly for testing purposes)
-    suspend fun deleteAll() {
-        estateDao.deleteAll()
-    }
-
-    // Update Estate in DB
-    suspend fun updateEstate(estate: Estate) {
-        estateDao.update(estate)
-    }
+    // Delete (mainly for testing purposes)
+    suspend fun deleteAllEstates()
 
 }

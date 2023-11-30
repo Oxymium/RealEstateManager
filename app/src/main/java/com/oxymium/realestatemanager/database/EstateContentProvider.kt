@@ -31,7 +31,7 @@ class EstateContentProvider: ContentProvider() {
     override fun query(uri: Uri, projection: Array<String>?, selection: String?, selectionArgs: Array<String>?, sortOrder: String?): Cursor? {
         if (context != null) {
             val userId = ContentUris.parseId(uri)
-            val db = AppRoomDatabase.getInstance(context!!)
+            val db = AppDatabase.getInstance(context!!)
             val cursor = db!!.estateDao().getEstateWithCursor(userId)
             cursor?.setNotificationUri(context!!.contentResolver, uri)
             return cursor
@@ -46,7 +46,7 @@ class EstateContentProvider: ContentProvider() {
     override fun insert(uri: Uri, contentValues: ContentValues?): Uri {
         if (context != null) {
             val estate = provideEstate(contentValues!!)
-            val db = AppRoomDatabase.getInstance(context!!)
+            val db = AppDatabase.getInstance(context!!)
             val id = provideEstate(contentValues)?.let { db!!.estateDao().insertTest(it) } ?: 0
             context!!.contentResolver.notifyChange(uri, null)
             return ContentUris.withAppendedId(uri, id)

@@ -14,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -26,14 +25,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.snackbar.Snackbar
 import com.google.maps.android.clustering.ClusterManager
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentMapBinding
 import com.oxymium.realestatemanager.model.ClusteredEstate
 import com.oxymium.realestatemanager.model.LatLngZoom
 import com.oxymium.realestatemanager.model.databaseitems.Estate
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
 import com.oxymium.realestatemanager.viewmodel.MapSelectedViewModel
-import com.oxymium.realestatemanager.viewmodel.factories.EstateViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 // -----------
 // MapFragment
@@ -50,7 +48,7 @@ class MapFragment : Fragment(), OnMapReadyCallback{
     private val fragmentTAG = javaClass.simpleName
 
     // ViewModel
-    private val mapSelectedViewModel: MapSelectedViewModel by activityViewModels()
+    private val mapSelectedViewModel: MapSelectedViewModel by activityViewModel<MapSelectedViewModel>()
 
     private lateinit var mapView: MapView
     private lateinit var googleMap: GoogleMap
@@ -71,13 +69,7 @@ class MapFragment : Fragment(), OnMapReadyCallback{
     private lateinit var previouslyKnownLocation: Location
 
     // EstateViewModel
-    private val estateViewModel: EstateViewModel by activityViewModels{
-        EstateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository
-        )
-    }
+    private val estateViewModel: EstateViewModel by activityViewModel<EstateViewModel>()
 
     // DataBinding
     private lateinit var fragmentMapBinding: FragmentMapBinding

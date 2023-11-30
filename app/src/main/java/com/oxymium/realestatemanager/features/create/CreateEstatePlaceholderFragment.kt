@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentCreateEstatePlaceholderBinding
-import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 
 // ---------------
@@ -27,13 +25,7 @@ class CreateEstatePlaceholderFragment: Fragment() {
     private lateinit var fragmentCreateEstatePlaceholderBinding: FragmentCreateEstatePlaceholderBinding
     private val binding get() = fragmentCreateEstatePlaceholderBinding
 
-    private val createEstateViewModel: CreateViewModel by activityViewModels {
-        CreateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository
-        )
-    }
+    private val createEstateViewModel: CreateViewModel by activityViewModel<CreateViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

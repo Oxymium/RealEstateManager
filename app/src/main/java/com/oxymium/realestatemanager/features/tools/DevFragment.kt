@@ -9,14 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentDevBinding
-import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.viewmodel.DevViewModel
-import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
-import com.oxymium.realestatemanager.viewmodel.factories.DevViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 // -----------
 // DevFragment
@@ -30,20 +26,8 @@ class DevFragment: Fragment() {
     private lateinit var fragmentDevBinding: FragmentDevBinding
     private val binding get() = fragmentDevBinding
 
-    // ViewModel
-    private val createViewModel: CreateViewModel by activityViewModels {
-        CreateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository)
-    }
-
     // DevViewModel
-    private val devViewModel: DevViewModel by activityViewModels {
-        DevViewModelFactory(
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository)
-    }
+    private val devViewModel: DevViewModel by activityViewModel<DevViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

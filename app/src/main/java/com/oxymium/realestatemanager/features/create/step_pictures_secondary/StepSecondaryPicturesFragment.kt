@@ -11,14 +11,12 @@ import android.widget.EditText
 import androidx.core.net.toUri
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.SECONDARY_PICTURES_AMOUNT_LIMIT
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentStepSecondaryPicturesBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.features.estates.CreatePictureAdapter
@@ -26,7 +24,7 @@ import com.oxymium.realestatemanager.features.estates.PictureCommentListener
 import com.oxymium.realestatemanager.features.estates.PictureDeleteListener
 import com.oxymium.realestatemanager.features.estates.PictureListener
 import com.oxymium.realestatemanager.model.databaseitems.Picture
-import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 // ----------------
 // StepFourFragment
@@ -42,13 +40,7 @@ class StepSecondaryPicturesFragment: Fragment() {
 
     private lateinit var pictureAdapter: CreatePictureAdapter
 
-    private val createViewModel: CreateViewModel by activityViewModels {
-        CreateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository
-        )
-    }
+    private val createViewModel: CreateViewModel by activityViewModel<CreateViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

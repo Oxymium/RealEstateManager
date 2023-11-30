@@ -22,7 +22,7 @@ interface EstateDao {
     fun getLocalisedEstate(): Flow<List<Estate>>
 
     @RawQuery(observedEntities = [Estate::class, Picture::class])
-    fun getSearchedEstates(search: SimpleSQLiteQuery): Flow<List<Estate>>
+    fun queryEstates(query: SimpleSQLiteQuery): Flow<List<Estate>>
 
     @Query("SELECT * FROM estate WHERE id = :estateId")
     fun getEstateWithId(estateId: Long): Flow<Estate>

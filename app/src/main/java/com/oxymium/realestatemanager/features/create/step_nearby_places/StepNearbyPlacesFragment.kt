@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentStepNearbyPlacesBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.features.create.LabelAdapter
@@ -18,8 +16,8 @@ import com.oxymium.realestatemanager.features.create.LabelListener
 import com.oxymium.realestatemanager.features.create.steps.RecyclerViewScrollListener
 import com.oxymium.realestatemanager.model.EstateField
 import com.oxymium.realestatemanager.model.ReachedSide
-import com.oxymium.realestatemanager.toConcatenatedString
-import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
+import com.oxymium.realestatemanager.model.toConcatenatedString
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class StepNearbyPlacesFragment: Fragment() {
 
@@ -32,13 +30,7 @@ class StepNearbyPlacesFragment: Fragment() {
     // RecyclerView
     private lateinit var labelAdapter: LabelAdapter
 
-    private val createViewModel: CreateViewModel by activityViewModels {
-        CreateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository
-        )
-    }
+    private val createViewModel: CreateViewModel by activityViewModel<CreateViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,31 +54,26 @@ class StepNearbyPlacesFragment: Fragment() {
         stepNearbyPlacesBinding.stepNearbyPlacesRecyclerView.layoutManager = gridLayoutManager
 
         // Submit Nearby Places list
-        createViewModel.nearbyPlaces.observe(viewLifecycleOwner){
-            labelAdapter.submitList(it)
+        createViewModel.nearbyPlaces.observe(viewLifecycleOwner) { labels ->
+            labelAdapter.submitList(labels)
+            createViewModel.updateEstateField(EstateField.NearbyPlaces(labels.filter { it.isSelected }.toConcatenatedString())) // update the field with a String of all labels that are selected
         }
 
         labelAdapter = LabelAdapter(
-            LabelListener {
+            LabelListener { selectedLabel ->
                 // Update selected Label
-                // TODO handle NearbyPlaces logic
-                //createViewModel.updateEstateField(EstateField.NearbyPlaces(it.label))
-                createViewModel.updateSelectedNearbyPlaces(it.label)
+                val updatedList = createViewModel.nearbyPlaces.value?.map { label ->
+                    if (label.label == selectedLabel.label) {
+                        // Toggle isSelected for the selected label
+                        label.copy(isSelected = !label.isSelected)
+                    } else {
+                        label
+                    }
+                }
+                // Update nearby places
+                createViewModel.updateNearbyPlaces(updatedList.orEmpty())
             }
         )
-
-        createViewModel.selectedNearbyPlaces.observe(viewLifecycleOwner){ selectedLabels ->
-            createViewModel.nearbyPlaces.value?.map { label ->
-                if (selectedLabels.contains(label.label)) {
-                    label.copy(isSelected = true)
-                } else {
-                    label.copy(isSelected = false)
-                }
-            }?.let { labels ->
-                createViewModel.updateSelectedPlaces(labels)
-                createViewModel.updateEstateField(EstateField.NearbyPlaces(labels.filter { it.isSelected }.toConcatenatedString() ) )
-            }
-        }
 
         // Adapter init
         stepNearbyPlacesBinding.stepNearbyPlacesRecyclerView.adapter = labelAdapter

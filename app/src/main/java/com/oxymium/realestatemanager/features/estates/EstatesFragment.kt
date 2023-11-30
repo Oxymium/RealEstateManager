@@ -12,14 +12,12 @@ import android.widget.AdapterView
 import android.widget.DatePicker
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentEstatesBinding
 import com.oxymium.realestatemanager.model.Search
 import com.oxymium.realestatemanager.model.mock.ENERGY_RATINGS
@@ -28,10 +26,10 @@ import com.oxymium.realestatemanager.utils.CustomSpinnerAdapter
 import com.oxymium.realestatemanager.utils.DateUtils
 import com.oxymium.realestatemanager.utils.OnSwipeTouchListener
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
-import com.oxymium.realestatemanager.viewmodel.factories.EstateViewModelFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 import java.util.Calendar
 
 
@@ -47,13 +45,7 @@ class EstatesFragment: Fragment() {
     private val binding get() = fragmentEstatesBinding
 
     // EstateViewModel
-    private val estateViewModel: EstateViewModel by activityViewModels {
-        EstateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository
-        )
-    }
+    private val estateViewModel: EstateViewModel by activityViewModel<EstateViewModel>()
 
     // RecyclerView Adapter
     private lateinit var estateAdapter: EstateAdapter

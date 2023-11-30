@@ -2,7 +2,7 @@ package com.oxymium.realestatemanager.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.oxymium.realestatemanager.database.estate.EstateRepository
-import com.oxymium.realestatemanager.database.picture.PictureRepository
+import com.oxymium.realestatemanager.database.picture.PictureRepositorytemp
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -16,7 +16,7 @@ class DevViewModelTest{
     val rule = InstantTaskExecutorRule()
 
     private val estateRepository = mockk<EstateRepository>()
-    private val pictureRepository = mockk<PictureRepository>()
+    private val pictureRepository = mockk<PictureRepositorytemp>()
     private val devViewModel = DevViewModel(estateRepository, pictureRepository)
 
     @Test

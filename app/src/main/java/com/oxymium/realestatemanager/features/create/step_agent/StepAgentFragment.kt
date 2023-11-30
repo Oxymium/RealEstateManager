@@ -7,16 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentStepAgentsBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.features.create.steps.RecyclerViewScrollListener
 import com.oxymium.realestatemanager.model.EstateField
 import com.oxymium.realestatemanager.model.ReachedSide
-import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class StepAgentFragment: Fragment() {
 
@@ -29,13 +27,7 @@ class StepAgentFragment: Fragment() {
     // RecyclerView Adapter
     private lateinit var agentAdapter: AgentAdapter
 
-    private val createViewModel: CreateViewModel by activityViewModels {
-        CreateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository
-        )
-    }
+    private val createViewModel: CreateViewModel by activityViewModel<CreateViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,16 +66,16 @@ class StepAgentFragment: Fragment() {
 
         createViewModel.agents.observe(viewLifecycleOwner){ agentAdapter.submitList(it) }
 
-        createViewModel.estate.observe(viewLifecycleOwner){
-                estate ->
+        createViewModel.estateState.observe(viewLifecycleOwner){
+                estateState ->
             // When an Agent's ID is available (ie. an agent was clicked)
-            if (estate?.agent_id == null) {
+            if (estateState?.estate?.agent_id == null) {
                 createViewModel.updateAgents(createViewModel.agents.value?.map{agent ->
                     agent.copy(isSelected = false)
                 })
             }else{
                 createViewModel.updateAgents(createViewModel.agents.value?.map{agent ->
-                    agent.copy(isSelected = agent.id == estate.agent_id)
+                    agent.copy(isSelected = agent.id == estateState.estate.agent_id)
                 })
             }
         }

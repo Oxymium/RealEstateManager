@@ -7,15 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentToolsBinding
 import com.oxymium.realestatemanager.features.create.steps.StepListener
 import com.oxymium.realestatemanager.features.create.steps.StepsAdapter
 import com.oxymium.realestatemanager.viewmodel.ToolsViewModel
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 // -------------
 // ToolsFragment
@@ -33,7 +32,7 @@ class ToolsFragment: Fragment() {
     private lateinit var stepsAdapter: StepsAdapter
 
     // ViewModel
-    private val toolsViewModel: ToolsViewModel by activityViewModels()
+    private val toolsViewModel: ToolsViewModel by activityViewModel<ToolsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

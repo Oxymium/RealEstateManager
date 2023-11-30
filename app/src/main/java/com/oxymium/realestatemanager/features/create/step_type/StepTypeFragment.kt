@@ -7,10 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.database.EstatesApplication
 import com.oxymium.realestatemanager.databinding.FragmentStepTypesBinding
 import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.features.create.LabelAdapter
@@ -18,7 +16,7 @@ import com.oxymium.realestatemanager.features.create.LabelListener
 import com.oxymium.realestatemanager.features.create.steps.RecyclerViewScrollListener
 import com.oxymium.realestatemanager.model.EstateField
 import com.oxymium.realestatemanager.model.ReachedSide
-import com.oxymium.realestatemanager.viewmodel.factories.CreateViewModelFactory
+import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class StepTypeFragment: Fragment() {
 
@@ -31,13 +29,7 @@ class StepTypeFragment: Fragment() {
     // RecyclerView Adapter
     private lateinit var labelAdapter: LabelAdapter
 
-    private val createViewModel: CreateViewModel by activityViewModels {
-        CreateViewModelFactory(
-            (activity?.application as EstatesApplication).agentRepository,
-            (activity?.application as EstatesApplication).estateRepository,
-            (activity?.application as EstatesApplication).pictureRepository
-        )
-    }
+    private val createViewModel: CreateViewModel by activityViewModel<CreateViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,14 +66,14 @@ class StepTypeFragment: Fragment() {
         // Types
         createViewModel.types.observe(viewLifecycleOwner) { labelAdapter.submitList(it) }
 
-        createViewModel.estate.observe(viewLifecycleOwner) { estate ->
-            if (estate?.type == null) {
+        createViewModel.estateState.observe(viewLifecycleOwner) { estateState ->
+            if (estateState?.estate?.type == null) {
                 createViewModel.updateTypes(createViewModel.types.value?.map { type ->
                     type.copy(isSelected = false)
                 })
             } else {
                 createViewModel.updateTypes(createViewModel.types.value?.map { type ->
-                    type.copy(isSelected = type.label == estate.type)
+                    type.copy(isSelected = type.label == estateState.estate.type)
                 })
             }
         }

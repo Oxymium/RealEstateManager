@@ -139,7 +139,7 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
             // CHECK REQUIRED BECAUSE EMPTY SimpleSQLiteQuery WILL CRASH THE APP
             if (simpleSQLiteQuery.sql.isNotEmpty()) {
                 estateRepository
-                    .getSearchedEstates(simpleSQLiteQuery)
+                    .queryEstates(simpleSQLiteQuery)
                     .collect { updateEstates(it) }
             }else {
                 println("EMPTY QUERY")

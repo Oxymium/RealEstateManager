@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            app:createHeaderTitle="@{createViewModel.editedEstate}"
+            app:createHeaderTitle="@{createViewModel.estateState}"
             android:text="Create"
             android:textColor="@color/white"
             android:textStyle="italic|bold"
