@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.oxymium.realestatemanager.databinding.ItemLabelBinding
-import com.oxymium.realestatemanager.model.Label
+import com.oxymium.realestatemanager.model.databaseitems.Label
 
 // ---------------
 // LabelViewHolder

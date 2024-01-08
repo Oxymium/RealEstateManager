@@ -14,7 +14,9 @@ import com.oxymium.realestatemanager.model.databaseitems.Agent
 import com.oxymium.realestatemanager.model.databaseitems.Estate
 import com.oxymium.realestatemanager.model.databaseitems.Picture
 import com.oxymium.realestatemanager.model.mock.provideRandomListPicture
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
@@ -36,10 +38,12 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
     }
 
     // Navigation 1 = from Maps, 2 = from Estates
-    val shouldStartDetailsFragment: MutableLiveData<Boolean?> get() = _shouldStartDetailsFragment
-    private val _shouldStartDetailsFragment = MutableLiveData<Boolean?>(null)
-    fun toggleShouldStartDetailsFragment(toggle: Boolean?){
-        _shouldStartDetailsFragment.value = toggle
+    private val _shouldNavigateToDetailsFragment = MutableSharedFlow<Boolean>(replay = 0)
+    val shouldNavigateToDetailsFragment: SharedFlow<Boolean> get() = _shouldNavigateToDetailsFragment
+    fun updateShouldNavigateToDetailsFragment(boolean: Boolean) {
+        viewModelScope.launch {
+            _shouldNavigateToDetailsFragment.emit(boolean)
+        }
     }
 
     // Get all estates from REPO
@@ -162,10 +166,13 @@ class EstateViewModel(private val agentRepository: AgentRepository, private val 
     // -----------------
 
     // EDIT
-    val estateToEdit: LiveData<Estate?> get() = _estateToEdit
-    private val _estateToEdit = MutableLiveData<Estate?>()
+    private val _estateToEdit = MutableSharedFlow<Estate?>(replay = 0)
+    val estateToEdit: SharedFlow<Estate?> get() = _estateToEdit
+
     fun updateEstateToEdit(estate: Estate?){
-        _estateToEdit.value = estate
+        viewModelScope.launch {
+            _estateToEdit.emit(estate)
+        }
     }
     fun onClickEditButton(){
         updateEstateToEdit(queriedEstate.value)

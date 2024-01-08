@@ -18,12 +18,12 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.SECONDARY_PICTURES_AMOUNT_LIMIT
 import com.oxymium.realestatemanager.databinding.FragmentStepSecondaryPicturesBinding
-import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.features.estates.CreatePictureAdapter
 import com.oxymium.realestatemanager.features.estates.PictureCommentListener
 import com.oxymium.realestatemanager.features.estates.PictureDeleteListener
 import com.oxymium.realestatemanager.features.estates.PictureListener
 import com.oxymium.realestatemanager.model.databaseitems.Picture
+import com.oxymium.realestatemanager.viewmodel.CreateViewModel
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 // ----------------

@@ -32,5 +32,6 @@ data class Agent(
     constructor(firstName: String, lastName: String, phoneNumber: String, mail: String, agency: String) : this(false, firstName, lastName, phoneNumber, mail, agency, null)
     // No-arg constructor
     constructor() : this(false, "", "","", "", "", 0)
+
 }
 

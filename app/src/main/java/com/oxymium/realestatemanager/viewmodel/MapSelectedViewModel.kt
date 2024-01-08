@@ -7,10 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.oxymium.realestatemanager.database.estate.EstateRepository
 import com.oxymium.realestatemanager.model.CategoryHelper
 import com.oxymium.realestatemanager.model.databaseitems.Estate
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-class MapSelectedViewModel(val estateRepository: EstateRepository): ViewModel() {
+class MapSelectedViewModel(private val estateRepository: EstateRepository): ViewModel() {
 
     val selectedEstate: LiveData<Estate?> get() = _selectedEstate
     private val _selectedEstate = MutableLiveData<Estate?>(null)
@@ -47,13 +49,16 @@ class MapSelectedViewModel(val estateRepository: EstateRepository): ViewModel() 
     }
 
     // Details button
-    val detailsButtonWasClicked: LiveData<Boolean?> get() = _detailsButtonWasClicked
-    private val _detailsButtonWasClicked = MutableLiveData<Boolean?>(null)
-    fun toggleUpdateButtonWasClicked(boolean: Boolean?){
-        _detailsButtonWasClicked.value = boolean
+    val isDetailsButtonClicked: SharedFlow<Boolean> get() = _isDetailsButtonClicked
+    private val _isDetailsButtonClicked = MutableSharedFlow<Boolean>(replay = 0)
+    private fun updateIsDetailsButtonClicked(boolean: Boolean) {
+        viewModelScope.launch {
+            _isDetailsButtonClicked.emit(boolean)
+        }
     }
+
     fun onClickDetailsButton(){
-        toggleUpdateButtonWasClicked(true)
+        updateIsDetailsButtonClicked(true)
     }
 
 }

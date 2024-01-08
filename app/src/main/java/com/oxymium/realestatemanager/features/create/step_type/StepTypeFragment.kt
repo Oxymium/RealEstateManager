@@ -7,15 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentStepTypesBinding
-import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.features.create.LabelAdapter
 import com.oxymium.realestatemanager.features.create.LabelListener
 import com.oxymium.realestatemanager.features.create.steps.RecyclerViewScrollListener
-import com.oxymium.realestatemanager.model.EstateField
 import com.oxymium.realestatemanager.model.ReachedSide
+import com.oxymium.realestatemanager.viewmodel.CreateViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class StepTypeFragment: Fragment() {
@@ -53,28 +56,21 @@ class StepTypeFragment: Fragment() {
         // TYPE
         // -----
 
-        val gridLayoutManager = GridLayoutManager(context, 1, GridLayoutManager.VERTICAL, false)
+        val gridLayoutManager = GridLayoutManager(context, 3, GridLayoutManager.VERTICAL, false)
         stepTypesBinding.stepTypeRecyclerView.layoutManager = gridLayoutManager
 
         labelAdapter = LabelAdapter(
-            LabelListener {
-                // UPDATE Estate with Type
-                createViewModel.updateEstateField(EstateField.Type(it.label))
+            LabelListener { type ->
+                createViewModel.updateSelectedType(type.label) // pass the title of the label
             }
         )
 
         // Types
-        createViewModel.types.observe(viewLifecycleOwner) { labelAdapter.submitList(it) }
-
-        createViewModel.estateState.observe(viewLifecycleOwner) { estateState ->
-            if (estateState?.estate?.type == null) {
-                createViewModel.updateTypes(createViewModel.types.value?.map { type ->
-                    type.copy(isSelected = false)
-                })
-            } else {
-                createViewModel.updateTypes(createViewModel.types.value?.map { type ->
-                    type.copy(isSelected = type.label == estateState.estate.type)
-                })
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                createViewModel.combinedTypes.collect {
+                    labelAdapter.submitList(it)
+                }
             }
         }
 

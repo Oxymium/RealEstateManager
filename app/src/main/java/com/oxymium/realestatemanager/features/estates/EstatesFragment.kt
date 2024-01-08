@@ -134,7 +134,7 @@ class EstatesFragment: Fragment() {
             estateViewModel.updateSelectedEstateId(it.id)
             // AGENT ID
             estateViewModel.updateAgentId(it.agent_id)
-            estateViewModel.toggleShouldStartDetailsFragment(true)
+            estateViewModel.updateShouldNavigateToDetailsFragment(true)
         })
 
         // Adapter init

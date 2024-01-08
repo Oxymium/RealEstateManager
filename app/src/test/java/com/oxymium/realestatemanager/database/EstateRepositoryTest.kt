@@ -2,7 +2,7 @@ package com.oxymium.realestatemanager.database
 
 import androidx.sqlite.db.SimpleSQLiteQuery
 import com.oxymium.realestatemanager.database.estate.EstateDao
-import com.oxymium.realestatemanager.database.estate.EstateRepository
+import com.oxymium.realestatemanager.database.estate.EstateRoomImpl
 import com.oxymium.realestatemanager.model.databaseitems.Estate
 import io.mockk.Runs
 import io.mockk.coEvery
@@ -20,7 +20,7 @@ import org.junit.Test
 class EstateRepositoryTest {
 
     private val estateDao = mockk<EstateDao>()
-    private val estateRepository = EstateRepository(estateDao)
+    private val estateRepository = EstateRoomImpl(estateDao)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
@@ -45,10 +45,10 @@ class EstateRepositoryTest {
         val query = SimpleSQLiteQuery("FROM ESTATE*")
         val expectedEstates = listOf(Estate(), Estate(), Estate())
 
-        every { estateDao.getSearchedEstates(query) } returns flowOf(expectedEstates)
+        every { estateDao.queryEstates(query) } returns flowOf(expectedEstates)
 
         // When
-        val getSearchedEstates = estateRepository.getSearchedEstates(query).first()
+        val getSearchedEstates = estateRepository.queryEstates(query).first()
 
         // Then
         assertEquals(expectedEstates, getSearchedEstates)
@@ -83,7 +83,7 @@ class EstateRepositoryTest {
         coEvery { estateDao.insert(estate) } returns expectedEstateId
 
         // When
-        estateRepository.insert(estate)
+        estateRepository.insertEstate(estate)
 
         // Then
         coVerify { estateDao.insert(estate) }
@@ -97,7 +97,7 @@ class EstateRepositoryTest {
         coEvery { estateDao.deleteAll() } just Runs
 
         // When
-        estateRepository.deleteAll()
+        estateRepository.deleteAllEstates()
 
         // Then
         coVerify { estateDao.deleteAll() }

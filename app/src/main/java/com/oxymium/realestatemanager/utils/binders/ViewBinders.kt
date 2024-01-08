@@ -118,6 +118,18 @@ class ViewBinders {
             })
         }
 
+        // ---------------
+        // MAP ICON HELPER
+        // ---------------
+        @JvmStatic
+        @BindingAdapter("app:categoryHelperText")
+        fun setCategoryHelperText(textView: TextView, categoryHelper: CategoryHelper?) {
+            textView.text = when (categoryHelper) {
+                null -> ""
+                else -> categoryHelper.categoryMessage
+            }
+        }
+
         // ------
         // LABELS
         // ------

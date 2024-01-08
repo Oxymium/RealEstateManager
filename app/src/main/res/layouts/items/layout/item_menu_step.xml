@@ -5,11 +5,11 @@
 
     <data>
         <variable
-            name="step"
-            type="com.oxymium.realestatemanager.model.Step"/>
+            name="menuStep"
+            type="com.oxymium.realestatemanager.model.MenuStep"/>
         <variable
-            name="stepListener"
-            type="com.oxymium.realestatemanager.features.create.steps.StepListener"/>
+            name="menuStepListener"
+            type="com.oxymium.realestatemanager.features.create.steps.MenuStepListener"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,8 +28,8 @@
             android:id="@+id/create_navigator_button_step"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{ () -> stepListener.onClickStep(step) }"
-            app:stepSelector="@{step}"
+            android:onClick="@{ () -> menuStepListener.onClickMenuStepListener(menuStep) }"
+            app:stepMenuSelector="@{ menuStep }"
             android:src="@drawable/miscellaneous"
             app:tint="@color/white"
             android:backgroundTint="@color/space_cadet"

@@ -6,8 +6,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.oxymium.realestatemanager.R
-import com.oxymium.realestatemanager.model.Label
-import com.oxymium.realestatemanager.model.Step
+import com.oxymium.realestatemanager.model.MenuStep
+import com.oxymium.realestatemanager.model.databaseitems.Label
 
 class LabelBinders {
 
@@ -24,13 +24,12 @@ class LabelBinders {
            })
         }
 
-        // TODO: MOVE TO STEP BINDERS
         // Step background color
         @JvmStatic
-        @BindingAdapter("app:stepSelector")
-        fun onStepSelected(imageView: ImageView, step: Step?) {
+        @BindingAdapter("app:stepMenuSelector")
+        fun onMenuStepSelected(imageView: ImageView, menuStep: MenuStep?) {
             val context = imageView.context
-            imageView.setColorFilter( when (step?.isSelected){
+            imageView.setColorFilter( when (menuStep?.isSelected){
                 true -> provideCompatColor(context, R.color.green_500)
                 else -> provideCompatColor(context, R.color.independence)
             })

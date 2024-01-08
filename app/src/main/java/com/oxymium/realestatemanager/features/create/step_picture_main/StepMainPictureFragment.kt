@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentStepMainPictureBinding
-import com.oxymium.realestatemanager.features.create.CreateViewModel
+import com.oxymium.realestatemanager.viewmodel.CreateViewModel
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class StepMainPictureFragment: Fragment() {
@@ -42,11 +42,11 @@ class StepMainPictureFragment: Fragment() {
         stepMainPictureBinding.createViewModel = createViewModel
 
         // Observe Main Picture and load into ImageView with Glide library
-        createViewModel.estateState.observe(viewLifecycleOwner) {
+        createViewModel.estate.observe(viewLifecycleOwner) {
             it?.let {
                 Glide
                     .with(this@StepMainPictureFragment)
-                    .load(it.estate?.mainPicturePath)
+                    .load(it.mainPicturePath)
                     .error(R.color.space_cadet)
                     .placeholder(R.color.space_cadet)
                     .transition(DrawableTransitionOptions.withCrossFade(500))

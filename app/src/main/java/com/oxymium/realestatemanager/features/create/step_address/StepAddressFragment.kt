@@ -11,9 +11,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentStepAddressBinding
-import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.features.map.GeoCoderUtils
 import com.oxymium.realestatemanager.model.EstateField
+import com.oxymium.realestatemanager.viewmodel.CreateViewModel
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 // ----------------
@@ -57,7 +57,7 @@ class StepAddressFragment: Fragment() {
                 override fun afterTextChanged(s: Editable) {
                     if (s.isNotEmpty()) {
                         createViewModel.updateEstateField(EstateField.Street(s.toString()))
-                        if (createViewModel.estateState.value?.estate?.street.isNullOrEmpty() || createViewModel.estateState.value?.estate?.location.isNullOrEmpty() || createViewModel.estateState.value?.estate?.zipCode.isNullOrEmpty()) createViewModel.updateEnableReverseGeoCoding(false)
+                        if (createViewModel.estate.value?.street.isNullOrEmpty() || createViewModel.estate.value?.location.isNullOrEmpty() || createViewModel.estate.value?.zipCode.isNullOrEmpty()) createViewModel.updateEnableReverseGeoCoding(false)
                         else createViewModel.updateEnableReverseGeoCoding(true)
                     }
                     else createViewModel.updateEstateField(EstateField.Street(null))
@@ -73,7 +73,7 @@ class StepAddressFragment: Fragment() {
                 override fun afterTextChanged(s: Editable) {
                     if (s.isNotEmpty()) {
                         createViewModel.updateEstateField(EstateField.ZipCode(s.toString()))
-                        if (createViewModel.estateState.value?.estate?.street.isNullOrEmpty() || createViewModel.estateState.value?.estate?.location.isNullOrEmpty() || createViewModel.estateState.value?.estate?.zipCode.isNullOrEmpty()) createViewModel.updateEnableReverseGeoCoding(false)
+                        if (createViewModel.estate.value?.street.isNullOrEmpty() || createViewModel.estate.value?.location.isNullOrEmpty() || createViewModel.estate.value?.zipCode.isNullOrEmpty()) createViewModel.updateEnableReverseGeoCoding(false)
                         else createViewModel.updateEnableReverseGeoCoding(true)
                     }
                     else createViewModel.updateEstateField(EstateField.ZipCode(null))
@@ -89,7 +89,7 @@ class StepAddressFragment: Fragment() {
                 override fun afterTextChanged(s: Editable) {
                     if (s.isNotEmpty()) {
                         createViewModel.updateEstateField(EstateField.Location(s.toString().replaceFirstChar { it.uppercaseChar() }))
-                        if (createViewModel.estateState.value?.estate?.street.isNullOrEmpty() || createViewModel.estateState.value?.estate?.location.isNullOrEmpty() || createViewModel.estateState.value?.estate?.zipCode.isNullOrEmpty()) createViewModel.updateEnableReverseGeoCoding(false)
+                        if (createViewModel.estate.value?.street.isNullOrEmpty() || createViewModel.estate.value?.location.isNullOrEmpty() || createViewModel.estate.value?.zipCode.isNullOrEmpty()) createViewModel.updateEnableReverseGeoCoding(false)
                         else createViewModel.updateEnableReverseGeoCoding(true)
                     }
                     else createViewModel.updateEstateField(EstateField.Location(null))
@@ -127,13 +127,13 @@ class StepAddressFragment: Fragment() {
         createViewModel.enableReverseGeoCoding.observe(viewLifecycleOwner){
             if (it == true){
                 // Performs the GeoCoding only if the LatLng values are null
-                if (createViewModel.estateState.value?.estate?.latitude == null || createViewModel.estateState.value?.estate?.longitude == null) {
+                if (createViewModel.estate.value?.latitude == null || createViewModel.estate.value?.longitude == null) {
                     // Fuse all elements of address
                     val fusedAddress = GeoCoderUtils()
                         .fuseAllElementsFromAddress(
-                            createViewModel.estateState.value?.estate?.street ?: "",
-                            createViewModel.estateState.value?.estate?.zipCode ?: "",
-                            createViewModel.estateState.value?.estate?.location ?: ""
+                            createViewModel.estate.value?.street ?: "",
+                            createViewModel.estate.value?.zipCode ?: "",
+                            createViewModel.estate.value?.location ?: ""
                         )
 
                     val latLngAnswer = GeoCoderUtils().getLatLngFromCompleteAddress(requireActivity(), fusedAddress)

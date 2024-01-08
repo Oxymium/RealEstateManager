@@ -3,7 +3,7 @@ package com.oxymium.realestatemanager.features.create
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.oxymium.realestatemanager.model.Label
+import com.oxymium.realestatemanager.model.databaseitems.Label
 
 // ------------
 // LabelAdapter

@@ -16,6 +16,9 @@ import com.oxymium.realestatemanager.BuildConfig.MAPS_API_KEY
 import com.oxymium.realestatemanager.ENABLE_STATIC_MAP
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentDetailsBinding
+import com.oxymium.realestatemanager.features.create.NearbyPlaceAdapter
+import com.oxymium.realestatemanager.features.create.NearbyPlaceListener
+import com.oxymium.realestatemanager.model.toNearbyPlaceList
 import com.oxymium.realestatemanager.utils.DateUtils
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -36,8 +39,10 @@ class DetailsFragment: Fragment() {
 
     // EstateViewModel
     private val estateViewModel: EstateViewModel by activityViewModel<EstateViewModel>()
+
     // RecyclerView Adapter
     private lateinit var detailsPictureAdapter: DetailsPictureAdapter
+    private lateinit var nearbyPlaceAdapter: NearbyPlaceAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,15 +88,24 @@ class DetailsFragment: Fragment() {
         }
 
         // RecyclerView setup
+        // -- Secondary Pictures
         val gridLayoutManager = GridLayoutManager(requireActivity(), 1, GridLayoutManager.HORIZONTAL, false)
         fragmentDetailsBinding.include4.fragmentDetailsEstatePicturesRecyclerView.layoutManager = gridLayoutManager
+        // -- Nearby Places
+        val gridLayoutManager2 = GridLayoutManager(requireActivity(), 3, GridLayoutManager.VERTICAL, false)
+        fragmentDetailsBinding.include5.detailsNearbyPlacesRecyclerView.layoutManager = gridLayoutManager2
 
         // Observe secondary pictures list
         estateViewModel.secondaryPicturesForCurrentEstate.observe(viewLifecycleOwner){
             detailsPictureAdapter.submitList(it)
         }
 
-        // Setup adapter
+        // Observe nearby place list
+        estateViewModel.queriedEstate.observe(viewLifecycleOwner) { estate ->
+            nearbyPlaceAdapter.submitList(estate.nearbyPlaces?.toNearbyPlaceList())
+        }
+
+        // Setup picture adapter
         detailsPictureAdapter = DetailsPictureAdapter(
             // onClick secondary picture
             PictureListener {
@@ -104,8 +118,16 @@ class DetailsFragment: Fragment() {
             }
         )
 
+        // Setup nearby places adapter
+        nearbyPlaceAdapter = NearbyPlaceAdapter(
+            NearbyPlaceListener{  } // no need pass anything here since we don't want to be able to click in Details mode
+        )
+
         // Adapter init
+        // -- Pictures
         fragmentDetailsBinding.include4.fragmentDetailsEstatePicturesRecyclerView.adapter = detailsPictureAdapter
+        // -- Nearby places
+        fragmentDetailsBinding.include5.detailsNearbyPlacesRecyclerView.adapter = nearbyPlaceAdapter
 
         // Load Main Picture in Details
         estateViewModel.queriedEstate.observe(viewLifecycleOwner) { queriedEstate ->

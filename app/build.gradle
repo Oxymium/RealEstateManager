@@ -119,6 +119,8 @@ dependencies {
     // Koin
     implementation ("io.insert-koin:koin-core:3.5.0")
     implementation ("io.insert-koin:koin-android:3.5.0")
+    implementation ("io.insert-koin:koin-android-test:3.5.0")
+    implementation ("io.insert-koin:koin-test:3.5.0")
 
     // RX
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -141,8 +143,8 @@ dependencies {
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
 
     // Mockk (unit test)
-    testImplementation "io.mockk:mockk-android:1.13.2"
-    testImplementation "io.mockk:mockk-agent:1.13.2"
+
+
 
 
 }

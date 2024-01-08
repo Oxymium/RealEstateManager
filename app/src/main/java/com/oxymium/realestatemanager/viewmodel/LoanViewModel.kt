@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.oxymium.realestatemanager.model.Loan
 
 // -------------
-// LaonViewModel
+// LoanViewModel
 // -------------
 
 class LoanViewModel: ViewModel() {

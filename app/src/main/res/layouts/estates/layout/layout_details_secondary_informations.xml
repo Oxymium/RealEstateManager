@@ -84,21 +84,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 />
 
-            <TextView
-                android:id="@+id/details_nearby_places"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/details_nearby_places_recyclerView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text='@{estateViewModel.queriedEstate.nearbyPlaces}'
-                android:textSize="@dimen/details_font_medium"
-                android:textColor="@color/white"
-                android:textAlignment="center"
-                android:hint="@string/hint_nearby_places"
-                android:textColorHint="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/details_nearby_places_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

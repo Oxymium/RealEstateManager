@@ -6,83 +6,169 @@
     <data>
         <variable
             name="createViewModel"
-            type="com.oxymium.realestatemanager.features.create.CreateViewModel"/>
+            type="com.oxymium.realestatemanager.viewmodel.CreateViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <ScrollView
-            android:id="@+id/step_agent_scroll_view"
+
+        <!-- TOP PART -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/step_nearby_places_top_part"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/space_cadet"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/step_holder_chevrons"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             >
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/step_nearby_places_add_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{ () -> createViewModel.onClickAddNearbyPlaceButton() }"
+                android:src="@drawable/nearby_places"
+                app:backgroundTint="@color/green_500"
+                app:layout_constraintTop_toTopOf="@id/step_nearby_place_holder"
+                app:layout_constraintBottom_toBottomOf="@id/step_nearby_place_holder"
+                app:layout_constraintStart_toEndOf="@id/step_nearby_place_holder"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:contentDescription="@string/icon_nearby_places" />
+
+            <!-- NEARBY PLACE INPUT -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@color/space_cadet"
+                android:id="@+id/step_nearby_place_holder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+                android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+                android:background="@drawable/circular_border"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/step_nearby_places_add_button"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 >
 
-                <!-- WRAPPER -->
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/step_nearby_place_part"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                    android:paddingVertical="@dimen/create_padding_vertical_margin"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     >
 
-                    <!-- AGENT -->
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/step_one_agent_part"
-                        android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/step_nearby_place"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/create_padding_horizontal_margin"
-                        android:paddingEnd="@dimen/create_padding_horizontal_margin"
-                        android:paddingTop="@dimen/create_padding_vertical_margin"
-                        app:layout_constraintStart_toStartOf="parent"
+                        android:background="@color/independence"
+                        app:startIconDrawable="@drawable/nearby_places"
+                        app:startIconTint="@color/white"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white"
+                        app:hintTextColor="@color/white"
+                        app:layout_constraintStart_toEndOf="@id/nearby_place_checker"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/nearby_place_checker"
+                        app:layout_constraintBottom_toBottomOf="@id/nearby_place_checker"
                         >
 
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/step_nearby_places_recyclerView"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/step_nearby_place_input"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:paddingStart="5dp"
-                            android:paddingEnd="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            tools:listitem="@layout/item_label"
-                            android:orientation="vertical"
-                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            />
+                            android:hint="@string/nearby_place_input_hint"
+                            android:background="@color/space_cadet"
+                            android:textColor="@color/green_500"
+                            android:textStyle="bold"
+                            android:textColorHint="@color/white"
+                            android:inputType="textAutoComplete"
+                            android:textCursorDrawable="@null"
+                            android:maxLines="1"
+                            android:maxLength="20" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <View
+                        android:id="@+id/nearby_place_checker"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        app:checkerColor="@{createViewModel.estate.nearbyPlaces}"
+                        android:background="@color/red_500"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!-- BOTTOM PART -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/step_nearby_places_bottom_part"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/step_nearby_places_top_part"
+            app:layout_constraintBottom_toBottomOf="parent"
+            >
+
+            <!-- AGENT -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/step_one_agent_part"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/create_padding_horizontal_margin"
+                android:paddingEnd="@dimen/create_padding_horizontal_margin"
+                android:paddingTop="@dimen/create_padding_vertical_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                >
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/step_nearby_places_recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    tools:listitem="@layout/item_label"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/step_holder_chevrons"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintStart_toEndOf="@id/step_agent_scroll_view"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/step_nearby_places_bottom_part"
+            app:layout_constraintBottom_toBottomOf="@id/step_nearby_places_bottom_part"
             >
 
             <ImageView

@@ -92,7 +92,8 @@
                     android:background="#7F000000"
                     card_view:layout_constraintStart_toStartOf="@id/item_picture_part_bottom"
                     card_view:layout_constraintEnd_toEndOf="@id/item_picture_part_bottom"
-                    card_view:layout_constraintBottom_toTopOf="@id/item_picture_button_edit"
+                    card_view:layout_constraintTop_toTopOf="@id/item_picture_part_bottom"
+                    card_view:layout_constraintBottom_toBottomOf="@id/item_picture_part_bottom"
                     card_view:layout_constraintHorizontal_bias="0.5"
                     />
 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app1="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="nearbyPlace"
+            type="com.oxymium.realestatemanager.model.NearbyPlace"/>
+        <variable
+            name="nearbyPlaceListener"
+            type="com.oxymium.realestatemanager.features.create.NearbyPlaceListener"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
+        android:layout_marginVertical="@dimen/create_padding_vertical_margin"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{ () -> nearbyPlaceListener.onClickNearbyPlace(nearbyPlace) }"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            app1:layout_constraintStart_toStartOf="parent"
+            app1:layout_constraintEnd_toEndOf="parent"
+            app1:layout_constraintTop_toTopOf="parent"
+            >
+
+            <TextView
+                android:id="@+id/item_agent_firstname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
+                android:paddingVertical="@dimen/create_padding_vertical_margin"
+                android:text="@{nearbyPlace.content}"
+                android:textColor="@color/white"
+                android:lines="1"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:hint="content"
+                android:textColorHint="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

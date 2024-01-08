@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.oxymium.realestatemanager.CREATE_MENU_STEPS
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentCreateEstateBinding
 import com.oxymium.realestatemanager.features.create.step_address.StepAddressFragment
@@ -21,11 +23,14 @@ import com.oxymium.realestatemanager.features.create.step_picture_main.StepMainP
 import com.oxymium.realestatemanager.features.create.step_pictures_secondary.StepSecondaryPicturesFragment
 import com.oxymium.realestatemanager.features.create.step_type.StepTypeFragment
 import com.oxymium.realestatemanager.features.create.step_values_energy_score.StepValuesEnergyScoreFragment
+import com.oxymium.realestatemanager.features.create.steps.MenuStepListener
+import com.oxymium.realestatemanager.features.create.steps.MenuStepsAdapter
 import com.oxymium.realestatemanager.features.create.steps.RecyclerViewScrollListener
-import com.oxymium.realestatemanager.features.create.steps.StepListener
-import com.oxymium.realestatemanager.features.create.steps.StepsAdapter
 import com.oxymium.realestatemanager.model.ReachedSide
 import com.oxymium.realestatemanager.model.mock.generateOneRandomEstate
+import com.oxymium.realestatemanager.model.toNearbyPlaceList
+import com.oxymium.realestatemanager.viewmodel.CreateViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 // ---------------
@@ -41,9 +46,9 @@ class CreateEstateFragment: Fragment() {
     private val binding get() = fragmentCreateEstateBinding
 
     // RecyclerView
-    private lateinit var stepsAdapter: StepsAdapter
+    private lateinit var menuStepsAdapter: MenuStepsAdapter
 
-    private val createViewModel: CreateViewModel by activityViewModel<CreateViewModel>()
+    private val createViewModel: CreateViewModel by activityViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,12 +69,9 @@ class CreateEstateFragment: Fragment() {
         fragmentCreateEstateBinding.navigatorHeader.createViewModel = createViewModel
         fragmentCreateEstateBinding.navigatorBar.createViewModel = createViewModel
 
-        createViewModel.currentStep.value?.copy(number = 0)
-            ?.let { createViewModel.updateCurrentStep(it) }
-
         observeEditedEstate()
-
-        observeCreationSteps()
+        observeSaveOrUpdateEstate()
+        observeCreationStep()
         observeMissingElements()
 
         // RecyclerView setup
@@ -77,30 +79,20 @@ class CreateEstateFragment: Fragment() {
         fragmentCreateEstateBinding.navigatorBar.navigatorCreateRecyclerView.layoutManager = linearLayoutManager
 
         // Observe list of steps
-        createViewModel.createSteps.observe(viewLifecycleOwner){
-            stepsAdapter.submitList(it?.toList())
-            println(it)
+        createViewModel.createMenuSteps.observe(viewLifecycleOwner) { createMenuSteps ->
+            menuStepsAdapter.submitList(createMenuSteps)
         }
 
         // Setup adapter
-        stepsAdapter = StepsAdapter(
+        menuStepsAdapter = MenuStepsAdapter(
             // StepListener
-            StepListener {
-                createViewModel.updateCurrentStep(it)
+            MenuStepListener {
+                createViewModel.updateCreateMenuStep(it)
             }
         )
 
-        createViewModel.currentStep.observe(viewLifecycleOwner) { step ->
-            step?.let {
-                createViewModel.updateCreateStep(createViewModel.createSteps.value?.map { createSteps ->
-                    createSteps.copy(isSelected = step.number == createSteps.number)
-                })
-            }
-
-        }
-
         // RecyclerView adapter init
-        fragmentCreateEstateBinding.navigatorBar.navigatorCreateRecyclerView.adapter = stepsAdapter
+        fragmentCreateEstateBinding.navigatorBar.navigatorCreateRecyclerView.adapter = menuStepsAdapter
 
         // RecyclerView side reached
         val onScrollToBeginning: () -> Unit = {
@@ -118,11 +110,12 @@ class CreateEstateFragment: Fragment() {
     }
 
     private fun observeEditedEstate(){
-        createViewModel.estateState.observe(viewLifecycleOwner){
-            // If there's an instance of an Estate to edit, pre-load all values into the fields
-            it?.isEdit.let {
-                // LOAD ESTATE
-                // LOAD SECONDARY PICTURES
+        createViewModel.estate.observe(viewLifecycleOwner) {
+            if (it?.id != null) {
+                // Load existing nearby places
+                it.nearbyPlaces?.toNearbyPlaceList()?.let { nearbyPlaces -> createViewModel.updateNearbyPlaces(nearbyPlaces) }
+                // Load existing secondary pictures
+                createViewModel.getPicturesForGivenEstateId(it.id)
             }
         }
     }
@@ -135,36 +128,50 @@ class CreateEstateFragment: Fragment() {
     }
 
     // Navigation handler for Creation process
-    private fun observeCreationSteps(){
-        val selectedStep = createViewModel.selectedStep.value
-        createViewModel.currentStep.observe(viewLifecycleOwner) {
-            if (it.number == selectedStep) return@observe
-            this.replaceFragment(when (it.number) {
-                null -> CreateEstatePlaceholderFragment()
-                0 -> StepOverviewFragment()
-                1 -> StepAgentFragment()
-                2 -> StepTypeFragment()
-                3 -> StepValuesEnergyScoreFragment()
-                4 -> StepMainPictureFragment()
-                5 -> StepSecondaryPicturesFragment()
-                6 -> StepMiscFragment()
-                7 -> StepAddressFragment()
-                8 -> StepNearbyPlacesFragment()
-                else -> CreateEstatePlaceholderFragment()
-            })
-            createViewModel.updateSelectedStep(it.number)
+    private fun observeCreationStep() {
+        lifecycleScope.launch {
+            createViewModel.createMenuStep.collect { createMenuStep ->
+                this@CreateEstateFragment.replaceFragment(
+                    when (createMenuStep.id) {
+                        CREATE_MENU_STEPS[0].id -> StepOverviewFragment()
+                        CREATE_MENU_STEPS[1].id -> StepAgentFragment()
+                        CREATE_MENU_STEPS[2].id -> StepTypeFragment()
+                        CREATE_MENU_STEPS[3].id -> StepValuesEnergyScoreFragment()
+                        CREATE_MENU_STEPS[4].id -> StepMainPictureFragment()
+                        CREATE_MENU_STEPS[5].id -> StepSecondaryPicturesFragment()
+                        CREATE_MENU_STEPS[6].id -> StepMiscFragment()
+                        CREATE_MENU_STEPS[7].id -> StepAddressFragment()
+                        CREATE_MENU_STEPS[8].id -> StepNearbyPlacesFragment()
+                        else -> StepOverviewFragment()
+                    }
+                )
+                // Update the currentMenuStep value to display the step in the Navigator
+                createViewModel.updateCurrentCreateMenuStep(createMenuStep)
+                // Update the list to flip the value of the selected item
+                createViewModel.updateCreateMenuSteps(
+                    createViewModel.createMenuSteps.value?.map {
+                        it.copy(isSelected = it.id == createMenuStep.id)
+                    }
+                )
+            }
         }
     }
 
-    // If elements are missing, display prompt with said missing elements, otherwise, display saving prompt
-    private fun observeMissingElements(){
-        createViewModel.missingElementsAsStrings.observe(viewLifecycleOwner){
-            if (it != null) {
-                displayMissingDialog()
-                // Reset
-                //createViewModel.missingElementsAsStrings.value = null
+    // If elements are missing, display prompt with said missing elements
+    private fun observeMissingElements() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            createViewModel.displayMissingElementsErrorDialog.collect { displayMissingErrorDialog ->
+                if (displayMissingErrorDialog) displayMissingDialog()
             }
-            else displaySaveDialog()
+        }
+    }
+
+    // Final alert to save
+    private fun observeSaveOrUpdateEstate()  {
+        viewLifecycleOwner.lifecycleScope.launch {
+            createViewModel.saveOrUpdateEstate.collect { saveOrUpdateEstate ->
+                if (saveOrUpdateEstate) displaySaveDialog()
+            }
         }
     }
 
@@ -178,8 +185,11 @@ class CreateEstateFragment: Fragment() {
             this?.setNeutralButton(R.string.alert_neutral) { _, _ -> }
             // Testing purposes
             this?.setNegativeButton(R.string.alert_random_debug) { _, _ ->
-                createViewModel.fillEstateFields(generateOneRandomEstate())
-                createViewModel.fillSecondaryPictures() }
+                val randomEstate = generateOneRandomEstate()
+                createViewModel.fillEstateFields(randomEstate)
+                randomEstate.nearbyPlaces?.toNearbyPlaceList()?.let { createViewModel.updateNearbyPlaces(it) }
+                createViewModel.fillSecondaryPictures()
+            }
         }
         val dialog: AlertDialog? = builder?.create()
         dialog?.show()
@@ -195,13 +205,7 @@ class CreateEstateFragment: Fragment() {
             this?.setMessage(R.string.alert_create_message)
         }.apply {
             this?.setPositiveButton(R.string.alert_positive) { _, _ ->
-                when (createViewModel.estateState.value?.isEdit) {
-                    // IsEdit = Update
-                    true -> createViewModel.updateEstateIntoDatabase()
-                    // Is not Edit = Insert
-                    else -> createViewModel.insertEstateAndPicturesIntoDatabase()
-                }
-
+                createViewModel.insertEstateAndPicturesIntoDatabase()
             }
             this?.setNegativeButton(R.string.alert_negative) { _, _ ->
             }

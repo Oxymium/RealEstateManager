@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app1="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="label"
-            type="com.oxymium.realestatemanager.model.Label"/>
+            type="com.oxymium.realestatemanager.model.databaseitems.Label"/>
         <variable
             name="labelListener"
             type="com.oxymium.realestatemanager.features.create.LabelListener"/>
@@ -12,7 +13,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:app="http://schemas.android.com/tools"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/create_padding_horizontal_margin"
         android:layout_marginVertical="@dimen/create_padding_vertical_margin"
@@ -20,7 +21,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:onClick="@{ () -> labelListener.onClickLabel(label) }"
                 app:labelSelector="@{label}"
                 android:background="@drawable/circular_border"
@@ -28,11 +29,14 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                app1:layout_constraintStart_toStartOf="parent"
+                app1:layout_constraintEnd_toEndOf="parent"
+                app1:layout_constraintTop_toTopOf="parent"
                 >
 
                 <TextView
                     android:id="@+id/item_agent_firstname"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="@dimen/create_padding_horizontal_margin"
                     android:paddingVertical="@dimen/create_padding_vertical_margin"

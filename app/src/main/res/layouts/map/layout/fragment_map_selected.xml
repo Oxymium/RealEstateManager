@@ -65,6 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:toggleViewVisibility="@{ mapSelectedViewModel.iconHelper }"
+                app:categoryHelperText="@{ mapSelectedViewModel.iconHelper }"
                 android:textColor="@color/black"
                 android:textSize="@dimen/details_font_very_big"
                 android:textAlignment="center"

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="createViewModel"
-            type="com.oxymium.realestatemanager.features.create.CreateViewModel"/>
+            type="com.oxymium.realestatemanager.viewmodel.CreateViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

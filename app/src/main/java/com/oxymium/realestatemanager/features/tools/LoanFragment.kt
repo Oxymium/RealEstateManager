@@ -20,7 +20,7 @@ import com.oxymium.realestatemanager.model.Loan
 import com.oxymium.realestatemanager.viewmodel.LoanViewModel
 
 // ------------
-// LaonFragment
+// LoanFragment
 // ------------
 
 class LoanFragment: Fragment() {
@@ -94,7 +94,6 @@ class LoanFragment: Fragment() {
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 }
             })
-
 
         return binding.root
 

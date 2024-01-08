@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentCreateEstatePlaceholderBinding
+import com.oxymium.realestatemanager.viewmodel.CreateViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 

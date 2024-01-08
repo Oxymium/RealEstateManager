@@ -25,13 +25,6 @@ class DevViewModel(private val estateRepository: EstateRepository, private val p
     // Testing
     // -------
 
-    val notificationId: LiveData<Long> get() = _notificationId
-    private val _notificationId = MutableLiveData<Long>()
-
-    private fun updateNotificationId(id: Long){
-        _notificationId.value = id
-    }
-
     val givenNumber: LiveData<Int?> get() = _givenNumber
     private val _givenNumber = MutableLiveData<Int?>()
 
@@ -51,7 +44,6 @@ class DevViewModel(private val estateRepository: EstateRepository, private val p
     private fun insertRandomEstate(estate: Estate) =
         viewModelScope.launch {
             val insertedId: Long = estateRepository.insertEstate(estate)
-            updateNotificationId(insertedId)
             val randomAmountOfPictures = (1..SECONDARY_PICTURES_AMOUNT_LIMIT).random()
             for (i in 1 .. randomAmountOfPictures){
                 val picture = generateOneRandomPicture()

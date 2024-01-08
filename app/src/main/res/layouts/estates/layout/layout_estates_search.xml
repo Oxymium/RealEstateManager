@@ -1492,10 +1492,10 @@
                             android:background="@color/space_cadet"
                             android:textColor="@color/white"
                             android:textColorHint="@color/white"
-                            android:inputType="number"
+                            android:inputType="text"
                             android:textCursorDrawable="@null"
                             android:maxLines="1"
-                            android:maxLength="8" />
+                            android:maxLength="25" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 

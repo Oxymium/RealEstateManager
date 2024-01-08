@@ -14,11 +14,15 @@
         tools:layout="@layout/fragment_create_estate"
         >
         <action
-            android:id="@+id/action_createEstateFragment_to_estatesFragment"
-            app:destination="@id/estatesFragment" />
+            android:id="@+id/action_navigateFromCreateToDetailsFragment"
+            app:destination="@id/estatesFragment"
+            app:popUpTo="@id/createEstateFragment"
+            app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_createEstateFragment_to_estatesDetailsFragment"
-            app:destination="@id/estatesDetailsFragment" />
+            android:id="@+id/action_navigateFromCreateToEstatesDetailsFragment"
+            app:destination="@id/estatesDetailsFragment"
+            app:popUpTo="@id/createEstateFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <!-- Tools Fragment -->
@@ -36,9 +40,6 @@
         android:label="EstatesFragment"
         tools:layout="@layout/fragment_estates"
         >
-        <action
-            android:id="@+id/action_estatesFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
     </fragment>
 
     <!-- EstatesDetails Fragment -->
@@ -48,12 +49,6 @@
         android:label="EstatesDetailsFragment"
         tools:layout="@layout/fragment_estates_details"
         >
-        <action
-            android:id="@+id/action_estatesDetailsFragment_to_createEstateFragment"
-            app:destination="@id/createEstateFragment" />
-        <action
-            android:id="@+id/action_estatesDetailsFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
     </fragment>
 
     <!-- MapSelected Fragment -->
@@ -63,9 +58,6 @@
         android:label="MapSelectedFragment"
         tools:layout="@layout/fragment_map_selected"
         >
-        <action
-            android:id="@+id/action_mapSelectedFragment_to_detailsFragment"
-            app:destination="@id/detailsFragment" />
     </fragment>
 
     <!-- Details Fragment -->
@@ -75,9 +67,6 @@
         android:label="DetailsFragment"
         tools:layout="@layout/fragment_details"
         >
-        <action
-            android:id="@+id/action_detailsFragment_to_createEstateFragment"
-            app:destination="@id/createEstateFragment" />
     </fragment>
 
 </navigation>

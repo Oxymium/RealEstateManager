@@ -285,6 +285,9 @@
     <string name="hint_high_speed_internet">High-speed internet</string>
     <string name="hint_disabled_accessibility">Disabled accessibility</string>
 
+    <!-- STEP SIX. -->
+    <string name="nearby_place_input_hint">Nearby place (any)</string>
+
     <!-- ALERT DIALOG. -->
     <string name="alert_create_title">Save into Database</string>
     <string name="alert_create_message">Do you want to save this Estate as is?</string>

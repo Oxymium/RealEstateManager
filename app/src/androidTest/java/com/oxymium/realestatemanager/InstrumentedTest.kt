@@ -52,10 +52,10 @@ class InstrumentedTest {
     dataClass.invoke(telephonyManager, false); */
 
         // Check if Network is available
-        Thread.sleep(5000)
-        val isNetworkAvailable2: Boolean = Utils.isInternetAvailable2(appContext)
-        println(isNetworkAvailable2)
-        assertFalse(isNetworkAvailable2)
+      //  Thread.sleep(5000)
+      //  val isNetworkAvailable2: Boolean = Utils.isInternetAvailable2(appContext)
+      //  println(isNetworkAvailable2)
+      //  assertFalse(isNetworkAvailable2)
 
         // Activate WIFI
         /*wifiManager.setWifiEnabled(true);

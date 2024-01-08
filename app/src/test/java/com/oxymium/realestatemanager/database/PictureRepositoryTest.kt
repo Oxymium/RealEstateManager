@@ -1,7 +1,7 @@
 package com.oxymium.realestatemanager.database
 
 import com.oxymium.realestatemanager.database.picture.PictureDao
-import com.oxymium.realestatemanager.database.picture.PictureRepositorytemp
+import com.oxymium.realestatemanager.database.picture.PictureRoomImpl
 import com.oxymium.realestatemanager.model.databaseitems.Picture
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -19,7 +19,7 @@ import org.junit.Test
 class PictureRepositoryTest {
 
     private val pictureDao = mockk<PictureDao>()
-    private val pictureRepository = PictureRepositorytemp(pictureDao)
+    private val pictureRepository = PictureRoomImpl(pictureDao)
 
     @OptIn(ExperimentalCoroutinesApi::class)
     @Test
@@ -50,13 +50,13 @@ class PictureRepositoryTest {
         // Given
         val picture = Picture("", "", 1L, 10L)
 
-        coEvery { pictureDao.insert(picture) } just runs
+        coEvery { pictureDao.insertPicture(picture) } just runs
 
         // When
-        pictureRepository.insert(picture)
+        pictureRepository.insertPicture(picture)
 
         // Then
-        coVerify { pictureDao.insert(picture) }
+        coVerify { pictureDao.insertPicture(picture) }
     }
 
 }

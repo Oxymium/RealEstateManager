@@ -7,13 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.oxymium.realestatemanager.R
+import com.oxymium.realestatemanager.TOOL_MENU_STEPS
 import com.oxymium.realestatemanager.databinding.FragmentToolsBinding
-import com.oxymium.realestatemanager.features.create.steps.StepListener
-import com.oxymium.realestatemanager.features.create.steps.StepsAdapter
+import com.oxymium.realestatemanager.features.create.steps.MenuStepListener
+import com.oxymium.realestatemanager.features.create.steps.MenuStepsAdapter
 import com.oxymium.realestatemanager.viewmodel.ToolsViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 // -------------
@@ -29,7 +32,7 @@ class ToolsFragment: Fragment() {
     private val binding get() = fragmentToolsBinding
 
     // RecyclerView
-    private lateinit var stepsAdapter: StepsAdapter
+    private lateinit var menuStepsAdapter: MenuStepsAdapter
 
     // ViewModel
     private val toolsViewModel: ToolsViewModel by activityViewModel<ToolsViewModel>()
@@ -52,38 +55,27 @@ class ToolsFragment: Fragment() {
         binding.toolsViewModel = toolsViewModel
         binding.navigatorBar.toolsViewModel = toolsViewModel
 
-        // toolsViewModel.updateCurrentTool()
-        observeToolsSteps()
+        observeToolStep()
 
         // RecyclerView setup
         val linearLayoutManager = LinearLayoutManager(requireActivity(), GridLayoutManager.HORIZONTAL, false)
         fragmentToolsBinding.navigatorBar.navigationToolsRecyclerView.layoutManager = linearLayoutManager
 
         // Observe list of steps
-        toolsViewModel.toolSteps.observe(viewLifecycleOwner){
-            stepsAdapter.submitList(it?.toList())
-            println(it)
+        toolsViewModel.toolMenuSteps.observe(viewLifecycleOwner) { toolMenuSteps ->
+            menuStepsAdapter.submitList(toolMenuSteps)
         }
 
         // Setup adapter
-        stepsAdapter = StepsAdapter(
+        menuStepsAdapter = MenuStepsAdapter(
             // StepListener
-            StepListener {
-                toolsViewModel.updateCurrentTool(it)
+            MenuStepListener {
+                toolsViewModel.updateToolMenuStep(it)
             }
         )
 
-        toolsViewModel.currentTool.observe(viewLifecycleOwner) { step ->
-            step?.let {
-                toolsViewModel.updateToolSteps(toolsViewModel.toolSteps.value?.map { toolSteps ->
-                    toolSteps.copy(isSelected = step.number == toolSteps.number)
-                })
-            }
-
-        }
-
         // RecyclerView adapter init
-        fragmentToolsBinding.navigatorBar.navigationToolsRecyclerView.adapter = stepsAdapter
+        fragmentToolsBinding.navigatorBar.navigationToolsRecyclerView.adapter = menuStepsAdapter
 
         return binding.root
     }
@@ -95,18 +87,29 @@ class ToolsFragment: Fragment() {
         transaction?.commit()
     }
 
-    // Navigation handler for Tools
-    private fun observeToolsSteps(){
-        toolsViewModel.currentTool.observe(viewLifecycleOwner) {
-            this.replaceFragment( when (it.number) {
-                null -> ToolsPlaceholderFragment()
-                0 -> ToolsPlaceholderFragment()
-                1 -> CurrencyFragment()
-                2 -> LoanFragment()
-                3 -> DevFragment()
-                else -> ToolsPlaceholderFragment()
-            })
-            toolsViewModel.updateSelectedTool(it.number)
+    // Navigation handler for Tool process
+    private fun observeToolStep() {
+        lifecycleScope.launch {
+            toolsViewModel.toolMenuStep.collect { toolMenuStep ->
+                this@ToolsFragment.replaceFragment(
+                    when (toolMenuStep.id) {
+                        TOOL_MENU_STEPS[0].id -> CurrencyFragment()
+                        TOOL_MENU_STEPS[1].id -> LoanFragment()
+                        TOOL_MENU_STEPS[2].id -> DevFragment()
+                        else -> CurrencyFragment()
+                    }
+                )
+                // Update the current step to display its title in the Navigation
+                toolsViewModel.updateCurrentToolMenuStep(toolMenuStep)
+
+                // Update the list to flip the value of the selected item
+                toolsViewModel.updateToolMenuSteps(
+                    toolsViewModel.toolMenuSteps.value?.map {
+                        it.copy(isSelected = it.id == toolMenuStep.id)
+                    }
+                )
+            }
         }
     }
+
 }

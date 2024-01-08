@@ -1,6 +1,6 @@
 package com.oxymium.realestatemanager
 
-import com.oxymium.realestatemanager.model.Step
+import com.oxymium.realestatemanager.model.MenuStep
 
 // Turn on/off the static map
 var ENABLE_STATIC_MAP = false
@@ -12,22 +12,59 @@ const val SECONDARY_PICTURES_AMOUNT_LIMIT = 9
 const val PRE_INSERTED_AGENT_AMOUNT = 14
 
 // Provide Steps for Create/Edit
-val CREATE_STEPS = listOf(
-    Step(0, 0, "Overview", R.drawable.overview),
-    Step(1, 1, "Agent", R.drawable.agent),
-    Step(2, 2, "Type", R.drawable.type),
-    Step(3, 3, "Values", R.drawable.values),
-    Step(4, 4, "Main picture", R.drawable.picture),
-    Step(5, 5, "Secondary pictures", R.drawable.picture_multiple),
-    Step(6, 6, "Miscellaneous", R.drawable.miscellaneous),
-    Step(7, 7, "Address", R.drawable.map),
-    Step(8, 8, "Nearby places", R.drawable.labels),
-    )
+val CREATE_MENU_STEPS = listOf(
+    MenuStep(
+        id = 0,
+        title = "Overview",
+        icon = R.drawable.overview),
+    MenuStep(
+        id = 1,
+        title = "Agent",
+        icon = R.drawable.agent),
+    MenuStep(
+        id = 2,
+        title = "Type",
+        icon = R.drawable.type),
+    MenuStep(
+        id = 3,
+        title = "Values",
+        icon = R.drawable.values),
+    MenuStep(
+        id = 4,
+        title = "Main picture",
+        icon = R.drawable.picture),
+    MenuStep(
+        id = 5,
+        title = "Secondary pictures",
+        icon = R.drawable.picture_multiple),
+    MenuStep(
+        id = 6,
+        title = "Miscellaneous",
+        icon = R.drawable.miscellaneous),
+    MenuStep(
+        id = 7,
+        title = "Address",
+        icon = R.drawable.map),
+    MenuStep(
+        id = 8,
+        title = "Nearby places",
+        icon = R.drawable.nearby_places),
+)
 
 // Provide Steps for Tools
-val TOOLS_STEPS = listOf(
-    Step(1, 1, "Currency Converter", R.drawable.currency),
-    Step( 2, 2, "Loan Simulator", R.drawable.chart_pie),
-    Step(3, 3, "Dev tools", R.drawable.dev)
+val TOOL_MENU_STEPS = listOf(
+    MenuStep(
+        id = 0,
+        title = "Currency Converter",
+        icon = R.drawable.currency),
+    MenuStep(
+        id = 1,
+        title = "Loan Simulation",
+        icon = R.drawable.chart_pie),
+    MenuStep(
+        id = 2,
+        title = "Dev tools",
+        icon = R.drawable.dev),
 )
+
 

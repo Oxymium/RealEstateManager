@@ -16,7 +16,7 @@ data class Loan(
     fun monthlyPayment(): Float {
         val totalMonths = duration * 12
         val monthlyInterestRate = interestRate / (12 * 100)
-        return (borrowedAmount * (monthlyInterestRate * (1 + monthlyInterestRate).pow(totalMonths))) / ((1 + monthlyInterestRate).pow(totalMonths) - 1)
+        return ((borrowedAmount - deposit) * (monthlyInterestRate * (1 + monthlyInterestRate).pow(totalMonths))) / ((1 + monthlyInterestRate).pow(totalMonths) - 1)
     }
 
 }

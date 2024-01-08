@@ -7,7 +7,7 @@ import com.oxymium.realestatemanager.database.estate.EstateRepository
 import com.oxymium.realestatemanager.database.estate.EstateRoomImpl
 import com.oxymium.realestatemanager.database.picture.PictureRepository
 import com.oxymium.realestatemanager.database.picture.PictureRoomImpl
-import com.oxymium.realestatemanager.features.create.CreateViewModel
+import com.oxymium.realestatemanager.viewmodel.CreateViewModel
 import com.oxymium.realestatemanager.viewmodel.DevViewModel
 import com.oxymium.realestatemanager.viewmodel.EstateViewModel
 import com.oxymium.realestatemanager.viewmodel.MapSelectedViewModel

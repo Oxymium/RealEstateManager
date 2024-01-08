@@ -21,18 +21,18 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.ActivityNavHostBinding
-import com.oxymium.realestatemanager.features.create.CreateViewModel
 import com.oxymium.realestatemanager.model.EstateField
-import com.oxymium.realestatemanager.model.EstateState
 import com.oxymium.realestatemanager.model.databaseitems.Picture
 import com.oxymium.realestatemanager.utils.Notifications
 import com.oxymium.realestatemanager.viewmodel.*
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.IOException
@@ -62,7 +62,6 @@ class NavHostActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var bottomNavigationView: BottomNavigationView
 
-
     // ViewModels
     private val estateViewModel: EstateViewModel by viewModel()
 
@@ -84,14 +83,13 @@ class NavHostActivity : AppCompatActivity() {
 
         // Notifications
         createNotificationChannel()
-        observeTestingNotification()
         observeNotification()
 
         // Navigation
         initNavigationUI()
-        observeNavigateToDetailsFragment()
-        observeWhenEstateIsDoneBeingCreatedOrEdited()
-        observeWhenDetailsButtonIsPressed()
+        observeShouldNavigateToDetailsFragment()
+        observeShouldNavigateToEstatesFragment()
+        observeWhenDetailsButtonIsClicked()
 
         observeEditedEstate()
 
@@ -200,7 +198,7 @@ class NavHostActivity : AppCompatActivity() {
             val imageUri: Uri? = it.data?.data
             val contentResolver = applicationContext.contentResolver
             val takeFlags: Int = Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-            contentResolver.takePersistableUriPermission(imageUri!!, takeFlags)
+            imageUri?.let { contentResolver.takePersistableUriPermission(imageUri, takeFlags) }
             when(createViewModel.pictureActivityType.value) {
                 1 -> createViewModel.updateEstateField(EstateField.MainPicturePath(imageUri.toString()))
                 2 -> createViewModel.addPictureToSecondaryPictures(
@@ -227,36 +225,38 @@ class NavHostActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeNavigateToDetailsFragment() {
-        estateViewModel.shouldStartDetailsFragment.observe(this) {
-            it?.let{
-                if (it && !isTablet) navController.navigate(R.id.action_estatesFragment_to_detailsFragment)
+    private fun observeShouldNavigateToDetailsFragment() {
+        lifecycleScope.launch {
+            estateViewModel.shouldNavigateToDetailsFragment.collect{ startDetailsFragment ->
+                if (startDetailsFragment && !isTablet) {
+                    navController.navigate(R.id.detailsFragment)
+                }
             }
         }
     }
 
     // Trigger navigation if there's an Estate to edit
     private fun observeEditedEstate() {
-        estateViewModel.estateToEdit.observe(this){
-            it?.let {
-                if (isTablet) navController.navigate(R.id.action_estatesDetailsFragment_to_createEstateFragment)
-                else navController.navigate(R.id.action_detailsFragment_to_createEstateFragment)
-                // Provide an instance of the Estate to Edit
-                createViewModel.updateEstateState(EstateState(it, true))
+        lifecycleScope.launch {
+            estateViewModel.estateToEdit.collect { estateToEdit ->
+                estateToEdit?.let {
+                    navController.navigate(R.id.createEstateFragment)
+                    // Provide an instance of the Estate to Edit
+                    createViewModel.updateEstate(it)
+                }
             }
         }
     }
 
     // Trigger navigation when Estate is done being Edited/Created
-    private fun observeWhenEstateIsDoneBeingCreatedOrEdited() {
-        createViewModel.isEstateDoneBeingCreatedOrEdited.observe(this){
-            it?.let{
-                if (it) {
-                    // TODO PUT BACK NAVIGATION
-                    if (isTablet) navController.navigate(R.id.action_createEstateFragment_to_estatesDetailsFragment)
-                    else navController.navigate(R.id.action_createEstateFragment_to_estatesFragment)
+    private fun observeShouldNavigateToEstatesFragment() {
+        lifecycleScope.launch {
+            createViewModel.shouldNavigateToEstatesFragment.collect { navigateToDetailsFragment ->
+                if (navigateToDetailsFragment) {
+                    if (isTablet) navController.navigate(R.id.action_navigateFromCreateToEstatesDetailsFragment)
+                    else navController.navigate(R.id.action_navigateFromCreateToDetailsFragment)
                     // Nullify edited Estate back to null
-                    createViewModel.updateEstateState(null)
+                    createViewModel.updateEstate(null)
                     estateViewModel.updateEstateToEdit(null)
                 }
             }
@@ -264,20 +264,21 @@ class NavHostActivity : AppCompatActivity() {
     }
 
     // Trigger navigation from Map to Details
-    private fun observeWhenDetailsButtonIsPressed(){
-        mapSelectedViewModel.detailsButtonWasClicked.observe(this){
-            it?.let {
-                // Put value back to false to reset
-                mapSelectedViewModel.toggleUpdateButtonWasClicked(null)
-                // Navigate to DetailsFragment
-                navController.navigate(R.id.action_mapSelectedFragment_to_detailsFragment)
+    private fun observeWhenDetailsButtonIsClicked() {
+        lifecycleScope.launch {
+            mapSelectedViewModel.isDetailsButtonClicked.collect { isEditButtonClicked ->
+                if (isEditButtonClicked) navController.navigate(R.id.detailsFragment)
                 // Provide ID to selected Estate from Map
-                estateViewModel.updateSelectedEstateId(mapSelectedViewModel.selectedEstate.value?.id ?: 0L)
+                estateViewModel.updateSelectedEstateId(
+                    mapSelectedViewModel.selectedEstate.value?.id ?: 0L
+                )
+
             }
         }
     }
 
     private fun displayPictureDialogChoice(arrayList: Int) {
+        println(">>>> CALLED")
         // Alert Dialog
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle("Pictures from:")
@@ -290,6 +291,7 @@ class NavHostActivity : AppCompatActivity() {
         { dialog, _ ->
             when (clickChoice) {
                 0 -> {
+                    println(">>>>> CAMERA CALLED")
                     startCameraApp()
                     dialog.cancel()
                 }
@@ -314,10 +316,5 @@ class NavHostActivity : AppCompatActivity() {
             Notifications(this, NOTIFICATION_CHANNEL).createNotification(it)
         }
     }
-    // Same as observeNotification() except for DevMode
-    private fun observeTestingNotification(){
-        devViewModel.notificationId.observe(this) {
-            Notifications(this, NOTIFICATION_CHANNEL).createNotification(it)
-        }
-    }
+
 }

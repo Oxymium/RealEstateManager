@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.oxymium.realestatemanager.R
 import com.oxymium.realestatemanager.databinding.FragmentStepOverviewBinding
-import com.oxymium.realestatemanager.features.create.CreateViewModel
+import com.oxymium.realestatemanager.viewmodel.CreateViewModel
 import org.koin.androidx.viewmodel.ext.android.activityViewModel
 
 class StepOverviewFragment: Fragment() {

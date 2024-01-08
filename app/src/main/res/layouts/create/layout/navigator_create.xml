@@ -5,7 +5,7 @@
     <data>
         <variable
             name="createViewModel"
-            type="com.oxymium.realestatemanager.features.create.CreateViewModel"/>
+            type="com.oxymium.realestatemanager.viewmodel.CreateViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +46,7 @@
                 android:id="@+id/navigator_create_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_step"
+                tools:listitem="@layout/item_menu_step"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_centerVertical="true"
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
-            app:navigatorMenuTitle="@{createViewModel.currentStep}"
+            app:createNavigationMenuStepTitle="@{createViewModel.currentCreateMenuStep}"
             android:textColor="@color/isabelline"
             android:textStyle="italic|bold"
             android:textAlignment="center"
