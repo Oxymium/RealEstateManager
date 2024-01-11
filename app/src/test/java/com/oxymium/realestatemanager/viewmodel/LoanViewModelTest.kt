@@ -15,46 +15,45 @@ class LoanViewModelTest {
     @Test
     fun updateBorrowedAmountTest() {
         // GIVEN
-        val loan = loanViewModel.loan.value
-        val borrowedAmount = 150000f
+        val givenBorrowedAmount = 150000f
         // WHEN
-        loanViewModel.updateBorrowedAmount(borrowedAmount)
+        loanViewModel.updateBorrowedAmount(givenBorrowedAmount)
+        val updatedBorrowedAmount = loanViewModel.loan.value
         // THEN
-        assertEquals(borrowedAmount, loan?.borrowedAmount)
+        assertEquals(givenBorrowedAmount, updatedBorrowedAmount?.borrowedAmount)
     }
 
     @Test
     fun updateDepositTest() {
         // GIVEN
-        val loan = loanViewModel.loan.value
-        val deposit = 50000f
+        val givenDeposit = 80000f
         // WHEN
-        loanViewModel.updateDeposit(deposit)
+        loanViewModel.updateDeposit(givenDeposit)
+        val updatedGivenDeposit = loanViewModel.loan.value
         // THEN
-        assertEquals(deposit, loan?.deposit)
-
+        assertEquals(givenDeposit, updatedGivenDeposit?.deposit)
     }
 
     @Test
     fun updateDurationTest() {
         // GIVEN
-        val loan = loanViewModel.loan.value
-        val duration = 10
+        val givenDuration = 25
         // WHEN
-        loanViewModel.updateDuration(duration)
+        loanViewModel.updateDuration(givenDuration)
+        val updatedGivenDuration = loanViewModel.loan.value
         // THEN
-        assertEquals(duration, loan?.duration)
+        assertEquals(givenDuration, updatedGivenDuration?.duration)
     }
 
     @Test
     fun updateInterestRateTest() {
         // GIVEN
-        val loan = loanViewModel.loan.value
-        val interestRate = 5f
+        val givenInterestRate = 3.27f
         // WHEN
-        loanViewModel.updateInterestRate(5f)
+        loanViewModel.updateInterestRate(givenInterestRate)
+        val updatedGivenInterestRate = loanViewModel.loan.value
         // THEN
-        assertEquals(interestRate, loan?.interestRate)
+        assertEquals(givenInterestRate, updatedGivenInterestRate?.interestRate)
     }
 
 }

@@ -143,8 +143,6 @@ dependencies {
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
 
     // Mockk (unit test)
-
-
-
+    testImplementation 'io.mockk:mockk:1.13.9'
 
 }

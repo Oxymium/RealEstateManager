@@ -59,7 +59,6 @@ class MapSelectedViewModelTest {
         // GIVEN
         val givenEstateId = 10L
         coEvery { mapSelectedViewModel.selectedEstate.value } returns generateOneRandomEstate().copy(id = givenEstateId)
-        coEvery {  }
         // WHEN
         mapSelectedViewModel.getSelectedEstate(givenEstateId)
         val updatedSelectedEstate = mapSelectedViewModel.selectedEstate.value

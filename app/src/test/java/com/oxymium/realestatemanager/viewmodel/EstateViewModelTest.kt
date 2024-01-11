@@ -9,7 +9,6 @@ import com.oxymium.realestatemanager.model.databaseitems.Estate
 import com.oxymium.realestatemanager.model.mock.generateOneRandomEstate
 import com.oxymium.realestatemanager.model.mock.generateRandomAgent
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -228,7 +227,6 @@ class EstateViewModelTest {
     fun onClickDateButtonTest() {
         // GIVEN
         val givenValue = 1
-        every { estateViewModel.dateType.value } returns givenValue
         // WHEN
         estateViewModel.onClickDateButton(givenValue)
         val updatedDateType = estateViewModel.dateType.value
