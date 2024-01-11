@@ -14,37 +14,35 @@ class LoanViewModel: ViewModel() {
 
     val loan: LiveData<Loan> get() = _loan
     private val _loan = MutableLiveData(
-        Loan(
-            0f,
-            0f,
-            20,
-            1.5f)
+        Loan()
     )
-    private fun updateLoan(loan: Loan){
-        _loan.value = loan
-    }
-    fun updateBorrowedAmount(borrowedAmount: Float){
-        val currentLoan = loan.value ?: Loan()
-        currentLoan.borrowedAmount = borrowedAmount
-        updateLoan(currentLoan)
+
+    fun updateBorrowedAmount(borrowedAmount: Float) {
+        _loan.value =
+            loan.value?.copy(
+                borrowedAmount = borrowedAmount
+            )
     }
 
     fun updateDeposit(deposit: Float){
-        val currentLoan = loan.value ?: Loan()
-        currentLoan.deposit = deposit
-        updateLoan(currentLoan)
+        _loan.value =
+            loan.value?.copy(
+                deposit = deposit
+            )
     }
 
     fun updateDuration(duration: Int){
-        val currentLoan = loan.value ?: Loan()
-        currentLoan.duration = duration
-        updateLoan(currentLoan)
+        _loan.value =
+            loan.value?.copy(
+                duration = duration
+            )
     }
 
     fun updateInterestRate(interestRate: Float){
-        val currentLoan = loan.value ?: Loan()
-        currentLoan.interestRate = interestRate
-        updateLoan(currentLoan)
+        _loan.value =
+            loan.value?.copy(
+                interestRate = interestRate
+            )
     }
 
 }

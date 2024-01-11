@@ -101,26 +101,17 @@ class LoanFragment: Fragment() {
 
     private fun displayLoanChartData(loan: Loan){
 
-        // Monthly cost
-        val monthlyPayments = loan.monthlyPayment()
-        // Total amount (monthly cost * duration in Years * 12)
-        val totalPayments = monthlyPayments * (loan.duration * 12)
-        // Sum of all interests (total amount minus sum of all interests)
-        val totalInterests = totalPayments - loan.borrowedAmount
-
         val entries = listOf(
-            // Entry: Borrowed Amount
-            PieEntry(loan.borrowedAmount, null, ContextCompat.getDrawable(requireActivity(), R.drawable.bank), null),
-            // Entry: Deposit
-            PieEntry(loan.deposit, null, ContextCompat.getDrawable(requireActivity(), R.drawable.piggy_bank), null),
+            // Entry: Loan amount
+            PieEntry(loan.actualBorrowedAmount, null, ContextCompat.getDrawable(requireActivity(), R.drawable.bank), null),
             // Entry: Interests
-            PieEntry(totalInterests, null, ContextCompat.getDrawable(requireActivity(), R.drawable.percent), null)
+            PieEntry(loan.calculateSumOfInterests(), null, ContextCompat.getDrawable(requireActivity(), R.drawable.percent), null)
         )
 
         // Ready set & data
         val set = PieDataSet(
             entries,
-            "Cost: $totalPayments"
+            "Cost: ${loan.calculateTotalCost()}"
         )
 
         set.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE
@@ -130,8 +121,7 @@ class LoanFragment: Fragment() {
         // Visuals & flavours
         set.colors = mutableListOf(
             ContextCompat.getColor(requireActivity(), R.color.pie_chart_1),
-            ContextCompat.getColor(requireActivity(), R.color.pie_chart_2),
-            ContextCompat.getColor(requireActivity(), R.color.pie_chart_3)
+            ContextCompat.getColor(requireActivity(), R.color.pie_chart_4)
         )
         set.valueTextColor = ContextCompat.getColor(requireActivity(), R.color.white)
         set.valueTextSize = 14f
@@ -139,12 +129,16 @@ class LoanFragment: Fragment() {
         provideDataToPieChart(
             data,
             loan.duration,
-            loan.monthlyPayment()
+            loan.calculateMonthlyPayment()
         )
 
     }
 
-    private fun provideDataToPieChart(data: PieData, loanDuration: Int, monthlyPayment: Float){
+    private fun provideDataToPieChart(
+        data: PieData,
+        loanDuration: Int,
+        monthlyPayment: Float
+    ) {
 
         val decimalRounded = String.format("%.2f", monthlyPayment)
         val yearsToMonths = loanDuration * 12
