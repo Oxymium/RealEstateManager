@@ -39,7 +39,7 @@ class ItemContentProviderTest {
     @Test
     fun insertAndGetItem() {
         // BEFORE : Adding demo item
-        val userUri = mContentResolver!!.insert(EstateContentProvider.URI_ITEM, generateItem())
+        val test = mContentResolver!!.insert(EstateContentProvider.URI_ITEM, generateItem())
         // TEST
         val cursor = mContentResolver!!.query(ContentUris.withAppendedId(EstateContentProvider.URI_ITEM, USER_ID), null, null, null, null)
         assertThat(cursor, notNullValue())

@@ -59,7 +59,7 @@ val TOOL_MENU_STEPS = listOf(
         icon = R.drawable.currency),
     MenuStep(
         id = 1,
-        title = "Loan Simulation",
+        title = "Loan Simulator",
         icon = R.drawable.chart_pie),
     MenuStep(
         id = 2,

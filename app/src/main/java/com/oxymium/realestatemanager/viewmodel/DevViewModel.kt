@@ -24,7 +24,6 @@ class DevViewModel(private val estateRepository: EstateRepository, private val p
     // -------
     // Testing
     // -------
-
     val givenNumber: LiveData<Int?> get() = _givenNumber
     private val _givenNumber = MutableLiveData<Int?>()
 

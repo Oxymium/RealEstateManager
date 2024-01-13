@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.oxymium.realestatemanager.database.estate.EstateRepository
 import com.oxymium.realestatemanager.model.CategoryHelper
 import com.oxymium.realestatemanager.model.mock.generateOneRandomEstate
-import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -50,20 +49,6 @@ class MapSelectedViewModelTest {
         val updatedSelectedEstate = mapSelectedViewModel.selectedEstate.value
         // THEN
         assertEquals(givenEstate, updatedSelectedEstate)
-    }
-
-    @OptIn(ExperimentalCoroutinesApi::class)
-    @Test
-    fun getSelectedEstate() = runTest {
-        val mapSelectedViewModel = mockk<MapSelectedViewModel>()
-        // GIVEN
-        val givenEstateId = 10L
-        coEvery { mapSelectedViewModel.selectedEstate.value } returns generateOneRandomEstate().copy(id = givenEstateId)
-        // WHEN
-        mapSelectedViewModel.getSelectedEstate(givenEstateId)
-        val updatedSelectedEstate = mapSelectedViewModel.selectedEstate.value
-        // THEN
-        assertEquals(givenEstateId, updatedSelectedEstate?.id)
     }
 
     @Test

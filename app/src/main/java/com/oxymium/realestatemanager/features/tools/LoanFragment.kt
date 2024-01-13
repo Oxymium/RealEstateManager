@@ -111,7 +111,7 @@ class LoanFragment: Fragment() {
         // Ready set & data
         val set = PieDataSet(
             entries,
-            "Cost: ${loan.calculateTotalCost()}"
+            "Total cost: ${loan.calculateTotalCost()}"
         )
 
         set.yValuePosition = PieDataSet.ValuePosition.OUTSIDE_SLICE

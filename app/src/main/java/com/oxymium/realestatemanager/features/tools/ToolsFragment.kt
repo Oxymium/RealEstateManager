@@ -96,7 +96,7 @@ class ToolsFragment: Fragment() {
                         TOOL_MENU_STEPS[0].id -> CurrencyFragment()
                         TOOL_MENU_STEPS[1].id -> LoanFragment()
                         TOOL_MENU_STEPS[2].id -> DevFragment()
-                        else -> CurrencyFragment()
+                        else -> ToolsPlaceholderFragment()
                     }
                 )
                 // Update the current step to display its title in the Navigation

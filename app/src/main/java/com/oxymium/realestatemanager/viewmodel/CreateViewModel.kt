@@ -31,7 +31,11 @@ import java.util.Calendar
 // ---------------
 // CreateViewModel
 // ---------------
-class CreateViewModel(private val agentRepository: AgentRepository, private val estateRepository: EstateRepository, private val pictureRepository: PictureRepository): ViewModel() {
+class CreateViewModel(
+    private val agentRepository: AgentRepository,
+    private val estateRepository: EstateRepository,
+    private val pictureRepository: PictureRepository)
+    : ViewModel() {
 
     // ------
     // ESTATE
@@ -125,31 +129,6 @@ class CreateViewModel(private val agentRepository: AgentRepository, private val 
     private val _reachedNearbyPlacesSide = MutableLiveData<ReachedSide>(ReachedSide.TopSide)
     fun updateReachedNearbyPlacesSide(reachedSide: ReachedSide) {
         _reachedNearbyPlacesSide.value = reachedSide
-    }
-
-    // -----
-    // MISC.
-    // -----
-
-    // AVAILABILITY
-    val availability: LiveData<Boolean> get() = _availability
-    private val _availability = MutableLiveData<Boolean>()
-    fun updateAvailability(availability: Boolean) {
-        _availability.value = availability
-    }
-
-    // AVAILABLE SINCE
-    val availableSince: LiveData<Long> get() = _availableSince
-    private val _availableSince = MutableLiveData<Long>()
-    fun updateAvailabilitySince(availabilitySince: Long) {
-        _availableSince.value = availabilitySince
-    }
-
-    // PURCHASE DATE
-    val purchaseDate: LiveData<Long> get() = _purchaseDate
-    private val _purchaseDate = MutableLiveData<Long>()
-    fun updatePurchaseDate(purchaseDate: Long) {
-        _purchaseDate.value = purchaseDate
     }
 
     // ----------
@@ -330,7 +309,6 @@ class CreateViewModel(private val agentRepository: AgentRepository, private val 
         _pictureActivityType.value = pictureActivityType
     }
 
-
     val shouldNavigateToEstatesFragment: SharedFlow<Boolean> get() = _shouldNavigateToEstatesFragment
     private val _shouldNavigateToEstatesFragment = MutableSharedFlow<Boolean>(0)
     private fun updateShouldNavigateToEstatesFragment(boolean: Boolean) {
@@ -381,6 +359,7 @@ class CreateViewModel(private val agentRepository: AgentRepository, private val 
                 // There's an ID, UPDATE
                 else -> {
                     estate.value.let { estate -> estate?.let{ estateRepository.updateEstate(estate) } }
+                    secondaryPictures.value?.forEach { pictureRepository.insertPicture(it) }
                 }
             }
             // After all is done, clear the fields to reset the creation process
